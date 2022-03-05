@@ -13,4 +13,10 @@ describe('Matchmaker Backend', () => {
     const response = await MatchMakerBackendAcceptanceTest.get("/status");
     expect(response.status).equal(200);
   });
+
+  it('should retrieve matches', async () => {
+    const response = await MatchMakerBackendAcceptanceTest.get("/matchmaker");
+    expect(response.status).equal(200);
+    expect(response.body).eql([]);
+  });
 });
