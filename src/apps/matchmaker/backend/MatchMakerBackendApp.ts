@@ -1,4 +1,3 @@
-// import { Definition } from 'node-dependency-injection';
 import { Server } from './server';
 
 export class MatchMakerBackendApp {

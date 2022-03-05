@@ -1,14 +1,18 @@
 import { inject, injectable } from "inversify";
 import { types } from "../../../../apps/matchmaker/backend/ioc/types";
+import { Match } from "../../domain/Match";
 import { MatchRepository } from "../../domain/MatchRepository";
-import { MatchesResponse } from "./MatchesResponse";
+
+type Params = {
+  id: string;
+};
 
 @injectable()
-export class MatchFinder {
+export class MatchCreator {
   constructor(@inject(types.MatchRepository) private repository: MatchRepository) { }
 
-  async run() {
-    const matches = await this.repository.searchAll();
-    return new MatchesResponse(matches);
+  async run({ id }: Params) {
+    const course = Match.create(id);
+    await this.repository.insert(course);
   }
 }

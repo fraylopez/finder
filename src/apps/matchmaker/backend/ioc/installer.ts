@@ -6,6 +6,8 @@ import StatusGetController from "../controllers/StatusGetController";
 import { types } from "./types";
 import { MatchFinder } from "../../../../contexts/matchmaker/application/get-matches/MatchFinder";
 import { MemoryMatchRepository } from "../../../../contexts/matchmaker/infrastructure/MemoryMatchRepository";
+import { MatchPutController } from "../controllers/MatchPutController";
+import { MatchCreator } from "../../../../contexts/matchmaker/application/get-matches/MatchCreator";
 
 export const container = new Container();
 
@@ -14,6 +16,8 @@ container.bind(types.Logger).to(ConsoleLogger).inSingletonScope();
 container.bind(StatusGetController).toSelf().inSingletonScope();
 
 container.bind(MatchGetController).toSelf().inSingletonScope();
+container.bind(MatchPutController).toSelf().inSingletonScope();
 
 container.bind(MatchFinder).toSelf().inSingletonScope();
+container.bind(MatchCreator).toSelf().inSingletonScope();
 container.bind(types.MatchRepository).to(MemoryMatchRepository).inSingletonScope();

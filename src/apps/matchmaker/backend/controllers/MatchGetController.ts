@@ -6,7 +6,6 @@ import { MatchFinder } from "../../../../contexts/matchmaker/application/get-mat
 import { Match } from "../../../../contexts/matchmaker/domain/Match";
 import { Controller } from './Controller';
 
-type FilterType = { value: string; operator: string; field: string; };
 @injectable()
 export class MatchGetController implements Controller {
   constructor(@inject(MatchFinder) private readonly matchFinder: MatchFinder) { }
@@ -22,8 +21,8 @@ export class MatchGetController implements Controller {
   private toResponse(matches: Array<Match>) {
     return matches.map(match => ({
       id: match.id.toString(),
-      // duration: course.duration.toString(),
-      // name: course.name.toString()
     }));
   }
 }
+
+
