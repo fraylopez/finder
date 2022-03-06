@@ -5,7 +5,12 @@
   "author": "goin",
   "license": "MIT",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start:frontend": "yarn --cwd src/apps/matchmaker/frontend start",
+    "start:backend": "node dist/src/apps/matchmaker/backend/start.js",
+    "build": "npm run build:clean && npm run build:tsc",
+    "build:tsc": "tsc",
+    "build:clean": "rm -r ./dist; exit 0"
   },
   "devDependencies": {
     "@types/chai": "^4.3.0",

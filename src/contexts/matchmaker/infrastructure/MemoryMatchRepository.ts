@@ -6,7 +6,7 @@ import { MatchRepository } from "../domain/MatchRepository";
 export class MemoryMatchRepository implements MatchRepository {
   protected matches: Match[];
   constructor() {
-    this.matches = [];
+    this.matches = testData;
   }
 
   insert(match: Match): Promise<void> {
@@ -19,3 +19,8 @@ export class MemoryMatchRepository implements MatchRepository {
   }
 
 }
+
+const testData = [
+  new Match("id-1"),
+  new Match("id-2"),
+];

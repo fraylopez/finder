@@ -1,7 +1,7 @@
-import { BackofficeBackendApp } from './BackofficeBackendApp';
+import { MatchMakerBackendApp } from "./MatchMakerBackendApp";
 
 try {
-  new BackofficeBackendApp().start().catch(handleError);
+  new MatchMakerBackendApp().start().catch(handleError);
 } catch (e) {
   handleError(e);
 }
