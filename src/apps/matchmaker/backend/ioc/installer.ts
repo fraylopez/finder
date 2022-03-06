@@ -16,6 +16,8 @@ import { SwipeCreator } from "../../../../contexts/matchmaker/candidate/applicat
 import { CandidateCreator } from "../../../../contexts/matchmaker/candidate/application/add/CandidateCreator";
 import { CandidatePutController } from "../controllers/CandidatePutController";
 import { MemoryCandidateRepository } from "../../../../contexts/matchmaker/candidate/infrastructure/MemoryCandidateRepository";
+import { ExposeSwipeOnSwipeCreatedEventHandler } from "../../../../contexts/matchmaker/candidate/application/propagate-swipe/ExposeSwipeOnSwipeCreatedEventHandler";
+import { WebSocketEventExposer } from "../../../../contexts/matchmaker/candidate/infrastructure/WebSocketEventExposer";
 
 export const container = new Container();
 
@@ -25,6 +27,7 @@ container.bind(types.EventBus).to(InMemoryAsyncEventBus).inSingletonScope();
 
 container.bind(EventLogger).to(EventLogger).inSingletonScope();
 container.bind(types.EventHandler).to(AllEventsHandler).inSingletonScope();
+container.bind(types.EventExposer).to(WebSocketEventExposer).inSingletonScope();
 
 // Status
 container.bind(StatusGetController).toSelf().inSingletonScope();
@@ -44,3 +47,5 @@ container.bind(SwipePutController).toSelf().inSingletonScope();
 container.bind(CandidateCreator).toSelf().inSingletonScope();
 container.bind(SwipeCreator).toSelf().inSingletonScope();
 container.bind(types.CandidadteRepository).to(MemoryCandidateRepository).inSingletonScope();
+
+container.bind(types.EventHandler).to(ExposeSwipeOnSwipeCreatedEventHandler).inSingletonScope();

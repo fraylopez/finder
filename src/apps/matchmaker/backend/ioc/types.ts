@@ -3,6 +3,7 @@ export enum types {
   EventBus = "EventBus",
   QueryBus = "QueryBus",
   CommandBus = "CommandBus",
+  EventExposer = "EventExposer",
 
   EventHandler = "EventHandler",
 

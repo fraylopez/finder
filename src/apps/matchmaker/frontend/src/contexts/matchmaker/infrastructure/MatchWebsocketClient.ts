@@ -3,12 +3,14 @@ export class MatchWebsocketClient {
 
   constructor(private readonly baseUrl: string) {
     this.subscriptions = [];
-    // const ws = new WebSocket('ws://localhost:8999');
-    // hook to this.onMessage
+
   }
 
   subscribe(callback: (message: any) => Promise<void> | void) {
-    this.subscriptions.push(callback);
+    const ws = new WebSocket('ws://localhost:8999');
+    ws.onopen = w => {
+      this.subscriptions.push(callback);
+    };
   }
 
   private onMessage(message: any) {

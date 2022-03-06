@@ -5,6 +5,7 @@ import { DomainEventMapping } from "../../../contexts/_shared/infrastructure/bus
 import { container } from "./ioc/installer";
 import { types } from "./ioc/types";
 import { Server } from './server';
+import { EventExposer } from "../../../contexts/matchmaker/candidate/domain/EventExposer";
 
 export class MatchMakerBackendApp {
   private server?: Server;
@@ -13,7 +14,10 @@ export class MatchMakerBackendApp {
     const port = process.env.PORT || '3000';
     this.server = new Server(port);
     await this.registerSubscribers();
-    return this.server.listen();
+
+    await this.server.listen();
+    const websocket: EventExposer = container.get(types.EventExposer);
+    websocket.init(this.server);
   }
 
   async stop() {
