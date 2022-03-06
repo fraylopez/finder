@@ -24,4 +24,8 @@ export class Uuid {
   toString(): string {
     return this.value;
   }
+
+  equals(uuid: Uuid | string) {
+    return uuid.toString() === this.value;
+  }
 }

@@ -26,7 +26,7 @@ export class MatchMakerBackendAcceptanceTest {
   static async get(route: string) {
     return request(this.application.httpServer).get(route);
   }
-  static async put(route: string, body: object) {
+  static async put(route: string, body?: object) {
     return request(this.application.httpServer).put(route).send(body);
   }
 }

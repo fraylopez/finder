@@ -5,8 +5,9 @@ import { container } from "../ioc/installer";
 
 export const register = (app: Application) => {
   const matchesGetController = container.get(MatchesGetController);
-  app.get('/matchmaker', matchesGetController.run.bind(matchesGetController));
+  app.get('/match', matchesGetController.run.bind(matchesGetController));
 
   const matchesPutController = container.get(MatchPutController);
-  app.put('/matchmaker/:id', matchesPutController.run.bind(matchesPutController));
+  app.put('/match/:id', matchesPutController.run.bind(matchesPutController));
+
 };

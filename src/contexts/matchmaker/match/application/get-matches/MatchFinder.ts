@@ -1,5 +1,5 @@
 import { inject, injectable } from "inversify";
-import { types } from "../../../../apps/matchmaker/backend/ioc/types";
+import { types } from "../../../../../apps/matchmaker/backend/ioc/types";
 import { MatchRepository } from "../../domain/MatchRepository";
 import { MatchesResponse } from "./MatchesResponse";
 

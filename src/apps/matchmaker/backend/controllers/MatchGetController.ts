@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 import { inject, injectable } from "inversify";
-import { MatchesResponse } from "../../../../contexts/matchmaker/application/get-matches/MatchesResponse";
-import { MatchFinder } from "../../../../contexts/matchmaker/application/get-matches/MatchFinder";
-import { Match } from "../../../../contexts/matchmaker/domain/Match";
+import { MatchesResponse } from "../../../../contexts/matchmaker/match/application/get-matches/MatchesResponse";
+import { MatchFinder } from "../../../../contexts/matchmaker/match/application/get-matches/MatchFinder";
+import { Match } from "../../../../contexts/matchmaker/match/domain/Match";
 import { Controller } from './Controller';
 
 @injectable()

@@ -1,5 +1,5 @@
-import { AggregateRoot } from "../../_shared/domain/AggregateRoot";
-import { Uuid } from "../../_shared/domain/value-object/Uuid";
+import { AggregateRoot } from "../../../_shared/domain/AggregateRoot";
+import { Uuid } from "../../../_shared/domain/value-object/Uuid";
 import { MatchCreatedEvent } from "./MatchCreatedEvent";
 
 interface Params {

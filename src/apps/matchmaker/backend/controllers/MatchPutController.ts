@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 import { inject, injectable } from "inversify";
-import { MatchCreator } from "../../../../contexts/matchmaker/application/get-matches/MatchCreator";
+import { MatchCreator } from "../../../../contexts/matchmaker/match/application/get-matches/MatchCreator";
 import { Controller } from './Controller';
 
 @injectable()

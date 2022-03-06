@@ -1,6 +1,6 @@
-import { DomainEvent } from "../../_shared/domain/DomainEvent";
-import { PrimitiveDomainEvent } from "../../_shared/domain/PrimitiveDomainEvent";
-import { Uuid } from "../../_shared/domain/value-object/Uuid";
+import { DomainEvent } from "../../../_shared/domain/DomainEvent";
+import { PrimitiveDomainEvent } from "../../../_shared/domain/PrimitiveDomainEvent";
+import { Uuid } from "../../../_shared/domain/value-object/Uuid";
 
 export class MatchCreatedEvent extends DomainEvent {
   static readonly NAME = 'match.created';

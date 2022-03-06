@@ -3,5 +3,5 @@ export interface PrimitiveDomainEvent {
   aggregateId: string;
   eventId: string;
   timestamp: number;
-  payload?: object;
+  payload?: Record<string, any>;
 }

@@ -1,6 +1,6 @@
 import { injectable } from "inversify";
-import { MatchTitleMother } from "../../../../test/contexts/matchmaker/domain/MatchTitleMother";
-import { Uuid } from "../../_shared/domain/value-object/Uuid";
+import { MatchTitleMother } from "../../../../../test/contexts/matchmaker/domain/MatchTitleMother";
+import { Uuid } from "../../../_shared/domain/value-object/Uuid";
 import { Match } from "../domain/Match";
 import { MatchRepository } from "../domain/MatchRepository";
 
