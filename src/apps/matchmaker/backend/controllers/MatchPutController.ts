@@ -10,7 +10,10 @@ export class MatchPutController implements Controller {
 
   async run(req: Request, res: Response) {
     const id: string = req.params.id;
-    await this.creator.run({ id });
+    const title: string = req.body.title;
+    const imageUrl: string = req.body.imageUrl;
+    await this.creator.run({ id, title, imageUrl });
+
     res.header('Access-Control-Allow-Origin', '*');
     res.status(httpStatus.OK).send();
   }

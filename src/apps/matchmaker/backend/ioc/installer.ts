@@ -8,10 +8,17 @@ import { MatchFinder } from "../../../../contexts/matchmaker/application/get-mat
 import { MemoryMatchRepository } from "../../../../contexts/matchmaker/infrastructure/MemoryMatchRepository";
 import { MatchPutController } from "../controllers/MatchPutController";
 import { MatchCreator } from "../../../../contexts/matchmaker/application/get-matches/MatchCreator";
+import { InMemoryAsyncEventBus } from "../../../../contexts/_shared/infrastructure/bus/event/InMemoryAsyncEventBus";
+import { EventLogger } from "../../../../contexts/_shared/application/EventLogger";
+import { AllEventsHandler } from "../../../../contexts/_shared/application/AllEventsHandler";
 
 export const container = new Container();
 
 container.bind(types.Logger).to(ConsoleLogger).inSingletonScope();
+container.bind(types.EventBus).to(InMemoryAsyncEventBus).inSingletonScope();
+
+container.bind(EventLogger).to(EventLogger).inSingletonScope();
+container.bind(types.EventHandler).to(AllEventsHandler).inSingletonScope();
 
 container.bind(StatusGetController).toSelf().inSingletonScope();
 

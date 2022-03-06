@@ -1,3 +1,9 @@
+import { DomainEvent } from "../../../contexts/_shared/domain/DomainEvent";
+import { EventHandler } from "../../../contexts/_shared/domain/EventHandler";
+import { EventBus } from "../../../contexts/_shared/domain/EventBus";
+import { DomainEventMapping } from "../../../contexts/_shared/infrastructure/bus/event/DomainEventMapping";
+import { container } from "./ioc/installer";
+import { types } from "./ioc/types";
 import { Server } from './server';
 
 export class MatchMakerBackendApp {
@@ -6,7 +12,7 @@ export class MatchMakerBackendApp {
   async start() {
     const port = process.env.PORT || '3000';
     this.server = new Server(port);
-    // await this.registerSubscribers();
+    await this.registerSubscribers();
     return this.server.listen();
   }
 
@@ -25,16 +31,14 @@ export class MatchMakerBackendApp {
     return this.server?.httpServer;
   }
 
-  // private async registerSubscribers() {
-  //   const eventBus = container.get('Shared.EventBus') as EventBus;
-  //   const subscriberDefinitions = container.findTaggedServiceIds('domainEventSubscriber') as Map<String, Definition>;
-  //   const subscribers: Array<DomainEventSubscriber<DomainEvent>> = [];
+  private async registerSubscribers() {
+    const eventBus = container.get<EventBus>(types.EventBus);
+    const eventHandlers = container.getAll<EventHandler>(types.EventHandler);
 
-  //   subscriberDefinitions.forEach((value: any, key: any) => subscribers.push(container.get(key)));
-  //   const domainEventMapping = new DomainEventMapping(subscribers);
+    const domainEventMapping = new DomainEventMapping(eventHandlers);
 
-  //   eventBus.setDomainEventMapping(domainEventMapping);
-  //   eventBus.addSubscribers(subscribers);
-  //   await eventBus.start();
-  // }
+    eventBus.setDomainEventMapping(domainEventMapping);
+    eventBus.addSubscribers(eventHandlers);
+    await eventBus.start();
+  }
 }

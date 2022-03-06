@@ -1,4 +1,3 @@
-import { injectable } from "inversify";
 import { MatchRepository } from "../../domain/MatchRepository";
 
 export class MatchFinder {

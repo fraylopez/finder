@@ -2,7 +2,7 @@ import request from "supertest";
 import { container } from "../../../../../src/apps/matchmaker/backend/ioc/installer";
 import { types } from "../../../../../src/apps/matchmaker/backend/ioc/types";
 import { MatchMakerBackendApp } from "../../../../../src/apps/matchmaker/backend/MatchMakerBackendApp";
-import { TestMemoryMatchRepository } from "../../../../contexts/matchmaker/infrastructure/TestMemoryMatchRepositort";
+import { TestMemoryMatchRepository } from "../../../../contexts/matchmaker/infrastructure/TestMemoryMatchRepository";
 import { setupTestDependencies } from "./testInstaller";
 
 export class MatchMakerBackendAcceptanceTest {
@@ -26,7 +26,7 @@ export class MatchMakerBackendAcceptanceTest {
   static async get(route: string) {
     return request(this.application.httpServer).get(route);
   }
-  static async put(route: string) {
-    return request(this.application.httpServer).put(route);
+  static async put(route: string, body: object) {
+    return request(this.application.httpServer).put(route).send(body);
   }
 }

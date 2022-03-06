@@ -1,4 +1,6 @@
 import { injectable } from "inversify";
+import { MatchTitleMother } from "../../../../test/contexts/matchmaker/domain/MatchTitleMother";
+import { Uuid } from "../../_shared/domain/value-object/Uuid";
 import { Match } from "../domain/Match";
 import { MatchRepository } from "../domain/MatchRepository";
 
@@ -21,6 +23,6 @@ export class MemoryMatchRepository implements MatchRepository {
 }
 
 const testData = [
-  new Match("id-1"),
-  new Match("id-2"),
+  Match.create({ id: Uuid.random(), title: MatchTitleMother.random() }),
+  Match.create({ id: Uuid.random(), title: MatchTitleMother.random() }),
 ];

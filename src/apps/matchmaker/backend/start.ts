@@ -1,7 +1,9 @@
 import { MatchMakerBackendApp } from "./MatchMakerBackendApp";
 
 try {
-  new MatchMakerBackendApp().start().catch(handleError);
+  new MatchMakerBackendApp()
+    .start()
+    .catch(handleError);
 } catch (e) {
   handleError(e);
 }

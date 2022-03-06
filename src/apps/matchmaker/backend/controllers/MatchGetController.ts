@@ -21,6 +21,8 @@ export class MatchGetController implements Controller {
   private toResponse(matches: Array<Match>) {
     return matches.map(match => ({
       id: match.id.toString(),
+      title: match.title,
+      imageUrl: match.imageUrl,
     }));
   }
 }
