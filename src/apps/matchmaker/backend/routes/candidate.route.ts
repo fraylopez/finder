@@ -8,5 +8,5 @@ export const register = (app: Application) => {
   app.put('/candidate/:uid', candidatePutController.run.bind(candidatePutController));
 
   const swipePutController = container.get(SwipePutController);
-  app.put('/candidate/:uid/swipe/:matchId', swipePutController.run.bind(swipePutController));
+  app.put('/candidate/:uid/swipe/:cardId', swipePutController.run.bind(swipePutController));
 };

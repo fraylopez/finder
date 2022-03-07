@@ -1,3 +1,3 @@
 export enum types {
-  MatchRepository = "MatchRepository",
+  CardRepository = "CardRepository",
 }

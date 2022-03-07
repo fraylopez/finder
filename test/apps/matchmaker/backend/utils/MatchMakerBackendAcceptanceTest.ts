@@ -2,7 +2,7 @@ import request from "supertest";
 import { container } from "../../../../../src/apps/matchmaker/backend/ioc/installer";
 import { types } from "../../../../../src/apps/matchmaker/backend/ioc/types";
 import { MatchMakerBackendApp } from "../../../../../src/apps/matchmaker/backend/MatchMakerBackendApp";
-import { TestMemoryMatchRepository } from "../../../../contexts/matchmaker/infrastructure/TestMemoryMatchRepository";
+import { TestMemoryCardRepository } from "../../../../contexts/matchmaker/card/infrastructure/TestMemoryCardRepository";
 import { setupTestDependencies } from "./testInstaller";
 
 export class MatchMakerBackendAcceptanceTest {
@@ -19,7 +19,7 @@ export class MatchMakerBackendAcceptanceTest {
     await this.application.stop();
   }
   static async reset() {
-    container.get<TestMemoryMatchRepository>(types.MatchRepository).removeAll();
+    container.get<TestMemoryCardRepository>(types.CardRepository).removeAll();
     await this.application.stop();
   }
 

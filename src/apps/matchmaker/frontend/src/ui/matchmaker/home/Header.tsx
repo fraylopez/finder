@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { container } from "../../../config/ioc/installer";
-import { MatchUpdater } from "../../../contexts/matchmaker/application/get-matches/MatchUpdater";
+import { CardUpdater } from "../../../contexts/matchmaker/application/get-cards/CardUpdater";
 import './Header.css';
 
 function Header() {
   const [matchCount, updateMatches] = useState<number>(0);
   useEffect(() => {
-    container.get(MatchUpdater).register((message: any) => {
+    container.get(CardUpdater).register((message: any) => {
       updateMatches(message.count);
     });
   });

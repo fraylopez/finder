@@ -1,21 +1,21 @@
 import { useEffect, useState } from 'react';
 import { container } from "../../../config/ioc/installer";
-import { MatchFinder } from "../../../contexts/matchmaker/application/get-matches/MatchFinder";
-import { Match } from "../../../contexts/matchmaker/domain/Match";
-import './MatchesView.css';
+import { CardFinder } from "../../../contexts/matchmaker/application/get-cards/CardFinder";
+import { Card } from "../../../contexts/matchmaker/domain/Card";
+import './CardsView.css';
 
-function MatchesView() {
-  const [matches, setMatches] = useState<Match[]>([]);
+function CardsView() {
+  const [matches, setMatches] = useState<Card[]>([]);
   useEffect(() => {
     async function fetchMatches() {
-      const result = await container.get(MatchFinder).find();
+      const result = await container.get(CardFinder).find();
       setMatches(result);
     }
     fetchMatches();
   });
 
   return (
-    <div className="MatchesView">
+    <div className="CardsView">
       <p>MATCHES</p>
       <ul>
         {matches.map(m => (
@@ -28,4 +28,4 @@ function MatchesView() {
   );
 }
 
-export default MatchesView;
+export default CardsView;

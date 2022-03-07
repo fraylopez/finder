@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { Uuid } from "../../../../src/contexts/_shared/domain/value-object/Uuid";
-import { MatchTitleMother } from "../../../contexts/matchmaker/domain/MatchTitleMother";
+import { CardTitleMother } from "../../../contexts/matchmaker/card/domain/CardTitleMother";
 import { MatchMakerBackendAcceptanceTest } from "./utils/MatchMakerBackendAcceptanceTest";
 
 describe('Status', () => {

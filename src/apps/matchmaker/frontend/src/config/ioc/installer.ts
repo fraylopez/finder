@@ -1,8 +1,8 @@
 import { types } from "./types";
-import { HttpMatchRepository } from "../../contexts/matchmaker/infrastructure/HttpMatchRepository";
-import { MatchFinder } from "../../contexts/matchmaker/application/get-matches/MatchFinder";
-import { MatchUpdater } from "../../contexts/matchmaker/application/get-matches/MatchUpdater";
-import { MatchWebsocketClient } from "../../contexts/matchmaker/infrastructure/MatchWebsocketClient";
+import { HttpCardRepository } from "../../contexts/matchmaker/infrastructure/HttpCardRepository";
+import { CardFinder } from "../../contexts/matchmaker/application/get-cards/CardFinder";
+import { CardUpdater } from "../../contexts/matchmaker/application/get-cards/CardUpdater";
+import { CardWebsocketClient } from "../../contexts/matchmaker/infrastructure/CardWebsocketClient";
 
 // const container = new Container();
 
@@ -32,10 +32,10 @@ class MapContainer {
 
 const container = new MapContainer();
 
-container.bind(types.MatchRepository, new HttpMatchRepository("http://localhost:3000"));
-container.bind(MatchFinder, new MatchFinder(container.get(types.MatchRepository)));
+container.bind(types.CardRepository, new HttpCardRepository("http://localhost:3000"));
+container.bind(CardFinder, new CardFinder(container.get(types.CardRepository)));
 
-container.bind(MatchWebsocketClient, new MatchWebsocketClient("ws://localhost:8999"));
-container.bind(MatchUpdater, new MatchUpdater(container.get(MatchWebsocketClient)));
+container.bind(CardWebsocketClient, new CardWebsocketClient("ws://localhost:8999"));
+container.bind(CardUpdater, new CardUpdater(container.get(CardWebsocketClient)));
 
 export { container };

@@ -1,12 +1,12 @@
 import './App.css';
 import Header from "./matchmaker/home/Header";
-import MatchesView from "./matchmaker/home/MatchesView";
+import CardsView from "./matchmaker/home/CardsView";
 
 function App() {
   return (
     <div className="App">
       <Header />
-      <MatchesView />
+      <CardsView />
     </div>
   );
 }

@@ -1,13 +1,13 @@
 import { AggregateRoot } from "../../../_shared/domain/AggregateRoot";
 import { Uuid } from "../../../_shared/domain/value-object/Uuid";
-import { MatchCreatedEvent } from "./MatchCreatedEvent";
+import { CardCreatedEvent } from "./CardCreatedEvent";
 
 interface Params {
   id: Uuid,
   title: string,
   imageUrl?: string,
 }
-export class Match extends AggregateRoot {
+export class Card extends AggregateRoot {
 
   constructor(
     public readonly id: Uuid,
@@ -18,13 +18,13 @@ export class Match extends AggregateRoot {
   }
 
   static create({ id, title, imageUrl }: Params) {
-    const match = new Match(id, title, imageUrl);
-    match.record(new MatchCreatedEvent(match.id));
-    return match;
+    const card = new Card(id, title, imageUrl);
+    card.record(new CardCreatedEvent(card.id));
+    return card;
   }
 
   static fromPrimitives(primitives: Record<string, any>) {
-    return new Match(primitives.id, primitives.title, primitives.imageUrl);
+    return new Card(primitives.id, primitives.title, primitives.imageUrl);
   }
 
   toPrimitives() {

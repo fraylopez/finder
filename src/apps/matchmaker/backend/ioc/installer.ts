@@ -1,13 +1,13 @@
 import "reflect-metadata";
 import { Container } from "inversify";
 import { ConsoleLogger } from "../../../../contexts/_shared/infrastructure/logger/ConsoleLogger";
-import { MatchGetController } from "../controllers/MatchGetController";
+import { CardGetController } from "../controllers/CardGetController";
 import StatusGetController from "../controllers/StatusGetController";
 import { types } from "./types";
-import { MatchFinder } from "../../../../contexts/matchmaker/match/application/get-matches/MatchFinder";
-import { MemoryMatchRepository } from "../../../../contexts/matchmaker/match/infrastructure/MemoryMatchRepository";
-import { MatchPutController } from "../controllers/MatchPutController";
-import { MatchCreator } from "../../../../contexts/matchmaker/match/application/get-matches/MatchCreator";
+import { CardFinder } from "../../../../contexts/matchmaker/card/application/get-cards/CardFinder";
+import { MemoryCardRepository } from "../../../../contexts/matchmaker/card/infrastructure/MemoryMatchRepository";
+import { CardPutController } from "../controllers/CardPutController";
+import { CardCreator } from "../../../../contexts/matchmaker/card/application/get-cards/CardCreator";
 import { InMemoryAsyncEventBus } from "../../../../contexts/_shared/infrastructure/bus/event/InMemoryAsyncEventBus";
 import { EventLogger } from "../../../../contexts/_shared/application/EventLogger";
 import { AllEventsHandler } from "../../../../contexts/_shared/application/AllEventsHandler";
@@ -33,12 +33,12 @@ container.bind(types.EventExposer).to(WebSocketEventExposer).inSingletonScope();
 container.bind(StatusGetController).toSelf().inSingletonScope();
 
 // Match
-container.bind(MatchGetController).toSelf().inSingletonScope();
-container.bind(MatchPutController).toSelf().inSingletonScope();
+container.bind(CardGetController).toSelf().inSingletonScope();
+container.bind(CardPutController).toSelf().inSingletonScope();
 
-container.bind(MatchFinder).toSelf().inSingletonScope();
-container.bind(MatchCreator).toSelf().inSingletonScope();
-container.bind(types.MatchRepository).to(MemoryMatchRepository).inSingletonScope();
+container.bind(CardFinder).toSelf().inSingletonScope();
+container.bind(CardCreator).toSelf().inSingletonScope();
+container.bind(types.CardRepository).to(MemoryCardRepository).inSingletonScope();
 
 // Candidate
 container.bind(CandidatePutController).toSelf().inSingletonScope();

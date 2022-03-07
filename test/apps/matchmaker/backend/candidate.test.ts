@@ -23,11 +23,11 @@ describe('Candidate', () => {
 
   it('should allow swipe from candidate', async () => {
     const uid = Uuid.random().toString();
-    const matchId = Uuid.random().toString();
+    const cardId = Uuid.random().toString();
 
     await MatchMakerBackendAcceptanceTest.put(`/candidate/${uid}`);
     const response = await MatchMakerBackendAcceptanceTest.put(
-      `/candidate/${uid}/swipe/${matchId}`,
+      `/candidate/${uid}/swipe/${cardId}`,
       {
         right: Math.random() > .5
       }

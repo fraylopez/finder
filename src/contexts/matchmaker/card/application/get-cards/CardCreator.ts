@@ -2,8 +2,8 @@ import { inject, injectable } from "inversify";
 import { types } from "../../../../../apps/matchmaker/backend/ioc/types";
 import { EventBus } from "../../../../_shared/domain/EventBus";
 import { Uuid } from "../../../../_shared/domain/value-object/Uuid";
-import { Match } from "../../domain/Match";
-import { MatchRepository } from "../../domain/MatchRepository";
+import { Card } from "../../domain/Card";
+import { CardRepository } from "../../domain/CardRepository";
 
 type Params = {
   id: string;
@@ -12,15 +12,15 @@ type Params = {
 };
 
 @injectable()
-export class MatchCreator {
+export class CardCreator {
   constructor(
-    @inject(types.MatchRepository) private repository: MatchRepository,
+    @inject(types.CardRepository) private repository: CardRepository,
     @inject(types.EventBus) private evetBus: EventBus,
   ) { }
 
   async run({ id, title, imageUrl }: Params) {
-    const match = Match.create({ id: new Uuid(id), title, imageUrl });
-    await this.repository.insert(match);
-    this.evetBus.publish(match.pullDomainEvents());
+    const card = Card.create({ id: new Uuid(id), title, imageUrl });
+    await this.repository.insert(card);
+    this.evetBus.publish(card.pullDomainEvents());
   }
 }

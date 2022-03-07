@@ -7,6 +7,6 @@ export enum types {
 
   EventHandler = "EventHandler",
 
-  MatchRepository = "MatchRepository",
+  CardRepository = "CardRepository",
   CandidadteRepository = "CandidadteRepository",
 }

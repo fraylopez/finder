@@ -1,9 +1,9 @@
 import { container } from "../../../../../src/apps/matchmaker/backend/ioc/installer";
 import { types } from "../../../../../src/apps/matchmaker/backend/ioc/types";
-import { TestMemoryMatchRepository } from "../../../../contexts/matchmaker/infrastructure/TestMemoryMatchRepository";
+import { TestMemoryCardRepository } from "../../../../contexts/matchmaker/card/infrastructure/TestMemoryCardRepository";
 
 export function setupTestDependencies() {
-  container.unbind(types.MatchRepository);
-  container.bind(types.MatchRepository).to(TestMemoryMatchRepository).inSingletonScope();
+  container.unbind(types.CardRepository);
+  container.bind(types.CardRepository).to(TestMemoryCardRepository).inSingletonScope();
 
 }

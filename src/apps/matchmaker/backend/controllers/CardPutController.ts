@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 import { inject, injectable } from "inversify";
-import { MatchCreator } from "../../../../contexts/matchmaker/match/application/get-matches/MatchCreator";
+import { CardCreator } from "../../../../contexts/matchmaker/card/application/get-cards/CardCreator";
 import { Controller } from './Controller';
 
 @injectable()
-export class MatchPutController implements Controller {
-  constructor(@inject(MatchCreator) private readonly creator: MatchCreator) { }
+export class CardPutController implements Controller {
+  constructor(@inject(CardCreator) private readonly creator: CardCreator) { }
 
   async run(req: Request, res: Response) {
     const id: string = req.params.id;

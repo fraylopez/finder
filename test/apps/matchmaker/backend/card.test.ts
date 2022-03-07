@@ -1,9 +1,9 @@
 import { expect } from "chai";
 import { Uuid } from "../../../../src/contexts/_shared/domain/value-object/Uuid";
-import { MatchTitleMother } from "../../../contexts/matchmaker/domain/MatchTitleMother";
+import { CardTitleMother } from "../../../contexts/matchmaker/card/domain/CardTitleMother";
 import { MatchMakerBackendAcceptanceTest } from "./utils/MatchMakerBackendAcceptanceTest";
 
-describe('Match', () => {
+describe('Card', () => {
   before(async () => {
     await MatchMakerBackendAcceptanceTest.start();
   });
@@ -16,18 +16,18 @@ describe('Match', () => {
     await MatchMakerBackendAcceptanceTest.stop();
   });
 
-  it('should create match', async () => {
+  it('should create card', async () => {
     const id = Uuid.random().toString();
-    const title = MatchTitleMother.random();
-    const response = await MatchMakerBackendAcceptanceTest.put(`/match/${id}`, { title });
+    const title = CardTitleMother.random();
+    const response = await MatchMakerBackendAcceptanceTest.put(`/card/${id}`, { title });
     expect(response.status).equal(200);
   });
 
-  it('should retrieve matches', async () => {
+  it('should retrieve cards', async () => {
     const id = Uuid.random().toString();
-    const title = MatchTitleMother.random();
-    await MatchMakerBackendAcceptanceTest.put(`/match/${id}`, { title });
-    const response = await MatchMakerBackendAcceptanceTest.get("/match");
+    const title = CardTitleMother.random();
+    await MatchMakerBackendAcceptanceTest.put(`/card/${id}`, { title });
+    const response = await MatchMakerBackendAcceptanceTest.get("/card");
 
     const responseData = response.body as any[];
     expect(responseData.pop()).eql({

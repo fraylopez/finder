@@ -7,7 +7,7 @@ import { CandidateRepository } from "../../domain/CandidateRepository";
 import { Swipe } from "../../domain/Swipe";
 
 type Params = {
-  matchId: string;
+  cardId: string;
   uid: string,
   right: boolean,
 };
@@ -19,13 +19,13 @@ export class SwipeCreator {
     @inject(types.EventBus) private readonly eventBus: EventBus,
   ) { }
 
-  async swipe({ uid, matchId, right }: Params) {
+  async swipe({ uid, cardId, right }: Params) {
     const candidate = await this.candidateRepository.find(new Uuid(uid));
     assert(candidate, "Unknown candidate");
     candidate.swipe(
       new Swipe(
         new Uuid(uid),
-        new Uuid(matchId),
+        new Uuid(cardId),
         right
       )
     );

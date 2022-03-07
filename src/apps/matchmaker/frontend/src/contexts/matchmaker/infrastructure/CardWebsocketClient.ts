@@ -1,4 +1,4 @@
-export class MatchWebsocketClient {
+export class CardWebsocketClient {
   private subscriptions: Array<(message: any) => Promise<void> | void>;
 
   constructor(private readonly baseUrl: string) {
@@ -10,6 +10,7 @@ export class MatchWebsocketClient {
     const ws = new WebSocket('ws://localhost:8999');
     ws.onopen = w => {
       this.subscriptions.push(callback);
+      ws.onmessage = this.onMessage.bind(this);
     };
   }
 

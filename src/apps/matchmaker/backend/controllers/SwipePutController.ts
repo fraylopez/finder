@@ -10,10 +10,10 @@ export class SwipePutController implements Controller {
 
   async run(req: Request, res: Response) {
     const uid: string = req.params.uid;
-    const matchId: string = req.params.matchId;
+    const cardId: string = req.params.cardId;
     const right: boolean = req.body.right;
     await this.creator.swipe({
-      matchId,
+      cardId,
       uid,
       right,
     }

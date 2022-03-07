@@ -23,7 +23,7 @@ export class Candidate extends AggregateRoot {
 
   swipe(swipe: Swipe) {
     this.swipes.push(swipe);
-    this.record(new SwipeCreatedEvent(swipe.matchId, this.id, swipe.right));
+    this.record(new SwipeCreatedEvent(swipe.cardId, this.id, swipe.right));
   }
 
   toPrimitives() {
