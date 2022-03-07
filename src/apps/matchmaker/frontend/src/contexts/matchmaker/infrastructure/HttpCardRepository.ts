@@ -10,6 +10,6 @@ export class HttpCardRepository implements CardRepository {
 
   async searchAll(): Promise<Card[]> {
     const response = await this.fetcher(`${this.baseUrl}/card`);
-    return response.data.map((d: { id: string; }) => new Card(d.id));
+    return response.data.map((d: any) => new Card(d.id, d.title, d.imageUrl));
   }
 };

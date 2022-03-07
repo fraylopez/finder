@@ -4,10 +4,10 @@ import { CardUpdater } from "../../../contexts/matchmaker/application/get-cards/
 import './Header.css';
 
 function Header() {
-  const [matchCount, updateMatches] = useState<number>(0);
+  const [matchCount, updateCards] = useState<number>(0);
   useEffect(() => {
     container.get(CardUpdater).register((message: any) => {
-      updateMatches(message.count);
+      updateCards(message.count);
     });
   });
 

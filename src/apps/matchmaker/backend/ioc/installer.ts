@@ -5,7 +5,7 @@ import { CardGetController } from "../controllers/CardGetController";
 import StatusGetController from "../controllers/StatusGetController";
 import { types } from "./types";
 import { CardFinder } from "../../../../contexts/matchmaker/card/application/get-cards/CardFinder";
-import { MemoryCardRepository } from "../../../../contexts/matchmaker/card/infrastructure/MemoryMatchRepository";
+import { MemoryCardRepository } from "../../../../contexts/matchmaker/card/infrastructure/MemoryCardRepository";
 import { CardPutController } from "../controllers/CardPutController";
 import { CardCreator } from "../../../../contexts/matchmaker/card/application/get-cards/CardCreator";
 import { InMemoryAsyncEventBus } from "../../../../contexts/_shared/infrastructure/bus/event/InMemoryAsyncEventBus";
@@ -32,7 +32,7 @@ container.bind(types.EventExposer).to(WebSocketEventExposer).inSingletonScope();
 // Status
 container.bind(StatusGetController).toSelf().inSingletonScope();
 
-// Match
+// Card
 container.bind(CardGetController).toSelf().inSingletonScope();
 container.bind(CardPutController).toSelf().inSingletonScope();
 

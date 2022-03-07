@@ -5,22 +5,24 @@ import { Card } from "../../../contexts/matchmaker/domain/Card";
 import './CardsView.css';
 
 function CardsView() {
-  const [matches, setMatches] = useState<Card[]>([]);
+  const [cards, setCards] = useState<Card[]>([]);
   useEffect(() => {
-    async function fetchMatches() {
+    async function fetchCards() {
       const result = await container.get(CardFinder).find();
-      setMatches(result);
+      setCards(result);
     }
-    fetchMatches();
+    fetchCards();
   });
 
   return (
     <div className="CardsView">
-      <p>MATCHES</p>
+      <p>CARDS</p>
       <ul>
-        {matches.map(m => (
+        {cards.map(m => (
           <li key={m.id}>
             <p>{m.id}</p>
+            <p>{m.title}</p>
+            <img src={m.imageUrl} alt={m.imageUrl} />
           </li>
         ))}
       </ul>

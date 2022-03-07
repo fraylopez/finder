@@ -1,4 +1,5 @@
 import { injectable } from "inversify";
+import { CardImageMother } from "../../../../../test/contexts/matchmaker/card/domain/CardImageMother";
 import { CardTitleMother } from "../../../../../test/contexts/matchmaker/card/domain/CardTitleMother";
 import { Uuid } from "../../../_shared/domain/value-object/Uuid";
 import { Card } from "../domain/Card";
@@ -23,6 +24,6 @@ export class MemoryCardRepository implements CardRepository {
 }
 
 const testData = [
-  Card.create({ id: Uuid.random(), title: CardTitleMother.random() }),
-  Card.create({ id: Uuid.random(), title: CardTitleMother.random() }),
+  Card.create({ id: Uuid.random(), title: CardTitleMother.random(), imageUrl: CardImageMother.random() }),
+  Card.create({ id: Uuid.random(), title: CardTitleMother.random(), imageUrl: CardImageMother.random() }),
 ];
