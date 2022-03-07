@@ -1,0 +1,33 @@
+@startuml
+
+object Tinder
+object Match
+object Like
+object Dismiss
+object Action
+object Candidates
+object User
+object Profile
+object Name
+object Conversation
+
+User ..> Action
+User *--> Profile
+
+Tinder *--> "2..n" User
+Profile *--> Name
+
+Like -up-|> Action
+Dismiss -up-|> Action
+Candidates "0..n" o-down-> Profile
+
+Profile ..> Candidates
+Conversation --> Match
+
+Action --> Profile
+Match *--> "2" Profile
+Match <--> "2" Like
+
+User --> Conversation
+
+@enduml
