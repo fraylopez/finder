@@ -16,7 +16,7 @@ import { SwipeCreator } from "../../../../contexts/matchmaker/candidate/applicat
 import { CandidateCreator } from "../../../../contexts/matchmaker/candidate/application/add/CandidateCreator";
 import { CandidatePutController } from "../controllers/CandidatePutController";
 import { MemoryCandidateRepository } from "../../../../contexts/matchmaker/candidate/infrastructure/MemoryCandidateRepository";
-import { ExposeSwipeOnSwipeCreatedEventHandler } from "../../../../contexts/matchmaker/candidate/application/propagate-swipe/ExposeSwipeOnSwipeCreatedEventHandler";
+import { ExposeSwipeOnSwipeCreatedEventHandler } from "../../../../contexts/matchmaker/candidate/application/swipe/ExposeSwipeOnSwipeCreatedEventHandler";
 import { WebSocketEventExposer } from "../../../../contexts/matchmaker/candidate/infrastructure/WebSocketEventExposer";
 
 export const container = new Container();

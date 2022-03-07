@@ -1,16 +1,16 @@
 import { Server } from "../../../../apps/matchmaker/backend/server";
 import { DomainEvent } from "../../../_shared/domain/DomainEvent";
 import { EventExposer } from "../domain/EventExposer";
-import * as WebSocket from 'ws';
+import * as socketIO from "socket.io";
 import { injectable } from "inversify";
 
 @injectable()
 export class WebSocketEventExposer implements EventExposer {
-  private wss!: WebSocket.Server;
+  private wss!: socketIO.Server;
   constructor() { };
 
   init(server: Server) {
-    this.wss = new WebSocket.Server({ server: server.httpServer });
+    this.wss = new socketIO.Server(server.httpServer);
   }
 
   expose(event: DomainEvent): void {

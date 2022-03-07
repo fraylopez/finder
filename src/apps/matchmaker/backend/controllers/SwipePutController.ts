@@ -16,8 +16,7 @@ export class SwipePutController implements Controller {
       cardId,
       uid,
       right,
-    }
-    );
+    });
 
     res.header('Access-Control-Allow-Origin', '*');
     res.status(httpStatus.OK).send();

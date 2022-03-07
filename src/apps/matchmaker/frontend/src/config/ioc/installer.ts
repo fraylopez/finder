@@ -1,8 +1,14 @@
 import { types } from "./types";
 import { HttpCardRepository } from "../../contexts/matchmaker/infrastructure/HttpCardRepository";
-import { CardFinder } from "../../contexts/matchmaker/application/get-cards/CardFinder";
-import { CardUpdater } from "../../contexts/matchmaker/application/get-cards/CardUpdater";
-import { CardWebsocketClient } from "../../contexts/matchmaker/infrastructure/CardWebsocketClient";
+import { CardFinder } from "../../contexts/matchmaker/card/application/get-cards/CardFinder";
+import { MatchUpdater } from "../../contexts/matchmaker/candidate/application/MatchUpdater";
+import { MatchWebSocketClient } from "../../contexts/matchmaker/infrastructure/MatchWebSocketClient";
+import { CandidateCreator } from "../../contexts/matchmaker/candidate/application/CandidateCreator";
+import { MemoryCandidateRepository } from "../../contexts/matchmaker/candidate/infrastructure/MemoryCandidateRepository";
+import { CandidateFinder } from "../../contexts/matchmaker/candidate/application/CandidateFinder";
+import { SwipeCreator } from "../../contexts/matchmaker/candidate/application/SwipeCreator";
+import { HttpSwipeService } from "../../contexts/matchmaker/candidate/infrastructure/HttpSwipeService";
+import { CompositeCandidateRepository } from "../../contexts/matchmaker/candidate/infrastructure/CompositeCandidateRepository";
 
 // const container = new Container();
 
@@ -32,10 +38,18 @@ class MapContainer {
 
 const container = new MapContainer();
 
-container.bind(types.CardRepository, new HttpCardRepository("http://localhost:3000"));
+container.bind(types.BaseHttpUrl, "http://localhost:3000");
+container.bind(types.BaseWsUrl, "ws://localhost:3000");
+container.bind(types.CardRepository, new HttpCardRepository(container.get(types.BaseHttpUrl)));
 container.bind(CardFinder, new CardFinder(container.get(types.CardRepository)));
 
-container.bind(CardWebsocketClient, new CardWebsocketClient("ws://localhost:8999"));
-container.bind(CardUpdater, new CardUpdater(container.get(CardWebsocketClient)));
+container.bind(MatchWebSocketClient, new MatchWebSocketClient(container.get(types.BaseWsUrl)));
+container.bind(MatchUpdater, new MatchUpdater(container.get(MatchWebSocketClient)));
 
+container.bind(types.CandidateRepository, new CompositeCandidateRepository(container.get(types.BaseHttpUrl)));
+container.bind(CandidateCreator, new CandidateCreator(container.get(types.CandidateRepository)));
+container.bind(CandidateFinder, new CandidateFinder(container.get(types.CandidateRepository)));
+
+container.bind(types.SwipeService, new HttpSwipeService(container.get(types.BaseHttpUrl)));
+container.bind(SwipeCreator, new SwipeCreator(container.get(types.SwipeService)));
 export { container };

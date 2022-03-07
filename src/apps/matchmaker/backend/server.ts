@@ -5,6 +5,7 @@ import express, { Request, Response } from 'express';
 import Router from 'express-promise-router';
 import helmet from 'helmet';
 import * as http from 'http';
+import cors from 'cors';
 import httpStatus from 'http-status';
 import Logger from "../../../contexts/_shared/domain/Logger";
 import { container } from "./ioc/installer";
@@ -23,6 +24,7 @@ export class Server {
     this.express = express();
     this.express.use(bodyParser.json());
     this.express.use(bodyParser.urlencoded({ extended: true }));
+    this.express.use(cors());
     this.express.use(helmet.xssFilter());
     this.express.use(helmet.noSniff());
     this.express.use(helmet.hidePoweredBy());

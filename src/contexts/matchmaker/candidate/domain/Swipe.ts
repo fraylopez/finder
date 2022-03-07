@@ -4,7 +4,8 @@ export class Swipe {
   constructor(
     public readonly id: Uuid,
     public readonly cardId: Uuid,
-    public readonly right: boolean
+    public readonly right: boolean,
+    public readonly score: number = 0,
   ) { }
 
   toPrimitives() {
