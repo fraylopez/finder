@@ -4,7 +4,6 @@ import { CardFinder } from "../../contexts/matchmaker/card/application/get-cards
 import { MatchUpdater } from "../../contexts/matchmaker/candidate/application/MatchUpdater";
 import { MatchWebSocketClient } from "../../contexts/matchmaker/infrastructure/MatchWebSocketClient";
 import { CandidateCreator } from "../../contexts/matchmaker/candidate/application/CandidateCreator";
-import { MemoryCandidateRepository } from "../../contexts/matchmaker/candidate/infrastructure/MemoryCandidateRepository";
 import { CandidateFinder } from "../../contexts/matchmaker/candidate/application/CandidateFinder";
 import { SwipeCreator } from "../../contexts/matchmaker/candidate/application/SwipeCreator";
 import { HttpSwipeService } from "../../contexts/matchmaker/candidate/infrastructure/HttpSwipeService";

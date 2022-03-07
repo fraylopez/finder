@@ -1,6 +1,5 @@
 import { injectable } from "inversify";
-import { CardImageMother } from "../../../../../test/contexts/matchmaker/card/domain/CardImageMother";
-import { CardTitleMother } from "../../../../../test/contexts/matchmaker/card/domain/CardTitleMother";
+import { CardMother } from "../../../../../test/contexts/matchmaker/card/domain/CardMother";
 import { Uuid } from "../../../_shared/domain/value-object/Uuid";
 import { Card } from "../domain/Card";
 import { CardRepository } from "../domain/CardRepository";
@@ -11,8 +10,13 @@ export class MemoryCardRepository implements CardRepository {
   constructor() {
     this.cards = testData;
   }
+  find(id: Uuid): Promise<Card | null> {
+    return Promise.resolve(
+      this.cards.find(c => c.id.equals(id)) || null
+    );
+  }
 
-  insert(card: Card): Promise<void> {
+  add(card: Card): Promise<void> {
     this.cards.push(card);
     return Promise.resolve();
   }
@@ -24,6 +28,10 @@ export class MemoryCardRepository implements CardRepository {
 }
 
 const testData = [
-  Card.create({ id: Uuid.random(), title: CardTitleMother.random(), imageUrl: CardImageMother.random() }),
-  Card.create({ id: Uuid.random(), title: CardTitleMother.random(), imageUrl: CardImageMother.random() }),
+  CardMother.random(),
+  CardMother.random(),
+  CardMother.random(),
+  CardMother.random(),
+  CardMother.random(),
+  CardMother.random(),
 ];

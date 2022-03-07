@@ -18,4 +18,10 @@ export class MemoryCandidateRepository implements CandidateRepository {
     const candidate = this.candidates.find(c => c.id.equals(id));
     return Promise.resolve(candidate || null);
   }
+
+  update(candidate: Candidate): Promise<void> {
+    const candidateIndex = this.candidates.findIndex(c => c.id.equals(candidate.id));
+    this.candidates[candidateIndex] = candidate;
+    return Promise.resolve();
+  }
 }

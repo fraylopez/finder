@@ -12,7 +12,7 @@ type Params = {
 @injectable()
 export class CandidateCreator {
   constructor(
-    @inject(types.CandidadteRepository) private repository: CandidateRepository,
+    @inject(types.CandidateRepository) private repository: CandidateRepository,
     @inject(types.EventBus) private eventBus: EventBus,
   ) { }
 

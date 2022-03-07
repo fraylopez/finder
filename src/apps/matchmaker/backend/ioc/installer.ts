@@ -18,6 +18,9 @@ import { CandidatePutController } from "../controllers/CandidatePutController";
 import { MemoryCandidateRepository } from "../../../../contexts/matchmaker/candidate/infrastructure/MemoryCandidateRepository";
 import { ExposeSwipeOnSwipeCreatedEventHandler } from "../../../../contexts/matchmaker/candidate/application/swipe/ExposeSwipeOnSwipeCreatedEventHandler";
 import { WebSocketEventExposer } from "../../../../contexts/matchmaker/candidate/infrastructure/WebSocketEventExposer";
+import { EvaluateOnCandidateScoreUpdatedEvent } from "../../../../contexts/matchmaker/candidate/application/swipe/EvaluateCandidateOnScoreUpdated";
+import { CandidateEvaluator } from "../../../../contexts/matchmaker/candidate/application/swipe/CandidateEvaluator";
+import { ScoreMatchEvaluator } from "../../../../contexts/matchmaker/candidate/domain/ScoreMatchEvaluator";
 
 export const container = new Container();
 
@@ -43,9 +46,12 @@ container.bind(types.CardRepository).to(MemoryCardRepository).inSingletonScope()
 // Candidate
 container.bind(CandidatePutController).toSelf().inSingletonScope();
 container.bind(SwipePutController).toSelf().inSingletonScope();
+container.bind(CandidateEvaluator).toSelf().inSingletonScope();
+container.bind(types.MatchEvaluator).to(ScoreMatchEvaluator).inSingletonScope();
 
 container.bind(CandidateCreator).toSelf().inSingletonScope();
 container.bind(SwipeCreator).toSelf().inSingletonScope();
-container.bind(types.CandidadteRepository).to(MemoryCandidateRepository).inSingletonScope();
+container.bind(types.CandidateRepository).to(MemoryCandidateRepository).inSingletonScope();
 
 container.bind(types.EventHandler).to(ExposeSwipeOnSwipeCreatedEventHandler).inSingletonScope();
+container.bind(types.EventHandler).to(EvaluateOnCandidateScoreUpdatedEvent).inSingletonScope();

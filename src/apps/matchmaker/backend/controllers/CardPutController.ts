@@ -11,8 +11,9 @@ export class CardPutController implements Controller {
   async run(req: Request, res: Response) {
     const id: string = req.params.id;
     const title: string = req.body.title;
+    const score: number = req.body.score;
     const imageUrl: string = req.body.imageUrl;
-    await this.creator.run({ id, title, imageUrl });
+    await this.creator.run({ id, title, score, imageUrl });
 
     res.header('Access-Control-Allow-Origin', '*');
     res.status(httpStatus.OK).send();

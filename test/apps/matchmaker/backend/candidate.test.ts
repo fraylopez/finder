@@ -1,8 +1,11 @@
 import { expect } from "chai";
 import { Uuid } from "../../../../src/contexts/_shared/domain/value-object/Uuid";
+import { CandidateMother } from "../../../contexts/matchmaker/candidate/domain/CandidateMother";
+import { CardMother } from "../../../contexts/matchmaker/card/domain/CardMother";
+import { TestUtils } from "../../../utils/TestUtils";
 import { MatchMakerBackendAcceptanceTest } from "./utils/MatchMakerBackendAcceptanceTest";
 
-describe('Candidate', () => {
+describe(`${TestUtils.getAcceptanceTestPath(__dirname, "Candidate")}`, () => {
   before(async () => {
     await MatchMakerBackendAcceptanceTest.start();
   });
@@ -23,9 +26,12 @@ describe('Candidate', () => {
 
   it('should allow swipe from candidate', async () => {
     const uid = Uuid.random().toString();
-    const cardId = Uuid.random().toString();
+    const card = CardMother.random();
+    const cardId = card.id.toString();
 
+    await MatchMakerBackendAcceptanceTest.put(`/card/${cardId}`);
     await MatchMakerBackendAcceptanceTest.put(`/candidate/${uid}`);
+
     const response = await MatchMakerBackendAcceptanceTest.put(
       `/candidate/${uid}/swipe/${cardId}`,
       {

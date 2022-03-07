@@ -10,6 +10,7 @@ export abstract class DomainEvent {
   readonly eventId: string;
   readonly timestamp: number;
   readonly eventName: string;
+  readonly payload?: Record<string, any>;
 
   constructor(eventName: string, aggregateId: string, eventId?: string, occurredOn?: number) {
     this.eventName = eventName;
@@ -26,6 +27,10 @@ export abstract class DomainEvent {
       timestamp: this.timestamp,
       payload: this.getPayloadPrimitives?.call(this),
     };
+  }
+
+  getPayload() {
+    return this.payload;
   }
 }
 

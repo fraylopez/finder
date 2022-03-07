@@ -8,6 +8,7 @@ export class CardMother {
     return Card.create({
       id: Uuid.random(),
       title: CardTitleMother.random(),
+      score: MotherCreator.random().datatype.number({ min: 0, max: 10 }),
       imageUrl: MotherCreator.random().image.imageUrl(),
     });
   }

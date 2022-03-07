@@ -1,9 +1,10 @@
 import { expect } from "chai";
 import { Uuid } from "../../../../src/contexts/_shared/domain/value-object/Uuid";
 import { CardTitleMother } from "../../../contexts/matchmaker/card/domain/CardTitleMother";
+import { TestUtils } from "../../../utils/TestUtils";
 import { MatchMakerBackendAcceptanceTest } from "./utils/MatchMakerBackendAcceptanceTest";
 
-describe('Status', () => {
+describe(`${TestUtils.getAcceptanceTestPath(__dirname, "Status")}`, () => {
   before(async () => {
     await MatchMakerBackendAcceptanceTest.start();
   });

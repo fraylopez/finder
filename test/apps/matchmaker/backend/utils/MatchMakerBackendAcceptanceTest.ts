@@ -1,7 +1,10 @@
+import e from "express";
 import request from "supertest";
 import { container } from "../../../../../src/apps/matchmaker/backend/ioc/installer";
 import { types } from "../../../../../src/apps/matchmaker/backend/ioc/types";
 import { MatchMakerBackendApp } from "../../../../../src/apps/matchmaker/backend/MatchMakerBackendApp";
+import { DomainEvent } from "../../../../../src/contexts/_shared/domain/DomainEvent";
+import { EventBus } from "../../../../../src/contexts/_shared/domain/EventBus";
 import { TestMemoryCardRepository } from "../../../../contexts/matchmaker/card/infrastructure/TestMemoryCardRepository";
 import { setupTestDependencies } from "./testInstaller";
 
@@ -28,5 +31,9 @@ export class MatchMakerBackendAcceptanceTest {
   }
   static async put(route: string, body?: object) {
     return request(this.application.httpServer).put(route).send(body);
+  }
+  static async publish(event: DomainEvent) {
+    const eventBus = container.get<EventBus>(types.EventBus);
+    eventBus.publish([event]);
   }
 }

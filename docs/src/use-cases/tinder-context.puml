@@ -1,4 +1,4 @@
-@startuml
+@startuml UserContext
 
 state INITIAL
 state SWIPING
