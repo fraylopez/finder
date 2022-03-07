@@ -2,21 +2,21 @@
 
 state SWIPPING
 state STATE_1 as " "
+state isMatch <<choice>>
 state SHOW_MATCH_CREATED as " "
 state hasMoreProfiles <<choice>>
-state SWIPPING_OUT as "SWIPPING"
 state IN_APP
-state isMatch <<choice>>
+state SWIPPING_OUT as "SWIPPING"
 
 
 [*] --> SWIPPING
-SWIPPING --> STATE_1: System requires a like
-STATE_1 --> isMatch : User swipes 
-hasMoreProfiles --> SWIPPING_OUT
-hasMoreProfiles --> IN_APP: has no more profiles
+SWIPPING --> STATE_1: System allows swipe
+STATE_1 --> isMatch : User swipes
 isMatch --> SHOW_MATCH_CREATED: [match] System shows the match
 isMatch --> hasMoreProfiles: [no match]
 SHOW_MATCH_CREATED -->  hasMoreProfiles: System allows OpenConversation
+hasMoreProfiles --> IN_APP: no more profiles
+hasMoreProfiles --> SWIPPING_OUT
 
 
 @enduml
