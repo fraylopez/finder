@@ -21,6 +21,8 @@ import { WebSocketEventExposer } from "../../../../contexts/matchmaker/candidate
 import { EvaluateOnCandidateScoreUpdatedEvent } from "../../../../contexts/matchmaker/candidate/application/swipe/EvaluateCandidateOnScoreUpdated";
 import { CandidateEvaluator } from "../../../../contexts/matchmaker/candidate/application/swipe/CandidateEvaluator";
 import { ScoreMatchEvaluator } from "../../../../contexts/matchmaker/candidate/domain/ScoreMatchEvaluator";
+import { StartChatOnMatchCreatedEvent } from "../../../../contexts/matchmaker/candidate/application/chat/StartChatOnMatchCreatedEvent";
+import { ChatManager } from "../../../../contexts/matchmaker/candidate/application/chat/ChatManager";
 
 export const container = new Container();
 
@@ -55,3 +57,7 @@ container.bind(types.CandidateRepository).to(MemoryCandidateRepository).inSingle
 
 container.bind(types.EventHandler).to(ExposeSwipeOnSwipeCreatedEventHandler).inSingletonScope();
 container.bind(types.EventHandler).to(EvaluateOnCandidateScoreUpdatedEvent).inSingletonScope();
+
+container.bind(ChatManager).toSelf().inSingletonScope();
+
+container.bind(types.EventHandler).to(StartChatOnMatchCreatedEvent).inSingletonScope();

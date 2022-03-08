@@ -2,10 +2,14 @@ import { AggregateRoot } from "../../../_shared/domain/AggregateRoot";
 import { Uuid } from "../../../_shared/domain/value-object/Uuid";
 import { MatchEvaluator } from "./MatchEvaluator";
 import { CandidateCreatedEvent } from "./CandidateCreatedEvent";
-import { CandidateMatchCreatedEvent } from "./CandidateMatchCreatedEvent";
+import { MatchCreatedEvent } from "./MatchCreatedEvent";
 import { CandidateScoreUpdatedEvent } from "./CandidateScoreUpdatedEvent";
 import { Swipe } from "./Swipe";
 import { SwipeCreatedEvent } from "./SwipeCreatedEvent";
+import { Chat } from "./chatbot/Chat";
+import { Line } from "./chatbot/Line";
+import assert from "assert";
+import { Conversation } from "./chatbot/Conversation";
 
 type Params = {
   id: Uuid;
@@ -14,11 +18,13 @@ type Primitives = {
   id: Uuid;
   swipes: Record<string, any>[];
   isMatch: boolean;
+  chat?: any;
 };
 export class Candidate extends AggregateRoot {
 
   private readonly swipes: Swipe[];
   private isMatch: boolean;
+  private _chat?: Chat;
   constructor(
     public readonly id: Uuid,
   ) {
@@ -31,10 +37,11 @@ export class Candidate extends AggregateRoot {
     candidate.record(new CandidateCreatedEvent(candidate.id));
     return candidate;
   }
-  static fromPrimitives({ id, swipes, isMatch }: Primitives) {
+  static fromPrimitives({ id, swipes, isMatch, chat }: Primitives) {
     const candidate = new Candidate(id);
     candidate.swipes.push(...swipes.map(s => new Swipe(s.cardId, s.right, s.score)));
     candidate.isMatch = isMatch;
+    candidate._chat = chat ? Chat.fromPrimitives(chat) : undefined;
     return candidate;
   }
 
@@ -47,8 +54,16 @@ export class Candidate extends AggregateRoot {
   match(matchEvaluator: MatchEvaluator) {
     if (matchEvaluator.isMatch(this.score)) {
       this.isMatch = true;
-      this.record(new CandidateMatchCreatedEvent(this.id));
+      this.record(new MatchCreatedEvent(this.id));
     }
+  }
+
+  startChat(conversation: Conversation) {
+    this._chat = new Chat(conversation);
+  }
+
+  talk(line?: Line) {
+    return this.chat.add(line);
   }
 
   toPrimitives() {
@@ -56,6 +71,7 @@ export class Candidate extends AggregateRoot {
       id: this.id.toString(),
       swipes: this.swipes.map(m => m.toPrimitives()),
       isMatch: this.isMatch,
+      chat: this._chat?.toPrimitives()
     };
   }
 
@@ -63,6 +79,8 @@ export class Candidate extends AggregateRoot {
     return this.swipes.reduce((acc, swipe) => acc + swipe.score, 0);
   }
 
+  private get chat() {
+    assert(this._chat);
+    return this._chat!;
+  }
 }
-
-;

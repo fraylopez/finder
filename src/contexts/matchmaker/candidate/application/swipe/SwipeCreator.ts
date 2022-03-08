@@ -3,7 +3,6 @@ import { inject, injectable } from "inversify";
 import { types } from "../../../../../apps/matchmaker/backend/ioc/types";
 import { EventBus } from "../../../../_shared/domain/EventBus";
 import { Uuid } from "../../../../_shared/domain/value-object/Uuid";
-import { CardFinder } from "../../../card/application/get-cards/CardFinder";
 import { CardRepository } from "../../../card/domain/CardRepository";
 import { CandidateRepository } from "../../domain/CandidateRepository";
 import { Swipe } from "../../domain/Swipe";
@@ -18,7 +17,7 @@ type Params = {
 export class SwipeCreator {
   constructor(
     @inject(types.CandidateRepository) private readonly candidateRepository: CandidateRepository,
-    @inject(types.CardRepository) private readonly cardRepository: CardRepository,
+    @inject(types.CardRepository) private readonly cardRepository: CardRepository, //TODO: decouple through queryBus
     @inject(types.EventBus) private readonly eventBus: EventBus,
   ) { }
 
