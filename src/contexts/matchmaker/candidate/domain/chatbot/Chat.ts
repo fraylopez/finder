@@ -25,9 +25,12 @@ export class Chat {
     return chat;
   }
 
-  add(line: Line = DefaultLines.HELLO) {
+  add(line: Line) {
     this.lines.push(line);
     this.conversation.listen(line.id);
+  }
+
+  getNext() {
     return this.conversation.getNext();
   }
 

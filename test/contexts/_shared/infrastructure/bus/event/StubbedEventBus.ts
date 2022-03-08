@@ -1,7 +1,8 @@
 import sinon from "sinon";
-import { DomainEvent, DomainEventClass } from "../../../../../../src/contexts/_shared/domain/DomainEvent";
-import { EventBus } from "../../../../../../src/contexts/_shared/domain/EventBus";
-import { EventHandler } from "../../../../../../src/contexts/_shared/domain/EventHandler";
+import { DomainEvent } from "../../../../../../src/contexts/_shared/domain/bus/DomainEvent";
+import { DomainEventClass } from "../../../../../../src/contexts/_shared/domain/bus/DomainEventClass";
+import { EventBus } from "../../../../../../src/contexts/_shared/domain/bus/EventBus";
+import { EventHandler } from "../../../../../../src/contexts/_shared/domain/bus/EventHandler";
 import { DomainEventMapping } from "../../../../../../src/contexts/_shared/infrastructure/bus/event/DomainEventMapping";
 import { Stub } from "../../../../../utils/Stub";
 import { StubHelper } from "../../../../../utils/StubHelper";

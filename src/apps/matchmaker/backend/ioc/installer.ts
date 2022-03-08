@@ -2,7 +2,6 @@ import "reflect-metadata";
 import { Container } from "inversify";
 import { ConsoleLogger } from "../../../../contexts/_shared/infrastructure/logger/ConsoleLogger";
 import { CardGetController } from "../controllers/CardGetController";
-import StatusGetController from "../controllers/StatusGetController";
 import { types } from "./types";
 import { CardFinder } from "../../../../contexts/matchmaker/card/application/get-cards/CardFinder";
 import { MemoryCardRepository } from "../../../../contexts/matchmaker/card/infrastructure/MemoryCardRepository";
@@ -22,7 +21,9 @@ import { EvaluateOnCandidateScoreUpdatedEvent } from "../../../../contexts/match
 import { CandidateEvaluator } from "../../../../contexts/matchmaker/candidate/application/swipe/CandidateEvaluator";
 import { ScoreMatchEvaluator } from "../../../../contexts/matchmaker/candidate/domain/ScoreMatchEvaluator";
 import { StartChatOnMatchCreatedEvent } from "../../../../contexts/matchmaker/candidate/application/chat/StartChatOnMatchCreatedEvent";
-import { ChatManager } from "../../../../contexts/matchmaker/candidate/application/chat/ChatManager";
+import { ChatController } from "../../../../contexts/matchmaker/candidate/application/chat/ChatController";
+import { ConversationPutController } from "../controllers/ConversationPutController";
+import { StatusGetController } from "../controllers/StatusGetController";
 
 export const container = new Container();
 
@@ -49,6 +50,7 @@ container.bind(types.CardRepository).to(MemoryCardRepository).inSingletonScope()
 container.bind(CandidatePutController).toSelf().inSingletonScope();
 container.bind(SwipePutController).toSelf().inSingletonScope();
 container.bind(CandidateEvaluator).toSelf().inSingletonScope();
+container.bind(ConversationPutController).toSelf().inSingletonScope();
 container.bind(types.MatchEvaluator).to(ScoreMatchEvaluator).inSingletonScope();
 
 container.bind(CandidateCreator).toSelf().inSingletonScope();
@@ -57,7 +59,8 @@ container.bind(types.CandidateRepository).to(MemoryCandidateRepository).inSingle
 
 container.bind(types.EventHandler).to(ExposeSwipeOnSwipeCreatedEventHandler).inSingletonScope();
 container.bind(types.EventHandler).to(EvaluateOnCandidateScoreUpdatedEvent).inSingletonScope();
+container.bind(types.EventHandler).to(StartChatOnMatchCreatedEvent).inSingletonScope();
 
-container.bind(ChatManager).toSelf().inSingletonScope();
+container.bind(ChatController).toSelf().inSingletonScope();
 
 container.bind(types.EventHandler).to(StartChatOnMatchCreatedEvent).inSingletonScope();

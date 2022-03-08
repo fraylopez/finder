@@ -1,6 +1,6 @@
-import { DomainEvent } from '../../../domain/DomainEvent';
-import { EventHandler } from '../../../domain/EventHandler';
-import { WildcardEvent } from "../../../domain/WildcardEvent";
+import { DomainEvent } from '../../../domain/bus/DomainEvent';
+import { EventHandler } from '../../../domain/bus/EventHandler';
+import { WildcardEvent } from "../../../domain/bus/WildcardEvent";
 
 export class EventEmitterBus {
   constructor(private readonly subscribers: Array<EventHandler<DomainEvent>>) {

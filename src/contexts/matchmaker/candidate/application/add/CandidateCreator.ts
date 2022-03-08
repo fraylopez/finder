@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify";
 import { types } from "../../../../../apps/matchmaker/backend/ioc/types";
-import { EventBus } from "../../../../_shared/domain/EventBus";
+import { EventBus } from "../../../../_shared/domain/bus/EventBus";
 import { Uuid } from "../../../../_shared/domain/value-object/Uuid";
 import { Candidate } from "../../domain/Candidate";
 import { CandidateRepository } from "../../domain/CandidateRepository";

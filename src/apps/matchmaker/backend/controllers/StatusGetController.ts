@@ -1,11 +1,13 @@
 import { Request, Response } from 'express';
-import httpStatus from 'http-status';
 import { injectable } from "inversify";
 import { Controller } from './Controller';
 
 @injectable()
-export default class StatusGetController implements Controller {
-  async run(req: Request, res: Response) {
-    res.status(httpStatus.OK).send();
+export class StatusGetController extends Controller {
+  constructor() {
+    super();
+  }
+  protected async run(req: Request, res: Response) {
+    return;
   }
 }

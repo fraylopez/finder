@@ -1,7 +1,7 @@
 import { inject, injectable } from "inversify";
-import { DomainEventClass } from "../../../../_shared/domain/DomainEvent";
-import { EventHandler } from "../../../../_shared/domain/EventHandler";
-import { CandidateScoreUpdatedEvent } from "../../domain/CandidateScoreUpdatedEvent";
+import { DomainEventClass } from "../../../../_shared/domain/bus/DomainEventClass";
+import { EventHandler } from "../../../../_shared/domain/bus/EventHandler";
+import { CandidateScoreUpdatedEvent } from "../../domain/events/CandidateScoreUpdatedEvent";
 import { CandidateEvaluator } from "./CandidateEvaluator";
 
 @injectable()

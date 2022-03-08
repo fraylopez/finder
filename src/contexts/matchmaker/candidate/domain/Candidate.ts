@@ -1,15 +1,15 @@
 import { AggregateRoot } from "../../../_shared/domain/AggregateRoot";
 import { Uuid } from "../../../_shared/domain/value-object/Uuid";
 import { MatchEvaluator } from "./MatchEvaluator";
-import { CandidateCreatedEvent } from "./CandidateCreatedEvent";
-import { MatchCreatedEvent } from "./MatchCreatedEvent";
-import { CandidateScoreUpdatedEvent } from "./CandidateScoreUpdatedEvent";
+import { CandidateCreatedEvent } from "./events/CandidateCreatedEvent";
 import { Swipe } from "./Swipe";
-import { SwipeCreatedEvent } from "./SwipeCreatedEvent";
 import { Chat } from "./chatbot/Chat";
 import { Line } from "./chatbot/Line";
 import assert from "assert";
 import { Conversation } from "./chatbot/Conversation";
+import { CandidateScoreUpdatedEvent } from "./events/CandidateScoreUpdatedEvent";
+import { MatchCreatedEvent } from "./events/MatchCreatedEvent";
+import { SwipeCreatedEvent } from "./events/SwipeCreatedEvent";
 
 type Params = {
   id: Uuid;
@@ -63,7 +63,10 @@ export class Candidate extends AggregateRoot {
   }
 
   talk(line?: Line) {
-    return this.chat.add(line);
+    if (line) {
+      this.chat.add(line);
+    }
+    return this.chat.getNext();
   }
 
   toPrimitives() {
@@ -73,6 +76,10 @@ export class Candidate extends AggregateRoot {
       isMatch: this.isMatch,
       chat: this._chat?.toPrimitives()
     };
+  }
+
+  getIsMatch() {
+    return this.isMatch;
   }
 
   private get score() {

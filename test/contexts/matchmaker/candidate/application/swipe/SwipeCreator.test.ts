@@ -1,11 +1,10 @@
 import { expect } from "chai";
 import { SwipeCreator } from "../../../../../../src/contexts/matchmaker/candidate/application/swipe/SwipeCreator";
 import { CandidateRepository } from "../../../../../../src/contexts/matchmaker/candidate/domain/CandidateRepository";
-import { SwipeCreatedEvent } from "../../../../../../src/contexts/matchmaker/candidate/domain/SwipeCreatedEvent";
+import { SwipeCreatedEvent } from "../../../../../../src/contexts/matchmaker/candidate/domain/events/SwipeCreatedEvent";
 import { MemoryCandidateRepository } from "../../../../../../src/contexts/matchmaker/candidate/infrastructure/MemoryCandidateRepository";
 import { CardRepository } from "../../../../../../src/contexts/matchmaker/card/domain/CardRepository";
 import { MemoryCardRepository } from "../../../../../../src/contexts/matchmaker/card/infrastructure/MemoryCardRepository";
-import { EventBus } from "../../../../../../src/contexts/_shared/domain/EventBus";
 import { TestUtils } from "../../../../../utils/TestUtils";
 import { StubbedEventBus } from "../../../../_shared/infrastructure/bus/event/StubbedEventBus";
 import { CardMother } from "../../../card/domain/CardMother";

@@ -1,5 +1,5 @@
 import { Server } from "../../../../apps/matchmaker/backend/server";
-import { DomainEvent } from "../../../_shared/domain/DomainEvent";
+import { DomainEvent } from "../../../_shared/domain/bus/DomainEvent";
 import { EventExposer } from "../domain/EventExposer";
 import * as socketIO from "socket.io";
 import { injectable } from "inversify";

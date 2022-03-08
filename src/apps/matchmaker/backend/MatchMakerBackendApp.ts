@@ -1,6 +1,6 @@
-import { DomainEvent } from "../../../contexts/_shared/domain/DomainEvent";
-import { EventHandler } from "../../../contexts/_shared/domain/EventHandler";
-import { EventBus } from "../../../contexts/_shared/domain/EventBus";
+import { DomainEvent } from "../../../contexts/_shared/domain/bus/DomainEvent";
+import { EventHandler } from "../../../contexts/_shared/domain/bus/EventHandler";
+import { EventBus } from "../../../contexts/_shared/domain/bus/EventBus";
 import { DomainEventMapping } from "../../../contexts/_shared/infrastructure/bus/event/DomainEventMapping";
 import { container } from "./ioc/installer";
 import { types } from "./ioc/types";

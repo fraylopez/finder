@@ -7,7 +7,7 @@ import { ScoreMatchEvaluator } from "../../../../../src/contexts/matchmaker/cand
 import { TestUtils } from "../../../../utils/TestUtils";
 import { CandidateMother } from "./CandidateMother";
 import { SwipeMother } from "./SwipeMother";
-import { MatchCreatedEvent } from "../../../../../src/contexts/matchmaker/candidate/domain/MatchCreatedEvent";
+import { MatchCreatedEvent } from "../../../../../src/contexts/matchmaker/candidate/domain/events/MatchCreatedEvent";
 
 describe(`${TestUtils.getUnitTestPath(__dirname, Candidate)}`, () => {
   it('should set candidate as match when reaches threshold score', () => {

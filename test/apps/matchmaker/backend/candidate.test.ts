@@ -1,4 +1,11 @@
 import { expect } from "chai";
+import { container } from "../../../../src/apps/matchmaker/backend/ioc/installer";
+import { types } from "../../../../src/apps/matchmaker/backend/ioc/types";
+import { CandidateRepository } from "../../../../src/contexts/matchmaker/candidate/domain/CandidateRepository";
+import { CandidateIsNotMatchError } from "../../../../src/contexts/matchmaker/candidate/domain/errors/CandidateIsNotMatchError";
+import { UnknownCandidateError } from "../../../../src/contexts/matchmaker/candidate/domain/errors/UnknownCandidateError";
+import { ScoreMatchEvaluator } from "../../../../src/contexts/matchmaker/candidate/domain/ScoreMatchEvaluator";
+import { UnknownCardError } from "../../../../src/contexts/matchmaker/card/domain/errors/UnknownCardError";
 import { Uuid } from "../../../../src/contexts/_shared/domain/value-object/Uuid";
 import { CandidateMother } from "../../../contexts/matchmaker/candidate/domain/CandidateMother";
 import { CardMother } from "../../../contexts/matchmaker/card/domain/CardMother";
@@ -18,26 +25,97 @@ describe(`${TestUtils.getAcceptanceTestPath(__dirname, "Candidate")}`, () => {
     await MatchMakerBackendAcceptanceTest.stop();
   });
 
-  it('should create a candidate', async () => {
-    const uid = Uuid.random().toString();
-    const response = await MatchMakerBackendAcceptanceTest.put(`/candidate/${uid}`);
-    expect(response.status).eq(200);
+  describe('candidate', () => {
+    it('should create a candidate', async () => {
+      const uid = Uuid.random().toString();
+      const response = await MatchMakerBackendAcceptanceTest.put(`/candidate/${uid}`);
+      expect(response.status).eq(200);
+    });
   });
 
-  it('should allow swipe from candidate', async () => {
-    const uid = Uuid.random().toString();
-    const card = CardMother.random();
-    const cardId = card.id.toString();
+  describe('swipe', () => {
+    it('should allow swipe from candidate', async () => {
+      const uid = Uuid.random().toString();
+      const card = CardMother.random();
+      const cardId = card.id.toString();
 
-    await MatchMakerBackendAcceptanceTest.put(`/card/${cardId}`);
-    await MatchMakerBackendAcceptanceTest.put(`/candidate/${uid}`);
+      await MatchMakerBackendAcceptanceTest.put(`/card/${cardId}`);
+      await MatchMakerBackendAcceptanceTest.put(`/candidate/${uid}`);
 
-    const response = await MatchMakerBackendAcceptanceTest.put(
-      `/candidate/${uid}/swipe/${cardId}`,
-      {
-        right: Math.random() > .5
-      }
-    );
-    expect(response.status).eq(200);
+      const response = await MatchMakerBackendAcceptanceTest.put(
+        `/candidate/${uid}/swipe/${cardId}`,
+        {
+          right: Math.random() > .5
+        }
+      );
+      expect(response.status).eq(200);
+    });
+
+    it('should decline swipe from unknown candidate', async () => {
+      const uid = Uuid.random().toString();
+      const card = CardMother.random();
+      const cardId = card.id.toString();
+
+      await MatchMakerBackendAcceptanceTest.put(`/card/${cardId}`);
+
+      const response = await MatchMakerBackendAcceptanceTest.put(
+        `/candidate/${uid}/swipe/${cardId}`,
+        {
+          right: Math.random() > .5
+        }
+      );
+      expect(response.status).eq(404);
+      expect(response.body.message).contains(UnknownCandidateError.name);
+    });
+    it('should decline swipe from unknown card', async () => {
+      const uid = Uuid.random().toString();
+      const card = CardMother.random();
+      const cardId = card.id.toString();
+
+      await MatchMakerBackendAcceptanceTest.put(`/candidate/${uid}`);
+
+      const response = await MatchMakerBackendAcceptanceTest.put(
+        `/candidate/${uid}/swipe/${cardId}`,
+        {
+          right: Math.random() > .5
+        }
+      );
+      expect(response.status).eq(404);
+      expect(response.body.message).contains(UnknownCardError.name);
+    });
   });
+
+  describe('chat', () => {
+
+    it('should handle match candidate conversations', async () => {
+      const candidate = CandidateMother.withScore(ScoreMatchEvaluator.MATCH_SCORE);
+      const uid = candidate.id.toString();
+      const repository: CandidateRepository = container.get(types.CandidateRepository);
+      await repository.add(candidate);
+
+      const response = await MatchMakerBackendAcceptanceTest.put(
+        `/candidate/${uid}/talk`,
+        {
+          responseId: "some-id"
+        }
+      );
+      expect(response.status).eq(403);
+      expect(response.body.message).contains(CandidateIsNotMatchError.name);
+    });
+
+    it('should decline non match candidate conversations', async () => {
+      const uid = Uuid.random().toString();
+      await MatchMakerBackendAcceptanceTest.put(`/candidate/${uid}`);
+
+      const response = await MatchMakerBackendAcceptanceTest.put(
+        `/candidate/${uid}/talk`,
+        {
+          responseId: "some-id"
+        }
+      );
+      expect(response.status).eq(403);
+      expect(response.body.message).contains(CandidateIsNotMatchError.name);
+    });
+  });
+
 });

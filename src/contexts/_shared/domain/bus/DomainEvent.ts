@@ -1,4 +1,4 @@
-import { Uuid } from './value-object/Uuid';
+import { Uuid } from "../value-object/Uuid";
 
 export interface DomainEvent {
   getPayloadPrimitives?(): object;
@@ -34,4 +34,3 @@ export abstract class DomainEvent {
   }
 }
 
-export type DomainEventClass = { NAME: string, fromPrimitives(...args: any[]): DomainEvent; };

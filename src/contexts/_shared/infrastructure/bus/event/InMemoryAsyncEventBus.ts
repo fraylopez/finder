@@ -1,6 +1,6 @@
-import { DomainEvent } from "../../../domain/DomainEvent";
-import { EventHandler } from "../../../domain/EventHandler";
-import { EventBus } from "../../../domain/EventBus";
+import { DomainEvent } from "../../../domain/bus/DomainEvent";
+import { EventHandler } from "../../../domain/bus/EventHandler";
+import { EventBus } from "../../../domain/bus/EventBus";
 import { DomainEventMapping } from "./DomainEventMapping";
 import { EventEmitterBus } from "./EventEmitterBus";
 import { injectable, multiInject } from "inversify";

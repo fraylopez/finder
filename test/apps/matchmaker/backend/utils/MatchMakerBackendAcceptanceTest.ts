@@ -3,8 +3,8 @@ import request from "supertest";
 import { container } from "../../../../../src/apps/matchmaker/backend/ioc/installer";
 import { types } from "../../../../../src/apps/matchmaker/backend/ioc/types";
 import { MatchMakerBackendApp } from "../../../../../src/apps/matchmaker/backend/MatchMakerBackendApp";
-import { DomainEvent } from "../../../../../src/contexts/_shared/domain/DomainEvent";
-import { EventBus } from "../../../../../src/contexts/_shared/domain/EventBus";
+import { DomainEvent } from "../../../../../src/contexts/_shared/domain/bus/DomainEvent";
+import { EventBus } from "../../../../../src/contexts/_shared/domain/bus/EventBus";
 import { TestMemoryCardRepository } from "../../../../contexts/matchmaker/card/infrastructure/TestMemoryCardRepository";
 import { setupTestDependencies } from "./testInstaller";
 

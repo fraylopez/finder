@@ -1,7 +1,7 @@
 import { inject, injectable } from "inversify";
 import { Logger } from "mongodb";
 import { types } from "../../../apps/matchmaker/backend/ioc/types";
-import { DomainEvent } from "../domain/DomainEvent";
+import { DomainEvent } from "../domain/bus/DomainEvent";
 
 @injectable()
 export class EventLogger {

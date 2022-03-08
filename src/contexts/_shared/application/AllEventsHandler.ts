@@ -1,7 +1,8 @@
 import { inject, injectable } from "inversify";
-import { DomainEventClass, DomainEvent } from "../domain/DomainEvent";
-import { EventHandler } from "../domain/EventHandler";
-import { WildcardEvent } from "../domain/WildcardEvent";
+import { DomainEvent } from "../domain/bus/DomainEvent";
+import { DomainEventClass } from "../domain/bus/DomainEventClass";
+import { EventHandler } from "../domain/bus/EventHandler";
+import { WildcardEvent } from "../domain/bus/WildcardEvent";
 import { EventLogger } from "./EventLogger";
 
 @injectable()

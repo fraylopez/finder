@@ -1,6 +1,6 @@
-import { Command } from '../../../domain/Command';
-import { CommandHandler } from '../../../domain/CommandHandler';
-import { CommandNotRegisteredError } from '../../../domain/CommandNotRegisteredError';
+import { Command } from '../../../domain/bus/Command';
+import { CommandHandler } from "../../../domain/bus/CommandHandler";
+import { CommandNotRegisteredError } from "../../../domain/bus/CommandNotRegisteredError";
 
 export class CommandHandlersInformation {
   private commandHandlersMap: Map<Command, CommandHandler<Command>>;

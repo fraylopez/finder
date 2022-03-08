@@ -1,6 +1,6 @@
 import { AggregateRoot } from "../../../_shared/domain/AggregateRoot";
 import { Uuid } from "../../../_shared/domain/value-object/Uuid";
-import { CardCreatedEvent } from "./CardCreatedEvent";
+import { CardCreatedEvent } from "./events/CardCreatedEvent";
 
 interface Params {
   id: Uuid,

@@ -1,4 +1,4 @@
-import { Query } from '../../../../../../src/contexts/_shared/domain/Query';
+import { Query } from '../../../domain/bus/Query';
 import { QueryHandlersInformation } from '../../../../../../src/contexts/_shared/infrastructure/bus/query/QueryHandlersInformation';
 import { QueryNotRegisteredError } from '../../../../../../src/contexts/_shared/domain/QueryNotRegisteredError';
 import { QueryHandler } from '../../../../../../src/contexts/_shared/domain/QueryHandler';

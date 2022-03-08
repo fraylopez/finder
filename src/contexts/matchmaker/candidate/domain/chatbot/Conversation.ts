@@ -1,4 +1,5 @@
 import assert from "assert";
+import { UnknownConversationNode } from "../errors/UnknownConversationNode";
 import { ConversationItem } from "./ConversationItem";
 import { ConversationLine } from "./ConversationLine";
 import { DefaultLines } from "./DefaultLines";
@@ -46,7 +47,7 @@ export class Conversation implements ConversationItem {
   }
 
   listen(next: string) {
-    assert(this.items.get(next), "Unknown node");
+    assert(this.items.get(next), new UnknownConversationNode());
     this.cursor = next || this.getCursor();
     return this;
   }
