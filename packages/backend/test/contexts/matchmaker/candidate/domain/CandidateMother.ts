@@ -9,14 +9,14 @@ export class CandidateMother {
     return Candidate.fromPrimitives({
       id: Uuid.random(),
       swipes: [],
-      isMatch: this.randomMatch(),
+      isMatch: false
     });
   }
   static randomWithSwipes() {
     return Candidate.fromPrimitives({
       id: Uuid.random(),
       swipes: [SwipeMother.random()],
-      isMatch: this.randomMatch(),
+      isMatch: false
     });
   }
 

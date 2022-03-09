@@ -89,7 +89,7 @@ export class Candidate extends AggregateRoot {
   }
 
   private get chat() {
-    assert(this._chat);
+    assert(this._chat, "Missing chat");
     return this._chat!;
   }
 }
