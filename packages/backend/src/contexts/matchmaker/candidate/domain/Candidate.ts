@@ -11,6 +11,8 @@ import { CandidateScoreUpdatedEvent } from "./events/CandidateScoreUpdatedEvent"
 import { MatchCreatedEvent } from "./events/MatchCreatedEvent";
 import { SwipeCreatedEvent } from "./events/SwipeCreatedEvent";
 import { ConversationItem } from "./chatbot/ConversationItem";
+import { Mail } from "../../../_shared/domain/Mail";
+import { CandidateMailUpdatedEvent } from "./events/CandidateMailUpdatedEvent";
 
 type Params = {
   id: Uuid;
@@ -20,10 +22,12 @@ type Primitives = {
   swipes: Record<string, any>[];
   isMatch: boolean;
   chat?: any;
+  mail?: string;
 };
 export class Candidate extends AggregateRoot {
 
   private readonly swipes: Swipe[];
+  private mail?: Mail;
   private isMatch: boolean;
   private _chat?: Chat;
   constructor(
@@ -38,11 +42,12 @@ export class Candidate extends AggregateRoot {
     candidate.record(new CandidateCreatedEvent(candidate.id));
     return candidate;
   }
-  static fromPrimitives({ id, swipes, isMatch, chat }: Primitives) {
+  static fromPrimitives({ id, swipes, isMatch, chat, mail }: Primitives) {
     const candidate = new Candidate(id);
     candidate.swipes.push(...swipes.map(s => new Swipe(s.cardId, s.right, s.score)));
     candidate.isMatch = isMatch;
     candidate._chat = chat ? Chat.fromPrimitives(chat) : undefined;
+    candidate.mail = mail ? new Mail(mail) : undefined;
     return candidate;
   }
 
@@ -59,6 +64,10 @@ export class Candidate extends AggregateRoot {
     }
   }
 
+  getIsMatch() {
+    return this.isMatch;
+  }
+
   startChat(conversation: Conversation) {
     this._chat = new Chat(conversation);
     return this._chat.getChatItem();
@@ -71,17 +80,18 @@ export class Candidate extends AggregateRoot {
     return this.chat.getChatItem();
   }
 
+  setMail(mail: Mail) {
+    this.mail = mail;
+    this.record(new CandidateMailUpdatedEvent(this.id, this.mail));
+  }
   toPrimitives() {
     return {
       id: this.id.toString(),
       swipes: this.swipes.map(m => m.toPrimitives()),
       isMatch: this.isMatch,
-      chat: this._chat?.toPrimitives()
+      chat: this._chat?.toPrimitives(),
+      mail: this.mail?.toString(),
     };
-  }
-
-  getIsMatch() {
-    return this.isMatch;
   }
 
   private get score() {

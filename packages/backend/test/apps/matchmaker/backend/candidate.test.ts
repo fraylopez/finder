@@ -5,6 +5,7 @@ import { CandidateRepository } from "../../../../src/contexts/matchmaker/candida
 import { CandidateIsNotMatchError } from "../../../../src/contexts/matchmaker/candidate/domain/errors/CandidateIsNotMatchError";
 import { UnknownCandidateError } from "../../../../src/contexts/matchmaker/candidate/domain/errors/UnknownCandidateError";
 import { UnknownCardError } from "../../../../src/contexts/matchmaker/card/domain/errors/UnknownCardError";
+import { InvalidEmailError } from "../../../../src/contexts/_shared/domain/InvalidEmailError";
 import { Uuid } from "../../../../src/contexts/_shared/domain/value-object/Uuid";
 import { CandidateMother } from "../../../contexts/matchmaker/candidate/domain/CandidateMother";
 import { ConversationMother } from "../../../contexts/matchmaker/candidate/domain/chatbot/ConversationMother";
@@ -125,4 +126,49 @@ describe(`${TestUtils.getAcceptanceTestPath(__dirname, "Candidate")}`, () => {
     });
   });
 
+  describe('mail', () => {
+    let candidateRepository: CandidateRepository;
+    beforeEach(() => {
+      candidateRepository = container.get(types.CandidateRepository);
+    });
+
+    it('should decline mail updates from unknown users', async () => {
+      const uid = Uuid.random().toString();
+      const response = await MatchMakerBackendAcceptanceTest.patch(
+        `/candidate/${uid}/mail`,
+        {
+          mail: "somemail@mail.com"
+        }
+      );
+      expect(response.status).eq(404);
+      expect(response.body.message).contains(UnknownCandidateError.name);
+    });
+
+    it('should decline mail updates with invalid mails', async () => {
+      const candidate = CandidateMother.random();
+      const uid = candidate.id.toString();
+      await candidateRepository.add(candidate);
+      const response = await MatchMakerBackendAcceptanceTest.patch(
+        `/candidate/${uid}/mail`,
+        {
+          mail: "somemail@mailcom"
+        }
+      );
+      expect(response.status).eq(400);
+      expect(response.body.message).contains(InvalidEmailError.name);
+    });
+
+    it('should update user mail', async () => {
+      const candidate = CandidateMother.random();
+      const uid = candidate.id.toString();
+      await candidateRepository.add(candidate);
+      const response = await MatchMakerBackendAcceptanceTest.patch(
+        `/candidate/${uid}/mail`,
+        {
+          mail: "somemail@mail.com"
+        }
+      );
+      expect(response.status).eq(200);
+    });
+  });
 });

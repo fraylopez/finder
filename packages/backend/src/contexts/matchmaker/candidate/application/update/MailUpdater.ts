@@ -2,40 +2,28 @@ import assert from "assert";
 import { inject, injectable } from "inversify";
 import { types } from "../../../../../apps/backend/ioc/types";
 import { EventBus } from "../../../../_shared/domain/bus/EventBus";
+import { Mail } from "../../../../_shared/domain/Mail";
 import { Uuid } from "../../../../_shared/domain/value-object/Uuid";
-import { CardRepository } from "../../../card/domain/CardRepository";
-import { UnknownCardError } from "../../../card/domain/errors/UnknownCardError";
 import { CandidateRepository } from "../../domain/CandidateRepository";
 import { UnknownCandidateError } from "../../domain/errors/UnknownCandidateError";
-import { Swipe } from "../../domain/Swipe";
 
-type Params = {
-  cardId: string;
+interface Params {
   uid: string,
-  right: boolean,
-};
+  mail: string;
+}
 
 @injectable()
-export class SwipeCreator {
+export class MailUpdater {
   constructor(
     @inject(types.CandidateRepository) private readonly candidateRepository: CandidateRepository,
-    @inject(types.CardRepository) private readonly cardRepository: CardRepository, //TODO: decouple through queryBus
     @inject(types.EventBus) private readonly eventBus: EventBus,
   ) { }
 
-  async swipe({ uid, cardId, right }: Params) {
+  async update({ uid, mail }: Params) {
     const candidate = await this.candidateRepository.find(new Uuid(uid));
-    const card = await this.cardRepository.find(new Uuid(cardId));
     assert(candidate, new UnknownCandidateError(uid));
-    assert(card, new UnknownCardError(cardId));
-    candidate.swipe(
-      new Swipe(
-        new Uuid(cardId),
-        right,
-        card.score
-      )
-    );
-    await this.candidateRepository.update(candidate);
+    candidate.setMail(new Mail(mail));
+    this.candidateRepository.update(candidate);
     this.eventBus.publish(candidate.pullDomainEvents());
   }
 }

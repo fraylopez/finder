@@ -26,6 +26,8 @@ import { ConversationPutController } from "../controllers/ConversationPutControl
 import { StatusGetController } from "../controllers/StatusGetController";
 import { WebSocketServer } from "../../../contexts/_shared/infrastructure/WebSocketServer";
 import { WebSocketChatItemSender } from "../../../contexts/matchmaker/candidate/infrastructure/WebSocketChatItemSender";
+import { MailPatchController } from "../controllers/MailPatchController";
+import { MailUpdater } from "../../../contexts/matchmaker/candidate/application/update/MailUpdater";
 
 export const container = new Container();
 
@@ -47,6 +49,7 @@ container.bind(CardPutController).toSelf().inSingletonScope();
 
 container.bind(CardFinder).toSelf().inSingletonScope();
 container.bind(CardCreator).toSelf().inSingletonScope();
+
 container.bind(types.CardRepository).to(MemoryCardRepository).inSingletonScope();
 
 // Candidate
@@ -54,17 +57,18 @@ container.bind(CandidatePutController).toSelf().inSingletonScope();
 container.bind(SwipePutController).toSelf().inSingletonScope();
 container.bind(CandidateEvaluator).toSelf().inSingletonScope();
 container.bind(ConversationPutController).toSelf().inSingletonScope();
-container.bind(types.MatchEvaluator).to(ScoreMatchEvaluator).inSingletonScope();
-container.bind(types.ConversationItemSender).to(WebSocketChatItemSender).inSingletonScope();
+container.bind(MailPatchController).toSelf().inSingletonScope();
 
 container.bind(CandidateCreator).toSelf().inSingletonScope();
 container.bind(SwipeCreator).toSelf().inSingletonScope();
+container.bind(ChatController).toSelf().inSingletonScope();
+container.bind(MailUpdater).toSelf().inSingletonScope();
+
+container.bind(types.MatchEvaluator).to(ScoreMatchEvaluator).inSingletonScope();
+container.bind(types.ConversationItemSender).to(WebSocketChatItemSender).inSingletonScope();
 container.bind(types.CandidateRepository).to(MemoryCandidateRepository).inSingletonScope();
 
 container.bind(types.EventHandler).to(ExposeSwipeOnSwipeCreatedEventHandler).inSingletonScope();
 container.bind(types.EventHandler).to(EvaluateOnCandidateScoreUpdatedEvent).inSingletonScope();
 container.bind(types.EventHandler).to(StartChatOnMatchCreatedEvent).inSingletonScope();
-
-container.bind(ChatController).toSelf().inSingletonScope();
-
 container.bind(types.EventHandler).to(StartChatOnMatchCreatedEvent).inSingletonScope();

@@ -32,6 +32,9 @@ export class MatchMakerBackendAcceptanceTest {
   static async put(route: string, body?: object) {
     return request(this.application.httpServer).put(route).send(body);
   }
+  static async patch(route: string, body?: object) {
+    return request(this.application.httpServer).patch(route).send(body);
+  }
   static async publish(event: DomainEvent) {
     const eventBus = container.get<EventBus>(types.EventBus);
     eventBus.publish([event]);
