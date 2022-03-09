@@ -21,8 +21,8 @@ describe(`${TestUtils.getUnitTestPath(__dirname, Conversation)}`, () => {
   it('should have next nodes', () => {
     expect(conversation.getNext()).length.greaterThan(0);
   });
-  it('should remain in same node', () => {
-    expect(conversation.getNext()).eql(conversation.getNext());
+  it('should remain in same node on unknown id', () => {
+    expect(conversation.listen("unknown").getCurrentNode()).eql(conversation.getCurrentNode());
   });
   it('should increase cursor', () => {
     for (let index = 0; index < 5; index++) {

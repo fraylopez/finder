@@ -4,10 +4,10 @@ import { types } from "../../../../src/apps/matchmaker/backend/ioc/types";
 import { CandidateRepository } from "../../../../src/contexts/matchmaker/candidate/domain/CandidateRepository";
 import { CandidateIsNotMatchError } from "../../../../src/contexts/matchmaker/candidate/domain/errors/CandidateIsNotMatchError";
 import { UnknownCandidateError } from "../../../../src/contexts/matchmaker/candidate/domain/errors/UnknownCandidateError";
-import { ScoreMatchEvaluator } from "../../../../src/contexts/matchmaker/candidate/domain/ScoreMatchEvaluator";
 import { UnknownCardError } from "../../../../src/contexts/matchmaker/card/domain/errors/UnknownCardError";
 import { Uuid } from "../../../../src/contexts/_shared/domain/value-object/Uuid";
 import { CandidateMother } from "../../../contexts/matchmaker/candidate/domain/CandidateMother";
+import { ConversationMother } from "../../../contexts/matchmaker/candidate/domain/chatbot/ConversationMother";
 import { CardMother } from "../../../contexts/matchmaker/card/domain/CardMother";
 import { TestUtils } from "../../../utils/TestUtils";
 import { MatchMakerBackendAcceptanceTest } from "./utils/MatchMakerBackendAcceptanceTest";
@@ -86,26 +86,31 @@ describe(`${TestUtils.getAcceptanceTestPath(__dirname, "Candidate")}`, () => {
   });
 
   describe('chat', () => {
+    let candidateRepository: CandidateRepository;
+    beforeEach(() => {
+      candidateRepository = container.get(types.CandidateRepository);
+    });
 
     it('should handle match candidate conversations', async () => {
-      const candidate = CandidateMother.withScore(ScoreMatchEvaluator.MATCH_SCORE);
-      const uid = candidate.id.toString();
-      const repository: CandidateRepository = container.get(types.CandidateRepository);
-      await repository.add(candidate);
+      const candidate = CandidateMother.match();
+      candidate.startChat(ConversationMother.randomSequential());
 
+      const uid = candidate.id.toString();
+      await candidateRepository.add(candidate);
+      candidateRepository;
       const response = await MatchMakerBackendAcceptanceTest.put(
         `/candidate/${uid}/talk`,
         {
           responseId: "some-id"
         }
       );
-      expect(response.status).eq(403);
-      expect(response.body.message).contains(CandidateIsNotMatchError.name);
+      expect(response.status).eq(200);
     });
 
     it('should decline non match candidate conversations', async () => {
-      const uid = Uuid.random().toString();
-      await MatchMakerBackendAcceptanceTest.put(`/candidate/${uid}`);
+      const candidate = CandidateMother.random();
+      const uid = candidate.id.toString();
+      await candidateRepository.add(candidate);
 
       const response = await MatchMakerBackendAcceptanceTest.put(
         `/candidate/${uid}/talk`,

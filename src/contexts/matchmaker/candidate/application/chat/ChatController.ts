@@ -5,6 +5,7 @@ import { Uuid } from "../../../../_shared/domain/value-object/Uuid";
 import { CandidateRepository } from "../../domain/CandidateRepository";
 import { CandidateLine } from "../../domain/chatbot/CandidateLine";
 import { ConversationFactory } from "../../domain/chatbot/ConversationFactory";
+import { ChatItemSender } from "../../domain/ConversationItemSender";
 import { CandidateIsNotMatchError } from "../../domain/errors/CandidateIsNotMatchError";
 import { UnknownCandidateError } from "../../domain/errors/UnknownCandidateError";
 
@@ -18,18 +19,25 @@ interface TalkParams {
 export class ChatController {
   constructor(
     @inject(types.CandidateRepository) private readonly candidateRepository: CandidateRepository,
+    @inject(types.ConversationItemSender) private readonly conversationItemSender: ChatItemSender,
   ) { }
 
   async start(uid: string) {
-    const candidate = await this.candidateRepository.find(new Uuid(uid));
-    assert(candidate, new UnknownCandidateError(uid));
-    candidate.startChat(ConversationFactory.get("test")!);
+    const candidate = await this.findCandidate(uid);
+    const startMessage = candidate.startChat(ConversationFactory.get("test")!);
+    this.conversationItemSender.send(startMessage);
   }
 
   async talk({ uid, responseId, message }: TalkParams) {
+    const candidate = await this.findCandidate(uid);
+    const currentMessage = candidate.talk(new CandidateLine(responseId, message));
+    this.conversationItemSender.send(currentMessage);
+  }
+
+  private async findCandidate(uid: string) {
     const candidate = await this.candidateRepository.find(new Uuid(uid));
     assert(candidate, new UnknownCandidateError(uid));
     assert(candidate.getIsMatch(), new CandidateIsNotMatchError(uid));
-    candidate.talk(new CandidateLine(responseId, message));
+    return candidate;
   }
 }

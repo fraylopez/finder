@@ -1,6 +1,6 @@
+import { ChatItem } from "./ChatItem";
 import { Conversation } from "./Conversation";
 import { ConversationFactory } from "./ConversationFactory";
-import { DefaultLines } from "./DefaultLines";
 import { Line } from "./Line";
 
 interface Primitives {
@@ -10,7 +10,6 @@ interface Primitives {
   };
   lines: { id: string, value: string; }[];
 }
-
 export class Chat {
   private lines: Line[];
   constructor(private readonly conversation: Conversation) {
@@ -25,13 +24,10 @@ export class Chat {
     return chat;
   }
 
-  add(line: Line) {
+  talk(line: Line): ChatItem {
     this.lines.push(line);
     this.conversation.listen(line.id);
-  }
-
-  getNext() {
-    return this.conversation.getNext();
+    return this.getChatItem();
   }
 
   toPrimitives() {
@@ -40,4 +36,12 @@ export class Chat {
       lines: this.lines.map(l => l.toPrimitives())
     };
   }
+
+  getChatItem(): ChatItem {
+    return {
+      current: this.conversation.getCurrentNode(),
+      next: this.conversation.getNext(),
+    };
+  }
+
 }

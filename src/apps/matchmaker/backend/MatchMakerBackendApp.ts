@@ -1,11 +1,10 @@
-import { DomainEvent } from "../../../contexts/_shared/domain/bus/DomainEvent";
 import { EventHandler } from "../../../contexts/_shared/domain/bus/EventHandler";
 import { EventBus } from "../../../contexts/_shared/domain/bus/EventBus";
 import { DomainEventMapping } from "../../../contexts/_shared/infrastructure/bus/event/DomainEventMapping";
 import { container } from "./ioc/installer";
 import { types } from "./ioc/types";
 import { Server } from './server';
-import { EventExposer } from "../../../contexts/matchmaker/candidate/domain/EventExposer";
+import { WebSocketServer } from "../../../contexts/_shared/infrastructure/WebSocketServer";
 
 export class MatchMakerBackendApp {
   private server?: Server;
@@ -16,8 +15,8 @@ export class MatchMakerBackendApp {
     await this.registerSubscribers();
 
     await this.server.listen();
-    const websocket: EventExposer = container.get(types.EventExposer);
-    websocket.init(this.server);
+    const websocketServer: WebSocketServer = container.get(types.WebSocketServer);
+    websocketServer.init(this.server);
   }
 
   async stop() {

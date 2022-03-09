@@ -10,6 +10,7 @@ import { Conversation } from "./chatbot/Conversation";
 import { CandidateScoreUpdatedEvent } from "./events/CandidateScoreUpdatedEvent";
 import { MatchCreatedEvent } from "./events/MatchCreatedEvent";
 import { SwipeCreatedEvent } from "./events/SwipeCreatedEvent";
+import { ConversationItem } from "./chatbot/ConversationItem";
 
 type Params = {
   id: Uuid;
@@ -60,13 +61,14 @@ export class Candidate extends AggregateRoot {
 
   startChat(conversation: Conversation) {
     this._chat = new Chat(conversation);
+    return this._chat.getChatItem();
   }
 
   talk(line?: Line) {
     if (line) {
-      this.chat.add(line);
+      this.chat.talk(line);
     }
-    return this.chat.getNext();
+    return this.chat.getChatItem();
   }
 
   toPrimitives() {

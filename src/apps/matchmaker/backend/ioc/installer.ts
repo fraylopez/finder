@@ -24,6 +24,8 @@ import { StartChatOnMatchCreatedEvent } from "../../../../contexts/matchmaker/ca
 import { ChatController } from "../../../../contexts/matchmaker/candidate/application/chat/ChatController";
 import { ConversationPutController } from "../controllers/ConversationPutController";
 import { StatusGetController } from "../controllers/StatusGetController";
+import { WebSocketServer } from "../../../../contexts/_shared/infrastructure/WebSocketServer";
+import { WebSocketChatItemSender } from "../../../../contexts/matchmaker/candidate/infrastructure/WebSocketChatItemSender";
 
 export const container = new Container();
 
@@ -34,6 +36,7 @@ container.bind(types.EventBus).to(InMemoryAsyncEventBus).inSingletonScope();
 container.bind(EventLogger).to(EventLogger).inSingletonScope();
 container.bind(types.EventHandler).to(AllEventsHandler).inSingletonScope();
 container.bind(types.EventExposer).to(WebSocketEventExposer).inSingletonScope();
+container.bind(types.WebSocketServer).to(WebSocketServer).inSingletonScope();
 
 // Status
 container.bind(StatusGetController).toSelf().inSingletonScope();
@@ -52,6 +55,7 @@ container.bind(SwipePutController).toSelf().inSingletonScope();
 container.bind(CandidateEvaluator).toSelf().inSingletonScope();
 container.bind(ConversationPutController).toSelf().inSingletonScope();
 container.bind(types.MatchEvaluator).to(ScoreMatchEvaluator).inSingletonScope();
+container.bind(types.ConversationItemSender).to(WebSocketChatItemSender).inSingletonScope();
 
 container.bind(CandidateCreator).toSelf().inSingletonScope();
 container.bind(SwipeCreator).toSelf().inSingletonScope();
