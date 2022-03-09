@@ -13,11 +13,11 @@ export class StubHelper {
   static fromClass<T extends object>(type: StubbableType<T>): Stub<T> {
     return this.sandbox.createStubInstance(type) as Stub<T>;
   }
-  static stubPrototype<T extends object>(type: { prototype: any; }): Stub<T> {
+  static stubPrototype<T extends object>(type: { prototype: object; }): Stub<T> {
     const customSandbox = sinon.createSandbox();
     this.sandboxes.set(type.prototype, customSandbox);
     const stub = customSandbox.stub<T>(
-      type.prototype
+      type.prototype as T
     );
     Object.keys(customSandbox).forEach((k: string) => {
       if (typeof (customSandbox as any)[k] === "function") {
@@ -47,10 +47,10 @@ export class SpyHelper {
   static sandbox: sinon.SinonSandbox = sinon.createSandbox();
   static sandboxes: Map<object, sinon.SinonSandbox> = new Map();
 
-  static spyPrototype<T extends object>(type: { prototype: any; }): sinon.SinonSpiedInstance<T> & T {
+  static spyPrototype<T extends object>(type: { prototype: object; }): sinon.SinonSpiedInstance<T> & T {
     const customSandbox = sinon.createSandbox();
     this.sandboxes.set(type.prototype, customSandbox);
-    return customSandbox.spy<T>(type.prototype) as any;
+    return customSandbox.spy<T>(type.prototype as T) as unknown as sinon.SinonSpiedInstance<T> & T;
   }
 
   static reset() {

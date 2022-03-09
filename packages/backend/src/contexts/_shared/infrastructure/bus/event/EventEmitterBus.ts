@@ -11,13 +11,16 @@ export class EventEmitterBus {
     this.subscribers.push(...subscribers || []);
   }
 
-  publish(events: DomainEvent[]): void {
-    events.forEach(event => {
-      this.subscribers
-        .filter(s => s.subscribedTo()
-          .some(e => e.NAME === event.eventName || e.NAME === WildcardEvent.NAME))
-        .forEach(h => h.handle(event))
-        ;
-    });
+  async publish(events: DomainEvent[]) {
+    await Promise.all(
+      events.map(event =>
+        Promise.all(
+          this.subscribers
+            .filter(s => s.subscribedTo()
+              .some(e => e.NAME === event.eventName || e.NAME === WildcardEvent.NAME))
+            .map(h => h.handle(event))
+        )
+      )
+    );
   }
 }

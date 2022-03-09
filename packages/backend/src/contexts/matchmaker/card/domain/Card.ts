@@ -25,7 +25,7 @@ export class Card extends AggregateRoot {
     return card;
   }
 
-  static fromPrimitives(primitives: Record<string, any>) {
+  static fromPrimitives(primitives: any) {
     return new Card(primitives.id, primitives.title, primitives.score, primitives.imageUrl);
   }
 

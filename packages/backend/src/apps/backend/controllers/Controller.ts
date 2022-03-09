@@ -20,9 +20,9 @@ export abstract class Controller {
       }
     }
   }
-  protected abstract run(req: Request, res: Response): Promise<any>;
+  protected abstract run(req: Request, res: Response): any | Promise<any>;
 
   protected addHandledError(errorKlass: DomainErrorConstructor, status: number, message?: string) {
     this.errors.set(errorKlass, { status, message });
-  };
+  }
 }

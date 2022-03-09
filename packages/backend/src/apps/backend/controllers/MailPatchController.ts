@@ -13,7 +13,7 @@ export class MailPatchController extends Controller {
     this.addHandledError(UnknownCandidateError, 404);
   }
 
-  protected async run(req: Request, res: Response) {
+  protected async run(req: Request, _res: Response) {
     const uid: string = req.params.uid;
     const mail: string = req.body.mail;
     await this.updater.update({

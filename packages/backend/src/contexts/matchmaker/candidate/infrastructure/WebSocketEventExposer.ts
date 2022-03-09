@@ -6,7 +6,7 @@ import { WebSocketServer } from "../../../_shared/infrastructure/WebSocketServer
 
 @injectable()
 export class WebSocketEventExposer implements EventExposer {
-  constructor(@inject(types.WebSocketServer) private readonly websocketServer: WebSocketServer) { };
+  constructor(@inject(types.WebSocketServer) private readonly websocketServer: WebSocketServer) { }
 
   expose(event: DomainEvent): void {
     this.websocketServer.emit(event.eventName, event.toPrimitives());

@@ -16,4 +16,4 @@ export class TestUtils {
       .substring(1)
       ;
   }
-};
+}

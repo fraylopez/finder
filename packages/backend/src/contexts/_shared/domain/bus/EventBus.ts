@@ -1,4 +1,4 @@
-import { DomainEventMapping } from "../infrastructure/bus/event/DomainEventMapping";
+import { DomainEventMapping } from "../../infrastructure/bus/event/DomainEventMapping";
 import { DomainEvent } from './DomainEvent';
 import { EventHandler } from './EventHandler';
 

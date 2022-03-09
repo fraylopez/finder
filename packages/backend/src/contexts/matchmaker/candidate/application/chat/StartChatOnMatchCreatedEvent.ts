@@ -14,8 +14,8 @@ export class StartChatOnMatchCreatedEvent implements EventHandler {
     return [MatchCreatedEvent];
   }
 
-  handle(domainEvent: DomainEvent): void | Promise<void> {
-    this.controller.start(domainEvent.aggregateId);
+  async handle(domainEvent: DomainEvent): Promise<void> {
+    await this.controller.start(domainEvent.aggregateId);
   }
 }
 

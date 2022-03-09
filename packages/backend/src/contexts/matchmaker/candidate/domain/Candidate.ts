@@ -10,22 +10,21 @@ import { Conversation } from "./chatbot/Conversation";
 import { CandidateScoreUpdatedEvent } from "./events/CandidateScoreUpdatedEvent";
 import { MatchCreatedEvent } from "./events/MatchCreatedEvent";
 import { SwipeCreatedEvent } from "./events/SwipeCreatedEvent";
-import { ConversationItem } from "./chatbot/ConversationItem";
 import { Mail } from "../../../_shared/domain/Mail";
 import { CandidateMailUpdatedEvent } from "./events/CandidateMailUpdatedEvent";
+import { AnyObject } from "../../../_shared/domain/AnyObject";
 
 type Params = {
   id: Uuid;
 };
 type Primitives = {
   id: Uuid;
-  swipes: Record<string, any>[];
+  swipes: AnyObject[];
   isMatch: boolean;
   chat?: any;
   mail?: string;
 };
 export class Candidate extends AggregateRoot {
-
   private readonly swipes: Swipe[];
   private mail?: Mail;
   private isMatch: boolean;
@@ -100,6 +99,6 @@ export class Candidate extends AggregateRoot {
 
   private get chat() {
     assert(this._chat, "Missing chat");
-    return this._chat!;
+    return this._chat;
   }
 }

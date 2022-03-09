@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { Express } from 'express';
 import { StatusGetController } from "../controllers/StatusGetController";
 import { container } from "../ioc/installer";

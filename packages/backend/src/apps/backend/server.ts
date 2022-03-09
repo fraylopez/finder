@@ -1,12 +1,11 @@
 import bodyParser from 'body-parser';
 import compress from 'compression';
 import errorHandler from 'errorhandler';
-import express, { Request, Response } from 'express';
+import express, { } from 'express';
 import Router from 'express-promise-router';
 import helmet from 'helmet';
 import * as http from 'http';
 import cors from 'cors';
-import httpStatus from 'http-status';
 import Logger from "../../contexts/_shared/domain/Logger";
 import { container } from "./ioc/installer";
 import { types } from "./ioc/types";

@@ -9,7 +9,7 @@ export class CandidatePutController extends Controller {
     super();
   }
 
-  protected async run(req: Request, res: Response) {
+  protected async run(req: Request, _res: Response) {
     const id: string = req.params.uid;
     return this.creator.create({
       id,

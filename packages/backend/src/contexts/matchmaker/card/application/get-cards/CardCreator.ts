@@ -22,6 +22,6 @@ export class CardCreator {
   async run({ id, title, score, imageUrl }: Params) {
     const card = Card.create({ id: new Uuid(id), title, score, imageUrl });
     await this.repository.add(card);
-    this.evetBus.publish(card.pullDomainEvents());
+    await this.evetBus.publish(card.pullDomainEvents());
   }
 }

@@ -19,6 +19,6 @@ export class CandidateCreator {
   async create({ id }: Params) {
     const candidate = Candidate.create({ id: new Uuid(id) });
     await this.repository.add(candidate);
-    this.eventBus.publish(candidate.pullDomainEvents());
+    await this.eventBus.publish(candidate.pullDomainEvents());
   }
 }

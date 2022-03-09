@@ -11,9 +11,10 @@ export class ConversationMother {
     const conversation = new Conversation(id || Uuid.random().toString());
     const _length = length || MotherCreator.random().datatype.number({ min: 5, max: 10 });
     for (let index = 0; index < _length; index++) {
-      let item: ConversationItem = LineMother.random(index.toString());
-      let next: ConversationItem = LineMother.random((index + 1).toString());
-      conversation.addNode(item, next);
+      conversation.addNode(
+        LineMother.random(index.toString()),
+        LineMother.random((index + 1).toString())
+      );
     }
 
     return conversation;

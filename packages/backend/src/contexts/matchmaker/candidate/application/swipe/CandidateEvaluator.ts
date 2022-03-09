@@ -24,6 +24,6 @@ export class CandidateEvaluator {
     assert(candidate, new UnknownCandidateError(uid));
     candidate.match(this.candidateEvaluator);
     await this.candidateRepository.update(candidate);
-    this.eventBus.publish(candidate.pullDomainEvents());
+    await this.eventBus.publish(candidate.pullDomainEvents());
   }
 }

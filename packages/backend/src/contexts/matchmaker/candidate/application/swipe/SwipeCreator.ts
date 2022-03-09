@@ -19,7 +19,7 @@ type Params = {
 export class SwipeCreator {
   constructor(
     @inject(types.CandidateRepository) private readonly candidateRepository: CandidateRepository,
-    @inject(types.CardRepository) private readonly cardRepository: CardRepository, //TODO: decouple through queryBus
+    @inject(types.CardRepository) private readonly cardRepository: CardRepository, // TODO: decouple through queryBus
     @inject(types.EventBus) private readonly eventBus: EventBus,
   ) { }
 
@@ -36,6 +36,6 @@ export class SwipeCreator {
       )
     );
     await this.candidateRepository.update(candidate);
-    this.eventBus.publish(candidate.pullDomainEvents());
+    await this.eventBus.publish(candidate.pullDomainEvents());
   }
 }

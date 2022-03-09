@@ -10,7 +10,7 @@ export class CardGetController extends Controller {
     super();
   }
 
-  protected async run(_req: Request, res: Response) {
+  protected async run(_req: Request, _res: Response) {
     const cardsResponse = await this.cardFinder.run();
     return this.toResponse(cardsResponse.cards);
   }

@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import httpStatus from 'http-status';
 import { inject, injectable } from "inversify";
 import { CardCreator } from "../../../contexts/matchmaker/card/application/get-cards/CardCreator";
 import { Controller } from './Controller';
@@ -10,7 +9,7 @@ export class CardPutController extends Controller {
     super();
   }
 
-  protected run(req: Request, res: Response) {
+  protected run(req: Request, _res: Response) {
     const id: string = req.params.id;
     const title: string = req.body.title;
     const score: number = req.body.score;

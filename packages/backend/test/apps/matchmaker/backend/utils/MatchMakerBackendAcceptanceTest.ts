@@ -1,4 +1,3 @@
-import e from "express";
 import request from "supertest";
 import { container } from "../../../../../src/apps/backend/ioc/installer";
 import { types } from "../../../../../src/apps/backend/ioc/types";
@@ -10,8 +9,6 @@ import { setupTestDependencies } from "./testInstaller";
 
 export class MatchMakerBackendAcceptanceTest {
   private static application: MatchMakerBackendApp;
-  private static _request: MatchMakerBackendApp;
-  private static _response: MatchMakerBackendApp;
   static async start() {
     setupTestDependencies();
     this.application = new MatchMakerBackendApp();
@@ -37,6 +34,6 @@ export class MatchMakerBackendAcceptanceTest {
   }
   static async publish(event: DomainEvent) {
     const eventBus = container.get<EventBus>(types.EventBus);
-    eventBus.publish([event]);
+    await eventBus.publish([event]);
   }
 }

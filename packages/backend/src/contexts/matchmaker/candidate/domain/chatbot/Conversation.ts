@@ -27,13 +27,9 @@ export class Conversation implements ConversationItem {
   getNext(): ConversationItem[] {
     return this.items.get(this.getCurrentNode().getId())!.next;
   }
-  setNext(nodeId: string, next: ConversationItem | ConversationItem[]): ConversationItem[] {
-    let _next = Array.isArray(next) ? next : [next];
-    return this.items.get(nodeId)!.next = _next;
-  }
 
   addNode(node: ConversationItem, next: ConversationItem | ConversationItem[] = []) {
-    let _next = Array.isArray(next) ? next : [next];
+    const _next = Array.isArray(next) ? next : [next];
     this.items.set(node.getId(), { item: node, next: _next });
   }
 

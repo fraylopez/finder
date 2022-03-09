@@ -1,6 +1,5 @@
 import { expect } from "chai";
 import { Conversation } from "../../../../../../src/contexts/matchmaker/candidate/domain/chatbot/Conversation";
-import { ConversationLine } from "../../../../../../src/contexts/matchmaker/candidate/domain/chatbot/ConversationLine";
 import { DefaultLines } from "../../../../../../src/contexts/matchmaker/candidate/domain/chatbot/DefaultLines";
 import { TestUtils } from "../../../../../utils/TestUtils";
 import { ConversationMother } from "./ConversationMother";

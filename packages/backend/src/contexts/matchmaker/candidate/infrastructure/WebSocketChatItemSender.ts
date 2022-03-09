@@ -6,7 +6,7 @@ import { ChatItemSender } from "../domain/ConversationItemSender";
 
 @injectable()
 export class WebSocketChatItemSender implements ChatItemSender {
-  constructor(@inject(types.WebSocketServer) private readonly websocketServer: WebSocketServer) { };
+  constructor(@inject(types.WebSocketServer) private readonly websocketServer: WebSocketServer) { }
 
   send(conversationItem: ChatItem): void {
     this.websocketServer.emit(

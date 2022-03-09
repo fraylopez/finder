@@ -98,7 +98,6 @@ describe(`${TestUtils.getAcceptanceTestPath(__dirname, "Candidate")}`, () => {
 
       const uid = candidate.id.toString();
       await candidateRepository.add(candidate);
-      candidateRepository;
       const response = await MatchMakerBackendAcceptanceTest.put(
         `/candidate/${uid}/talk`,
         {
@@ -112,7 +111,6 @@ describe(`${TestUtils.getAcceptanceTestPath(__dirname, "Candidate")}`, () => {
       const candidate = CandidateMother.random();
       const uid = candidate.id.toString();
       await candidateRepository.add(candidate);
-      console.log(candidate);
 
       const response = await MatchMakerBackendAcceptanceTest.put(
         `/candidate/${uid}/talk`,
@@ -120,7 +118,6 @@ describe(`${TestUtils.getAcceptanceTestPath(__dirname, "Candidate")}`, () => {
           responseId: "some-id"
         }
       );
-      console.log(response.error);
       expect(response.status).eq(403);
       expect(response.body.message).contains(CandidateIsNotMatchError.name);
     });

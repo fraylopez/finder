@@ -23,7 +23,7 @@ export class MailUpdater {
     const candidate = await this.candidateRepository.find(new Uuid(uid));
     assert(candidate, new UnknownCandidateError(uid));
     candidate.setMail(new Mail(mail));
-    this.candidateRepository.update(candidate);
-    this.eventBus.publish(candidate.pullDomainEvents());
+    await this.candidateRepository.update(candidate);
+    await this.eventBus.publish(candidate.pullDomainEvents());
   }
 }

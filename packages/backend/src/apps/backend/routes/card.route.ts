@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { Application } from "express";
 import { CardGetController } from '../controllers/CardGetController';
 import { CardPutController } from "../controllers/CardPutController";

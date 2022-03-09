@@ -13,13 +13,13 @@ export class StubbedEventBus implements EventBus {
   constructor() {
     this.bus = StubHelper.fromInterface<EventBus>();
   }
-  setDomainEventMapping(domainEventMapping: DomainEventMapping): void {
+  setDomainEventMapping(_domainEventMapping: DomainEventMapping): void {
     throw new Error("Method not implemented.");
   }
   publish(events: DomainEvent[]): Promise<void> {
     return this.bus.publish(events);
   }
-  addSubscribers(subscribers: EventHandler<DomainEvent>[]): void {
+  addSubscribers(_subscribers: EventHandler<DomainEvent>[]): void {
     throw new Error("Method not implemented.");
   }
   start(): Promise<void> {

@@ -1,0 +1,1 @@
+export type AnyObject<T = any> = Record<keyof T, any>;
