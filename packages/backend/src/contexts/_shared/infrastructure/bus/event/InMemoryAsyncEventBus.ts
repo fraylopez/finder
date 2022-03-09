@@ -4,7 +4,6 @@ import { EventBus } from "../../../domain/bus/EventBus";
 import { DomainEventMapping } from "./DomainEventMapping";
 import { EventEmitterBus } from "./EventEmitterBus";
 import { injectable, multiInject } from "inversify";
-import { types } from "../../../../../apps/backend/ioc/types";
 
 
 @injectable()

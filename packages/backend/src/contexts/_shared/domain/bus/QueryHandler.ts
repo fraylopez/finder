@@ -1,7 +1,7 @@
 import { Query } from './Query';
-import { Response } from './Response';
+import { BusResponse } from './BusResponse';
 
-export interface QueryHandler<Q extends Query, R extends Response> {
+export interface QueryHandler<Q extends Query, R extends BusResponse> {
   subscribedTo(): Query;
   handle(query: Q): Promise<R>;
 }
