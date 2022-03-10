@@ -11,12 +11,12 @@ export function setupEnvDependencies(container: Container) {
     container.unbind(types.CandidateRepository);
   }
 
-  if (process.env.NODE_ENV === "test") {
+  if (["test,development"].includes(process.env.NODE_ENV!)) {
     container.bind(types.CardRepository).to(MemoryCardRepository).inSingletonScope();
     container.bind(types.CandidateRepository).to(MemoryCandidateRepository).inSingletonScope();
   }
 
-  else if (process.env.NODE_ENV === "acceptance") {
+  else if (["acceptance"].includes(process.env.NODE_ENV!)) {
     container.bind(types.CardRepository).to(MongoCardRepository).inSingletonScope();
     container.bind(types.CandidateRepository).to(MongoCandidateRepository).inSingletonScope();
   }
