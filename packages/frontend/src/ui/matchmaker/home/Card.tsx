@@ -70,12 +70,12 @@ const Card = ({id, index, title, imageUrl, onVote}: CardProps) => {
         opacity: opacityValue,
         backgroundImage: `url(${imageUrl})`
       }}
-      className="bg-white bg-cover bg-center absolute overflow-hidden shadow-lg rounded-lg flex items-end w-full h-full"
+      className="bg-white bg-cover bg-center absolute overflow-hidden shadow-lg rounded-lg flex items-end w-full sm:h-full max-h-full aspect-[8/10] sm:aspect-auto"
     >
-      <div className="w-full px-4 py-4 sm:px-6 pb-24 backdrop-blur-md bg-black/20">
+      <div className="w-full px-4 py-4 sm:px-6 sm:pb-24 backdrop-blur-sm bg-black/30">
         <div className="leading-6 space-y-1">
-          <h3 className="text-white text-3xl font-semibold">{title}</h3>
-          <p className="text-red-400 text-lg">{id}</p>
+          <h3 className="text-white text-xl md:text-3xl font-semibold">{title}</h3>
+          <p className="text-orange-300 md:text-lg">{id}</p>
         </div>
       </div>
     </motion.div>
