@@ -1,26 +1,24 @@
 import request from "supertest";
+import { setupEnvDependencies } from "../../../../../src/apps/backend/ioc/env-config";
 import { container } from "../../../../../src/apps/backend/ioc/installer";
 import { types } from "../../../../../src/apps/backend/ioc/types";
 import { MatchMakerBackendApp } from "../../../../../src/apps/backend/MatchMakerBackendApp";
 import { DomainEvent } from "../../../../../src/contexts/_shared/domain/bus/DomainEvent";
 import { EventBus } from "../../../../../src/contexts/_shared/domain/bus/EventBus";
-import { TestMemoryCardRepository } from "../../../../contexts/matchmaker/card/infrastructure/TestMemoryCardRepository";
-import { setupTestDependencies } from "./testInstaller";
 
 export class MatchMakerBackendAcceptanceTest {
   private static application: MatchMakerBackendApp;
+  private static cachedEnv?: string;
   static async start() {
-    setupTestDependencies();
+    this.cachedEnv = process.env.NODE_ENV;
+    process.env.NODE_ENV = "acceptance";
+    setupEnvDependencies(container);
     this.application = new MatchMakerBackendApp();
     await this.application.start();
   }
   static async stop() {
-    this.application = new MatchMakerBackendApp();
     await this.application.stop();
-  }
-  static async reset() {
-    container.get<TestMemoryCardRepository>(types.CardRepository).removeAll();
-    await this.application.stop();
+    process.env.NODE_ENV = this.cachedEnv;
   }
 
   static async get(route: string) {

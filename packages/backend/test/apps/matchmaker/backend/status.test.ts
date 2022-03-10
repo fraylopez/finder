@@ -7,10 +7,6 @@ describe(`${TestUtils.getAcceptanceTestPath(__dirname, "Status")}`, () => {
     await MatchMakerBackendAcceptanceTest.start();
   });
 
-  afterEach(async () => {
-    await MatchMakerBackendAcceptanceTest.reset();
-  });
-
   after(async () => {
     await MatchMakerBackendAcceptanceTest.stop();
   });

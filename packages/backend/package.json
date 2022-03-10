@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "test": "mocha",
-    "start": "ts-node src/apps/backend/start.ts",
+    "start": "NODE_ENV=development ts-node src/apps/backend/start.ts",
+    "start:prod": "NODE_ENV=production ts-node src/apps/backend/start.ts",
     "build": "npm run build:clean && npm run build:tsc",
     "build:tsc": "tsc",
     "build:clean": "rm -r ./dist; exit 0",
