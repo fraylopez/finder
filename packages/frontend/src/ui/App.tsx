@@ -1,11 +1,11 @@
-import './App.css';
 import Header from "./matchmaker/home/Header";
 import CardsView from "./matchmaker/home/CardsView";
 import { container } from "../config/ioc/installer";
 import { CandidateCreator } from "../contexts/matchmaker/candidate/application/CandidateCreator";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import ChatView from "./matchmaker/home/ChatView";
 
-function App() {
+export default function Example() {
   useEffect(() => {
     async function createCandidate() {
       const candidateCreator = container.get(CandidateCreator);
@@ -14,13 +14,17 @@ function App() {
     createCandidate();
   }, []);
 
+  const [page, setPage] = useState<"swipe" | "chats">("swipe");
 
   return (
-    <div className="App">
-      <Header />
-      <CardsView />
-    </div>
-  );
+    <>
+      <div className="min-h-full">
+        <Header page={page} setPage={setPage}/>
+        <main className="h-screen pt-16">
+          {page === "swipe" && (<CardsView />)}
+          {page === "chats" && (<ChatView />)}
+        </main>
+      </div>
+    </>
+  )
 }
-
-export default App;
