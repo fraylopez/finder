@@ -3,11 +3,11 @@ export enum types {
   EventBus = "EventBus",
   QueryBus = "QueryBus",
   CommandBus = "CommandBus",
-  WebSocketServer = "WebSocketServer",
 
   EventHandler = "EventHandler",
-
   EventExposer = "EventExposer",
+
+  WebSocketServer = "WebSocketServer",
 
   CardRepository = "CardRepository",
   CandidateRepository = "CandidateRepository",

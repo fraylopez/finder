@@ -14,7 +14,6 @@ import { SwipePutController } from "../controllers/SwipePutController";
 import { SwipeCreator } from "../../../contexts/matchmaker/candidate/application/swipe/SwipeCreator";
 import { CandidateCreator } from "../../../contexts/matchmaker/candidate/application/add/CandidateCreator";
 import { CandidatePutController } from "../controllers/CandidatePutController";
-import { MemoryCandidateRepository } from "../../../contexts/matchmaker/candidate/infrastructure/MemoryCandidateRepository";
 import { ExposeSwipeOnSwipeCreatedEventHandler } from "../../../contexts/matchmaker/candidate/application/swipe/ExposeSwipeOnSwipeCreatedEventHandler";
 import { WebSocketEventExposer } from "../../../contexts/matchmaker/candidate/infrastructure/WebSocketEventExposer";
 import { EvaluateOnCandidateScoreUpdatedEvent } from "../../../contexts/matchmaker/candidate/application/swipe/EvaluateCandidateOnScoreUpdated";
@@ -28,6 +27,8 @@ import { WebSocketServer } from "../../../contexts/_shared/infrastructure/WebSoc
 import { WebSocketChatItemSender } from "../../../contexts/matchmaker/candidate/infrastructure/WebSocketChatItemSender";
 import { MailPatchController } from "../controllers/MailPatchController";
 import { MailUpdater } from "../../../contexts/matchmaker/candidate/application/update/MailUpdater";
+import { MongoCandidateRepository } from "../../../contexts/matchmaker/candidate/infrastructure/MongoCandidateRepository";
+import { MongoClientFactory } from "../../../contexts/_shared/infrastructure/persistence/mongo/MongoClientFactory";
 
 export const container = new Container();
 
@@ -39,6 +40,7 @@ container.bind(EventLogger).to(EventLogger).inSingletonScope();
 container.bind(types.EventHandler).to(AllEventsHandler).inSingletonScope();
 container.bind(types.EventExposer).to(WebSocketEventExposer).inSingletonScope();
 container.bind(types.WebSocketServer).to(WebSocketServer).inSingletonScope();
+container.bind(MongoClientFactory).to(MongoClientFactory).inSingletonScope();
 
 // Status
 container.bind(StatusGetController).toSelf().inSingletonScope();
@@ -66,7 +68,7 @@ container.bind(MailUpdater).toSelf().inSingletonScope();
 
 container.bind(types.MatchEvaluator).to(ScoreMatchEvaluator).inSingletonScope();
 container.bind(types.ConversationItemSender).to(WebSocketChatItemSender).inSingletonScope();
-container.bind(types.CandidateRepository).to(MemoryCandidateRepository).inSingletonScope();
+container.bind(types.CandidateRepository).to(MongoCandidateRepository).inSingletonScope();
 
 container.bind(types.EventHandler).to(ExposeSwipeOnSwipeCreatedEventHandler).inSingletonScope();
 container.bind(types.EventHandler).to(EvaluateOnCandidateScoreUpdatedEvent).inSingletonScope();

@@ -1,3 +1,5 @@
-type MongoConfig = { url: string };
+export type MongoConfig = {
+  url: string;
+  connectionTimeoutMs?: number;
+};
 
-export default MongoConfig;

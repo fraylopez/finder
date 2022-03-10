@@ -1,1 +1,4 @@
-export type AnyObject<T = any> = Record<keyof T, any>;
+export interface Any {
+  [key: string]: any;
+}
+export type AnyObject<T = {}> = Any & T;

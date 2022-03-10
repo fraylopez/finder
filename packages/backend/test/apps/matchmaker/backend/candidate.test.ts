@@ -94,7 +94,7 @@ describe(`${TestUtils.getAcceptanceTestPath(__dirname, "Candidate")}`, () => {
 
     it('should handle match candidate conversations', async () => {
       const candidate = CandidateMother.match();
-      candidate.startChat(ConversationMother.randomSequential());
+      candidate.startChat(ConversationMother.randomSequential("test"));
 
       const uid = candidate.id.toString();
       await candidateRepository.add(candidate);

@@ -16,7 +16,8 @@ export abstract class Controller {
       if (handledError) {
         res.status(handledError.status).send({ message: handledError.message || error.message });
       } else {
-        res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ message: error.message });
+        // console.log(error.stack);
+        res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ message: "Sorry about that..." });
       }
     }
   }

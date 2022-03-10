@@ -9,4 +9,4 @@ yarn test  // backend
 
 
 
-I took some classes and a bunch of ideas from https://github.com/CodelyTV/typescript-ddd-skeleton
+I took some code and a bunch of ideas from https://github.com/CodelyTV/typescript-ddd-skeleton
