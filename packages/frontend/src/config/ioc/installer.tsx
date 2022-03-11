@@ -1,3 +1,4 @@
+import React from "react";
 import { types } from "./types";
 import { HttpCardRepository } from "../../contexts/matchmaker/infrastructure/HttpCardRepository";
 import { CardFinder } from "../../contexts/matchmaker/card/application/get-cards/CardFinder";
@@ -15,6 +16,20 @@ import { CompositeCandidateRepository } from "../../contexts/matchmaker/candidat
 // container.bind(types.MatchRepository).to(HttpMatchRepository).inSingletonScope();
 
 // export { container };
+
+const ContainerContext = React.createContext<MapContainer | null>(null);
+
+const ContainerProvider = ({c, children}: any) => {
+  return <ContainerContext.Provider value={c}>{children}</ContainerContext.Provider>
+}
+
+const useContainer = (): MapContainer => {
+  const c = React.useContext(ContainerContext);
+
+  if (!c) throw new Error("useContainer must be used within a ContainerProvider");
+
+  return c;
+}
 
 type Newable<T> = new (...args: never[]) => T;
 interface Abstract<T> {
@@ -37,8 +52,8 @@ class MapContainer {
 
 const container = new MapContainer();
 
-container.bind(types.BaseHttpUrl, "http://localhost:3000");
-container.bind(types.BaseWsUrl, "ws://localhost:3000");
+container.bind(types.BaseHttpUrl, "http://10.1.0.89:3000");
+container.bind(types.BaseWsUrl, "ws://10.1.0.89:3000");
 container.bind(types.CardRepository, new HttpCardRepository(container.get(types.BaseHttpUrl)));
 container.bind(CardFinder, new CardFinder(container.get(types.CardRepository)));
 
@@ -51,4 +66,4 @@ container.bind(CandidateFinder, new CandidateFinder(container.get(types.Candidat
 
 container.bind(types.SwipeService, new HttpSwipeService(container.get(types.BaseHttpUrl)));
 container.bind(SwipeCreator, new SwipeCreator(container.get(types.SwipeService)));
-export { container };
+export { container, useContainer, ContainerProvider, ContainerContext };
