@@ -23,16 +23,24 @@ export class WebSocketServer {
     this.wss.to(socket).emit(eventName, data);
   }
 
-  private onClientConnect(data: socketIO.Socket) {
-    const uid = data.handshake.query.uid;
+  private onClientConnect(socket: socketIO.Socket) {
+    socket.on(
+      "disconnect",
+      (reason: string) => this.onClientDisconnect(socket.id, reason));
+
+    const uid = socket.handshake.query.uid;
     if (uid) {
-      this.connectedClients.set(uid as string, data.id);
+      this.connectedClients.set(uid as string, socket.id);
     }
   }
-  private onClientDisconnect(data: socketIO.Socket) {
-    const uid = data.handshake.query.uid;
+  private onClientDisconnect(socketId: string, _reason: string) {
+    const uid = this.getUidFromSocketId(socketId);
     if (uid) {
+      this.connectedClients.delete(uid);
     }
+  }
+  private getUidFromSocketId(id: string) {
+    return Array.from(this.connectedClients).find(c => c[1] === id)?.[0];
   }
 
 }
