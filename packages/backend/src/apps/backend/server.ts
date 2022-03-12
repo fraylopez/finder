@@ -10,6 +10,7 @@ import Logger from "../../contexts/_shared/domain/Logger";
 import { container } from "./ioc/installer";
 import { types } from "./ioc/types";
 import { registerRoutes } from './routes';
+import { WebSocketServer } from "../../contexts/_shared/infrastructure/WebSocketServer";
 
 export class Server {
   private express: express.Express;
@@ -36,15 +37,17 @@ export class Server {
   }
 
   async listen(): Promise<void> {
-    return new Promise(resolve => {
+    await new Promise<void>(resolve => {
       this.httpServer = this.express.listen(this.port, () => {
         this.logger.info(
-          `  Backoffice Backend App is running at http://localhost:${this.port} in ${this.express.get('env')} mode`
+          `  App is running at http://localhost:${this.port} in ${this.express.get('env')} mode`
         );
         this.logger.info('  Press CTRL-C to stop\n');
         resolve();
       });
     });
+    const websocketServer: WebSocketServer = container.get(types.WebSocketServer);
+    websocketServer.init(this);
   }
 
   async stop(): Promise<void> {

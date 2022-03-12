@@ -5,10 +5,10 @@ import { types } from "../../../../apps/backend/ioc/types";
 import { WebSocketServer } from "../../../_shared/infrastructure/WebSocketServer";
 
 @injectable()
-export class WebSocketEventExposer implements EventExposer {
+export class WebSocketCandidateEventExposer implements EventExposer {
   constructor(@inject(types.WebSocketServer) private readonly websocketServer: WebSocketServer) { }
 
   expose(event: DomainEvent): void {
-    this.websocketServer.emit(event.eventName, event.toPrimitives());
+    this.websocketServer.emit(event.aggregateId, event.eventName, event.toPrimitives());
   }
 }

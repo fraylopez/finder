@@ -1742,6 +1742,13 @@
   dependencies:
     "@types/node" "*"
 
+"@types/engine.io@*":
+  version "3.1.7"
+  resolved "https://registry.yarnpkg.com/@types/engine.io/-/engine.io-3.1.7.tgz#86e541a5dc52fb7e97735383564a6ae4cfe2e8f5"
+  integrity sha512-qNjVXcrp+1sS8YpRUa714r0pgzOwESdW5UjHL7D/2ZFdBX0BXUXtg1LUrp+ylvqbvMcMWUy73YpRoxPN2VoKAQ==
+  dependencies:
+    "@types/node" "*"
+
 "@types/eslint-scope@^3.7.3":
   version "3.7.3"
   resolved "https://registry.yarnpkg.com/@types/eslint-scope/-/eslint-scope-3.7.3.tgz#125b88504b61e3c8bc6f870882003253005c3224"
@@ -1943,6 +1950,35 @@
   dependencies:
     "@types/mime" "^1"
     "@types/node" "*"
+
+"@types/socket.io-client@1.4.36":
+  version "1.4.36"
+  resolved "https://registry.yarnpkg.com/@types/socket.io-client/-/socket.io-client-1.4.36.tgz#e4f1ca065f84c20939e9850e70222202bd76ff3f"
+  integrity sha512-ZJWjtFBeBy1kRSYpVbeGYTElf6BqPQUkXDlHHD4k/42byCN5Rh027f4yARHCink9sKAkbtGZXEAmR0ZCnc2/Ag==
+
+"@types/socket.io-parser@*":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@types/socket.io-parser/-/socket.io-parser-3.0.0.tgz#9726d3ab9235757a0a30dd5ccf8975dce54e5e2c"
+  integrity sha512-Ry/rbTE6HQNL9eu3LpL1Ocup5VexXu1bSSGlSho/IR5LuRc8YvxwSNJ3JxqTltVJEATLbZkMQETSbxfKNgp4Ew==
+  dependencies:
+    socket.io-parser "*"
+
+"@types/socket.io@2.1.13":
+  version "2.1.13"
+  resolved "https://registry.yarnpkg.com/@types/socket.io/-/socket.io-2.1.13.tgz#b6d694234e99956c96ff99e197eda824b6f9dc48"
+  integrity sha512-JRgH3nCgsWel4OPANkhH8TelpXvacAJ9VeryjuqCDiaVDMpLysd6sbt0dr6Z15pqH3p2YpOT3T1C5vQ+O/7uyg==
+  dependencies:
+    "@types/engine.io" "*"
+    "@types/node" "*"
+    "@types/socket.io-parser" "*"
+
+"@types/socketio-wildcard@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@types/socketio-wildcard/-/socketio-wildcard-2.0.4.tgz#248c93faf0e51efbeeda65551fe3d92ceae663ab"
+  integrity sha512-02BK7Bf3stIcvKXWjRFtPgCOMYi4KWhASPhVzkYpZOR9qQbtj7xBJEPi0fkksDJeqeRXCF23azFEOaRBXuUCNA==
+  dependencies:
+    "@types/socket.io" "2.1.13"
+    "@types/socket.io-client" "1.4.36"
 
 "@types/sockjs@^0.3.33":
   version "0.3.33"
@@ -7742,13 +7778,18 @@ socket.io-client@^4.4.1:
     parseuri "0.0.6"
     socket.io-parser "~4.1.1"
 
-socket.io-parser@~4.1.1:
+socket.io-parser@*, socket.io-parser@~4.1.1:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/socket.io-parser/-/socket.io-parser-4.1.2.tgz#0a97d4fb8e67022158a568450a6e41887e42035e"
   integrity sha512-j3kk71QLJuyQ/hh5F/L2t1goqzdTL0gvDzuhTuNSwihfuFUrcSji0qFZmJJPtG6Rmug153eOPsUizeirf1IIog==
   dependencies:
     "@socket.io/component-emitter" "~3.0.0"
     debug "~4.3.1"
+
+socketio-wildcard@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/socketio-wildcard/-/socketio-wildcard-2.0.0.tgz#2466e832276b19163563bee772388747f912475b"
+  integrity sha1-JGboMidrGRY1Y77ncjiHR/kSR1s=
 
 sockjs@^0.3.21:
   version "0.3.24"

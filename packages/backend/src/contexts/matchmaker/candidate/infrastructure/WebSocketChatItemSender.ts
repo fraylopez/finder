@@ -8,8 +8,9 @@ import { ChatItemSender } from "../domain/ConversationItemSender";
 export class WebSocketChatItemSender implements ChatItemSender {
   constructor(@inject(types.WebSocketServer) private readonly websocketServer: WebSocketServer) { }
 
-  send(conversationItem: ChatItem): void {
+  send(uid: string, conversationItem: ChatItem): void {
     this.websocketServer.emit(
+      uid,
       conversationItem.current.getValue(),
       {
         next: conversationItem.next

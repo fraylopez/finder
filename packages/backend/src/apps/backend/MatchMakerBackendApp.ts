@@ -4,7 +4,6 @@ import { DomainEventMapping } from "../../contexts/_shared/infrastructure/bus/ev
 import { container } from "./ioc/installer";
 import { types } from "./ioc/types";
 import { Server } from './server';
-import { WebSocketServer } from "../../contexts/_shared/infrastructure/WebSocketServer";
 
 export class MatchMakerBackendApp {
   private server?: Server;
@@ -15,8 +14,7 @@ export class MatchMakerBackendApp {
     await this.registerSubscribers();
 
     await this.server.listen();
-    const websocketServer: WebSocketServer = container.get(types.WebSocketServer);
-    websocketServer.init(this.server);
+
   }
 
   async stop() {

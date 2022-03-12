@@ -26,14 +26,14 @@ export class ChatController {
     const candidate = await this.findCandidate(uid);
     const startMessage = candidate.startChat(ConversationFactory.get("test")!);
     await this.candidateRepository.update(candidate);
-    this.conversationItemSender.send(startMessage);
+    this.conversationItemSender.send(uid, startMessage);
   }
 
   async talk({ uid, responseId, message }: TalkParams) {
     const candidate = await this.findCandidate(uid);
     const currentMessage = candidate.talk(new CandidateLine(responseId, message));
     await this.candidateRepository.update(candidate);
-    this.conversationItemSender.send(currentMessage);
+    this.conversationItemSender.send(uid, currentMessage);
   }
 
   private async findCandidate(uid: string) {

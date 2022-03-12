@@ -14,7 +14,7 @@ import { SwipeCreator } from "../../../contexts/matchmaker/candidate/application
 import { CandidateCreator } from "../../../contexts/matchmaker/candidate/application/add/CandidateCreator";
 import { CandidatePutController } from "../controllers/CandidatePutController";
 import { ExposeSwipeOnSwipeCreatedEventHandler } from "../../../contexts/matchmaker/candidate/application/swipe/ExposeSwipeOnSwipeCreatedEventHandler";
-import { WebSocketEventExposer } from "../../../contexts/matchmaker/candidate/infrastructure/WebSocketEventExposer";
+import { WebSocketCandidateEventExposer } from "../../../contexts/matchmaker/candidate/infrastructure/WebSocketCandidateEventExposer";
 import { EvaluateOnCandidateScoreUpdatedEvent } from "../../../contexts/matchmaker/candidate/application/swipe/EvaluateCandidateOnScoreUpdated";
 import { CandidateEvaluator } from "../../../contexts/matchmaker/candidate/application/swipe/CandidateEvaluator";
 import { ScoreMatchEvaluator } from "../../../contexts/matchmaker/candidate/domain/ScoreMatchEvaluator";
@@ -36,7 +36,7 @@ container.bind(types.EventBus).to(InMemoryAsyncEventBus).inSingletonScope();
 
 container.bind(EventLogger).to(EventLogger).inSingletonScope();
 container.bind(types.EventHandler).to(AllEventsHandler).inSingletonScope();
-container.bind(types.EventExposer).to(WebSocketEventExposer).inSingletonScope();
+container.bind(types.EventExposer).to(WebSocketCandidateEventExposer).inSingletonScope();
 container.bind(types.WebSocketServer).to(WebSocketServer).inSingletonScope();
 container.bind(MongoClientFactory).to(MongoClientFactory).inSingletonScope();
 
@@ -68,7 +68,5 @@ container.bind(types.ConversationItemSender).to(WebSocketChatItemSender).inSingl
 container.bind(types.EventHandler).to(ExposeSwipeOnSwipeCreatedEventHandler).inSingletonScope();
 container.bind(types.EventHandler).to(EvaluateOnCandidateScoreUpdatedEvent).inSingletonScope();
 container.bind(types.EventHandler).to(StartChatOnMatchCreatedEvent).inSingletonScope();
-container.bind(types.EventHandler).to(StartChatOnMatchCreatedEvent).inSingletonScope();
-
 
 setupEnvDependencies(container);
