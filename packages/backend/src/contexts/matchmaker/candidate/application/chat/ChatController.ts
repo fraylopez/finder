@@ -1,7 +1,7 @@
 import assert from "assert";
 import { inject, injectable } from "inversify";
-import { types } from "../../../../../apps/backend/ioc/types";
-import { Uuid } from "../../../../_shared/domain/value-object/Uuid";
+import { types } from "../../../../../apps/matchmaker/ioc/types";
+import { Uuid } from "../../../../_core/domain/value-object/Uuid";
 import { CandidateRepository } from "../../domain/CandidateRepository";
 import { CandidateLine } from "../../domain/chatbot/CandidateLine";
 import { ConversationFactory } from "../../domain/chatbot/ConversationFactory";

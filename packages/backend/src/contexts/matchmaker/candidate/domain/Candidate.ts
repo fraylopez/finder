@@ -1,5 +1,5 @@
-import { AggregateRoot } from "../../../_shared/domain/AggregateRoot";
-import { Uuid } from "../../../_shared/domain/value-object/Uuid";
+import { AggregateRoot } from "../../../_core/domain/AggregateRoot";
+import { Uuid } from "../../../_core/domain/value-object/Uuid";
 import { MatchEvaluator } from "./MatchEvaluator";
 import { CandidateCreatedEvent } from "./events/CandidateCreatedEvent";
 import { Swipe } from "./Swipe";
@@ -10,9 +10,9 @@ import { Conversation } from "./chatbot/Conversation";
 import { CandidateScoreUpdatedEvent } from "./events/CandidateScoreUpdatedEvent";
 import { MatchCreatedEvent } from "./events/MatchCreatedEvent";
 import { SwipeCreatedEvent } from "./events/SwipeCreatedEvent";
-import { Mail } from "../../../_shared/domain/Mail";
+import { Mail } from "../../../_core/domain/Mail";
 import { CandidateMailUpdatedEvent } from "./events/CandidateMailUpdatedEvent";
-import { AnyObject } from "../../../_shared/domain/AnyObject";
+import { AnyObject } from "../../../_core/domain/AnyObject";
 
 type Params = {
   id: Uuid;
@@ -25,15 +25,15 @@ type Primitives = {
   mail?: string;
 };
 export class Candidate extends AggregateRoot {
-  private readonly swipes: Swipe[];
   private mail?: Mail;
   private isMatch: boolean;
   private _chat?: Chat;
   constructor(
     public readonly id: Uuid,
+    private readonly swipes: Swipe[] = [],
+
   ) {
     super();
-    this.swipes = [];
     this.isMatch = false;
   }
   static create({ id }: Params) {

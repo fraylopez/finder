@@ -1,5 +1,5 @@
 import { injectable } from "inversify";
-import { Uuid } from "../../../_shared/domain/value-object/Uuid";
+import { Uuid } from "../../../_core/domain/value-object/Uuid";
 import { Candidate } from "../domain/Candidate";
 import { CandidateRepository } from "../domain/CandidateRepository";
 

@@ -1,8 +1,8 @@
 import assert from "assert";
 import { inject, injectable } from "inversify";
-import { types } from "../../../../../apps/backend/ioc/types";
-import { EventBus } from "../../../../_shared/domain/bus/EventBus";
-import { Uuid } from "../../../../_shared/domain/value-object/Uuid";
+import { types } from "../../../../../apps/matchmaker/ioc/types";
+import { EventBus } from "../../../../_core/domain/bus/EventBus";
+import { Uuid } from "../../../../_core/domain/value-object/Uuid";
 import { CandidateRepository } from "../../domain/CandidateRepository";
 import { UnknownCandidateError } from "../../domain/errors/UnknownCandidateError";
 import { MatchEvaluator } from "../../domain/MatchEvaluator";

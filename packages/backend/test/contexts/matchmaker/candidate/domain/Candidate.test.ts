@@ -1,6 +1,6 @@
 import { expect } from "chai";
-import { container } from "../../../../../src/apps/backend/ioc/installer";
-import { types } from "../../../../../src/apps/backend/ioc/types";
+import { container } from "../../../../../src/apps/matchmaker/ioc/installer";
+import { types } from "../../../../../src/apps/matchmaker/ioc/types";
 import { MatchEvaluator } from "../../../../../src/contexts/matchmaker/candidate/domain/MatchEvaluator";
 import { Candidate } from "../../../../../src/contexts/matchmaker/candidate/domain/Candidate";
 import { ScoreMatchEvaluator } from "../../../../../src/contexts/matchmaker/candidate/domain/ScoreMatchEvaluator";

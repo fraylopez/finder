@@ -1,9 +1,9 @@
 import { inject, injectable } from "inversify";
-import { types } from "../../../../../apps/backend/ioc/types";
-import { DomainEvent } from "../../../../_shared/domain/bus/DomainEvent";
-import { DomainEventClass } from "../../../../_shared/domain/bus/DomainEventClass";
-import { EventHandler } from "../../../../_shared/domain/bus/EventHandler";
-import { EventExposer } from "../../domain/EventExposer";
+import { types } from "../../../../../apps/matchmaker/ioc/types";
+import { DomainEvent } from "../../../../_core/domain/bus/DomainEvent";
+import { DomainEventClass } from "../../../../_core/domain/bus/DomainEventClass";
+import { EventHandler } from "../../../../_core/domain/bus/EventHandler";
+import { EventExposer } from "../../../../_shared/domain/EventExposer";
 import { SwipeCreatedEvent } from "../../domain/events/SwipeCreatedEvent";
 
 @injectable()

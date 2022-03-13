@@ -3,9 +3,9 @@ export class TestUtils {
     const path = this.getPath(dirname);
     return `${path}.${klass.name}`;
   }
-  static getAcceptanceTestPath(dirname: string, title: string) {
+  static getAcceptanceTestPath(dirname: string, title?: string) {
     const path = this.getPath(dirname);
-    return `${path}/${title}`;
+    return title ? `${path}/${title}` : path;
   }
 
   private static getPath(dirname: string) {

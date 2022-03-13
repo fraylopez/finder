@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify";
-import { types } from "../../../../../apps/backend/ioc/types";
-import { CardRepository } from "../../domain/CardRepository";
+import { types } from "../../../../../apps/matchmaker/ioc/types";
+import { CardRepository } from "../../../../_shared/domain/card/CardRepository";
 import { CardsResponse } from "./CardsResponse";
 
 @injectable()

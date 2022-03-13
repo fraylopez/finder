@@ -1,0 +1,34 @@
+@startuml CandidateUseCases
+left to right direction
+
+actor Candidate
+actor Admin
+
+usecase GetCards
+usecase StartSwipping
+usecase Swipe
+usecase OpenConversation
+usecase ReadMessage
+usecase SendMessage
+usecase CreateProfile
+usecase EditProfile
+
+usecase CreateCard
+usecase EditCard
+usecase GetProfile
+
+Candidate --> CreateProfile
+Candidate --> GetCards
+Candidate --> StartSwipping
+Candidate --> Swipe
+Candidate --> OpenConversation
+Candidate --> ReadMessage
+Candidate --> SendMessage
+Candidate --> EditProfile
+
+Admin --> CreateCard
+Admin --> EditCard
+Admin --> GetCards
+Admin --> GetProfile
+
+@enduml

@@ -1,5 +1,5 @@
 import { Swipe } from "../../../../../src/contexts/matchmaker/candidate/domain/Swipe";
-import { Uuid } from "../../../../../src/contexts/_shared/domain/value-object/Uuid";
+import { Uuid } from "../../../../../src/contexts/_core/domain/value-object/Uuid";
 import { MotherCreator } from "../../../_shared/domain/MotherCreator";
 
 

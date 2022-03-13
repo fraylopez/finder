@@ -1,0 +1,44 @@
+@startuml UserContext
+
+state INITIAL
+state IN_APP
+state CONVERSATION_BUILDING
+state CARD_BUILDER
+state PROFILE
+
+' Que estados faltan?
+' Como nos movemos entre SWIPING - EDIT_CONVERSATION - PROFILE
+' Back use case?
+
+[*] --> INITIAL
+INITIAL --> IN_APP
+note on link
+[requires Login]
+end note
+
+IN_APP --> CONVERSATION_BUILDING
+note on link
+CreateConversation
+EditConversation
+end note
+
+CONVERSATION_BUILDING --> CONVERSATION_BUILDING
+note on link
+EditConversation
+end note
+
+IN_APP --> PROFILE
+note on link
+GetProfile
+end note
+
+IN_APP --> CARD_BUILDER
+note on link
+GetCards
+end note
+CARD_BUILDER --> CARD_BUILDER
+note on link
+EditCard
+CreateCard
+end note
+@enduml

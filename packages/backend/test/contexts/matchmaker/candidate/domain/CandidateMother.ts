@@ -1,13 +1,13 @@
 import { Candidate } from "../../../../../src/contexts/matchmaker/candidate/domain/Candidate";
 import { ScoreMatchEvaluator } from "../../../../../src/contexts/matchmaker/candidate/domain/ScoreMatchEvaluator";
-import { Uuid } from "../../../../../src/contexts/_shared/domain/value-object/Uuid";
+import { Uuid } from "../../../../../src/contexts/_core/domain/value-object/Uuid";
 import { MotherCreator } from "../../../_shared/domain/MotherCreator";
 import { SwipeMother } from "./SwipeMother";
 
 export class CandidateMother {
-  static random() {
+  static random(id?: Uuid) {
     return Candidate.fromPrimitives({
-      id: Uuid.random(),
+      id: id || Uuid.random(),
       swipes: [],
       isMatch: false
     });

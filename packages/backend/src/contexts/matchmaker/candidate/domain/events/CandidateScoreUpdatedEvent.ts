@@ -1,6 +1,6 @@
-import { DomainEvent } from "../../../../_shared/domain/bus/DomainEvent";
-import { PrimitiveDomainEvent } from "../../../../_shared/domain/bus/PrimitiveDomainEvent";
-import { Uuid } from "../../../../_shared/domain/value-object/Uuid";
+import { DomainEvent } from "../../../../_core/domain/bus/DomainEvent";
+import { PrimitiveDomainEvent } from "../../../../_core/domain/bus/PrimitiveDomainEvent";
+import { Uuid } from "../../../../_core/domain/value-object/Uuid";
 
 export class CandidateScoreUpdatedEvent extends DomainEvent {
   static readonly NAME = 'candidate.score.updated';

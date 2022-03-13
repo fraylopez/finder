@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify";
-import { types } from "../../../../apps/backend/ioc/types";
-import { WebSocketServer } from "../../../_shared/infrastructure/WebSocketServer";
+import { types } from "../../../../apps/matchmaker/ioc/types";
+import { WebSocketServer } from "../../../_core/infrastructure/WebSocketServer";
 import { ChatItem } from "../domain/chatbot/ChatItem";
 import { ChatItemSender } from "../domain/ConversationItemSender";
 

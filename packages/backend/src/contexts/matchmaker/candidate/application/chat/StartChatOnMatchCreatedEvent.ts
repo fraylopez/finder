@@ -1,7 +1,7 @@
 import { inject, injectable } from "inversify";
-import { DomainEvent } from "../../../../_shared/domain/bus/DomainEvent";
-import { DomainEventClass } from "../../../../_shared/domain/bus/DomainEventClass";
-import { EventHandler } from "../../../../_shared/domain/bus/EventHandler";
+import { DomainEvent } from "../../../../_core/domain/bus/DomainEvent";
+import { DomainEventClass } from "../../../../_core/domain/bus/DomainEventClass";
+import { EventHandler } from "../../../../_core/domain/bus/EventHandler";
 import { MatchCreatedEvent } from "../../domain/events/MatchCreatedEvent";
 import { ChatController } from "./ChatController";
 

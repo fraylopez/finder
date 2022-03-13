@@ -1,10 +1,10 @@
 import assert from "assert";
 import { inject, injectable } from "inversify";
-import { types } from "../../../../../apps/backend/ioc/types";
-import { EventBus } from "../../../../_shared/domain/bus/EventBus";
-import { Uuid } from "../../../../_shared/domain/value-object/Uuid";
-import { CardRepository } from "../../../card/domain/CardRepository";
-import { UnknownCardError } from "../../../card/domain/errors/UnknownCardError";
+import { types } from "../../../../../apps/matchmaker/ioc/types";
+import { EventBus } from "../../../../_core/domain/bus/EventBus";
+import { Uuid } from "../../../../_core/domain/value-object/Uuid";
+import { CardRepository } from "../../../../_shared/domain/card/CardRepository";
+import { UnknownCardError } from "../../../../_shared/domain/card/errors/UnknownCardError";
 import { CandidateRepository } from "../../domain/CandidateRepository";
 import { UnknownCandidateError } from "../../domain/errors/UnknownCandidateError";
 import { Swipe } from "../../domain/Swipe";

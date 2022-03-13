@@ -1,7 +1,7 @@
 import { injectable } from "inversify";
-import { Nullable } from "../../../_shared/domain/Nullable";
-import { Uuid } from "../../../_shared/domain/value-object/Uuid";
-import { MongoRepository } from "../../../_shared/infrastructure/persistence/mongo/MongoRepository";
+import { Nullable } from "../../../_core/domain/Nullable";
+import { Uuid } from "../../../_core/domain/value-object/Uuid";
+import { MongoRepository } from "../../../_core/infrastructure/persistence/mongo/MongoRepository";
 import { Candidate } from "../domain/Candidate";
 import { CandidateRepository } from "../domain/CandidateRepository";
 

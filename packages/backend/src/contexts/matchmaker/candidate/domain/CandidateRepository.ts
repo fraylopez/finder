@@ -1,5 +1,5 @@
-import { Uuid } from "../../../_shared/domain/value-object/Uuid";
-import { Candidate } from "./Candidate";
+import { Uuid } from "../../../_core/domain/value-object/Uuid";
+import { Candidate } from "../../../matchmaker/candidate/domain/Candidate";
 
 export interface CandidateRepository {
   update(candidate: Candidate): Promise<void>;

@@ -1,5 +1,5 @@
-import { DomainEvent } from "../../../../_shared/domain/bus/DomainEvent";
-import { Uuid } from "../../../../_shared/domain/value-object/Uuid";
+import { DomainEvent } from "../../../../_core/domain/bus/DomainEvent";
+import { Uuid } from "../../../../_core/domain/value-object/Uuid";
 
 export class CandidateCreatedEvent extends DomainEvent {
   static readonly NAME = "candidate.created";

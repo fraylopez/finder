@@ -1,9 +1,9 @@
 import sinon from "sinon";
-import { DomainEvent } from "../../../../../../src/contexts/_shared/domain/bus/DomainEvent";
-import { DomainEventClass } from "../../../../../../src/contexts/_shared/domain/bus/DomainEventClass";
-import { EventBus } from "../../../../../../src/contexts/_shared/domain/bus/EventBus";
-import { EventHandler } from "../../../../../../src/contexts/_shared/domain/bus/EventHandler";
-import { DomainEventMapping } from "../../../../../../src/contexts/_shared/infrastructure/bus/event/DomainEventMapping";
+import { DomainEvent } from "../../../../../../src/contexts/_core/domain/bus/DomainEvent";
+import { DomainEventClass } from "../../../../../../src/contexts/_core/domain/bus/DomainEventClass";
+import { EventBus } from "../../../../../../src/contexts/_core/domain/bus/EventBus";
+import { EventHandler } from "../../../../../../src/contexts/_core/domain/bus/EventHandler";
+import { DomainEventMapping } from "../../../../../../src/contexts/_core/infrastructure/bus/event/DomainEventMapping";
 import { Stub } from "../../../../../utils/Stub";
 import { StubHelper } from "../../../../../utils/StubHelper";
 
