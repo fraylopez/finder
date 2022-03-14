@@ -1,5 +1,5 @@
 import assert from "assert";
-import { ConversationMother } from "../../../../../../test/contexts/matchmaker/candidate/domain/chatbot/ConversationMother";
+import { ConversationMother } from "../../../../../test/contexts/_shared/domain/chat/ConversationMother";
 import { Conversation } from "./Conversation";
 
 export class ConversationFactory {

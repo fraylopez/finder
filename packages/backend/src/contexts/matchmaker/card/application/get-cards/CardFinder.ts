@@ -1,11 +1,11 @@
 import { inject, injectable } from "inversify";
-import { types } from "../../../../../apps/matchmaker/ioc/types";
+import { sharedTypes } from "../../../../../apps/_shared/ioc/sharedTypes";
 import { CardRepository } from "../../../../_shared/domain/card/CardRepository";
 import { CardsResponse } from "./CardsResponse";
 
 @injectable()
 export class CardFinder {
-  constructor(@inject(types.CardRepository) private repository: CardRepository) { }
+  constructor(@inject(sharedTypes.CardRepository) private repository: CardRepository) { }
 
   async run() {
     const cards = await this.repository.searchAll();

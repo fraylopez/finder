@@ -3,6 +3,8 @@ import { BackofficeBackendApp } from "../../../../src/apps/backoffice/Backoffice
 import { setupEnvDependencies } from "../../../../src/apps/backoffice/ioc/env-config";
 import { container } from "../../../../src/apps/matchmaker/ioc/installer";
 import { types } from "../../../../src/apps/matchmaker/ioc/types";
+import { coreTypes } from "../../../../src/apps/_core/ioc/coreTypes";
+import { sharedTypes } from "../../../../src/apps/_shared/ioc/sharedTypes";
 import { CandidateRepository } from "../../../../src/contexts/matchmaker/candidate/domain/CandidateRepository";
 import { DomainEvent } from "../../../../src/contexts/_core/domain/bus/DomainEvent";
 import { EventBus } from "../../../../src/contexts/_core/domain/bus/EventBus";
@@ -36,13 +38,13 @@ export class BackofficeBackendAcceptanceTest {
     return request(this.application.httpServer).patch(route).send(body);
   }
   static async publish(event: DomainEvent) {
-    const eventBus = container.get<EventBus>(types.EventBus);
+    const eventBus = container.get<EventBus>(coreTypes.EventBus);
     await eventBus.publish([event]);
   }
 
   static async addRandomCard(cardId?: Uuid) {
     const card = CardMother.random(cardId);
-    const cardRepsitory = container.get<CardRepository>(types.CardRepository);
+    const cardRepsitory = container.get<CardRepository>(sharedTypes.CardRepository);
     await cardRepsitory.add(card);
     return card;
   }

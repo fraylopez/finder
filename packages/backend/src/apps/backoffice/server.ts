@@ -8,8 +8,8 @@ import * as http from 'http';
 import cors from 'cors';
 import Logger from "../../contexts/_core/domain/Logger";
 import { container } from "./ioc/installer";
-import { types } from "./ioc/types";
 import { registerRoutes } from './routes';
+import { coreTypes } from "../_core/ioc/coreTypes";
 
 export class Server {
   private express: express.Express;
@@ -19,7 +19,7 @@ export class Server {
 
   constructor(port: string) {
     this.port = port;
-    this.logger = container.get(types.Logger);
+    this.logger = container.get(coreTypes.Logger);
     this.express = express();
     this.express.use(bodyParser.json());
     this.express.use(bodyParser.urlencoded({ extended: true }));
@@ -39,7 +39,7 @@ export class Server {
     await new Promise<void>(resolve => {
       this.httpServer = this.express.listen(this.port, () => {
         this.logger.info(
-          `  App is running at http://localhost:${this.port} in ${this.express.get('env')} mode`
+          `  App is running at http://localhost:${this.port} in ${this.express.get('env') as string} mode`
         );
         this.logger.info('  Press CTRL-C to stop\n');
         resolve();

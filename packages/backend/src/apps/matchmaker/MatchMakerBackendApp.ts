@@ -2,8 +2,8 @@ import { EventHandler } from "../../contexts/_core/domain/bus/EventHandler";
 import { EventBus } from "../../contexts/_core/domain/bus/EventBus";
 import { DomainEventMapping } from "../../contexts/_core/infrastructure/bus/event/DomainEventMapping";
 import { container } from "./ioc/installer";
-import { types } from "./ioc/types";
 import { Server } from './server';
+import { coreTypes } from "../_core/ioc/coreTypes";
 
 export class MatchMakerBackendApp {
   private server?: Server;
@@ -33,8 +33,8 @@ export class MatchMakerBackendApp {
   }
 
   private async registerSubscribers() {
-    const eventBus = container.get<EventBus>(types.EventBus);
-    const eventHandlers = container.getAll<EventHandler>(types.EventHandler);
+    const eventBus = container.get<EventBus>(coreTypes.EventBus);
+    const eventHandlers = container.getAll<EventHandler>(coreTypes.EventHandler);
 
     const domainEventMapping = new DomainEventMapping(eventHandlers);
 

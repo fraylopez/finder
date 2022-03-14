@@ -1,7 +1,7 @@
 import { ChatItem } from "./ChatItem";
-import { Conversation } from "./Conversation";
-import { ConversationFactory } from "./ConversationFactory";
-import { Line } from "./Line";
+import { Conversation } from "../../../../_shared/domain/chat/Conversation";
+import { Line } from "../../../../_shared/domain/chat/Line";
+import { ConversationFactory } from "../../../../_shared/domain/chat/ConversationFactory";
 
 interface Primitives {
   conversation: {

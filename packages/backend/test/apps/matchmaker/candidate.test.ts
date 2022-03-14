@@ -7,7 +7,7 @@ import { UnknownCardError } from "../../../src/contexts/_shared/domain/card/erro
 import { InvalidEmailError } from "../../../src/contexts/_core/domain/InvalidEmailError";
 import { Uuid } from "../../../src/contexts/_core/domain/value-object/Uuid";
 import { CandidateMother } from "../../contexts/matchmaker/candidate/domain/CandidateMother";
-import { ConversationMother } from "../../contexts/matchmaker/candidate/domain/chatbot/ConversationMother";
+import { ConversationMother } from "../../contexts/_shared/domain/chat/ConversationMother";
 import { TestUtils } from "../../utils/TestUtils";
 import { MatchMakerBackendAcceptanceTest } from "./utils/MatchMakerBackendAcceptanceTest";
 import { CandidateRepository } from "../../../src/contexts/matchmaker/candidate/domain/CandidateRepository";

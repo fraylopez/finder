@@ -1,6 +1,8 @@
 import assert from "assert";
 import { inject, injectable } from "inversify";
 import { types } from "../../../../../apps/matchmaker/ioc/types";
+import { coreTypes } from "../../../../../apps/_core/ioc/coreTypes";
+import { sharedTypes } from "../../../../../apps/_shared/ioc/sharedTypes";
 import { EventBus } from "../../../../_core/domain/bus/EventBus";
 import { Uuid } from "../../../../_core/domain/value-object/Uuid";
 import { CardRepository } from "../../../../_shared/domain/card/CardRepository";
@@ -19,8 +21,8 @@ type Params = {
 export class SwipeCreator {
   constructor(
     @inject(types.CandidateRepository) private readonly candidateRepository: CandidateRepository,
-    @inject(types.CardRepository) private readonly cardRepository: CardRepository, // TODO: decouple through queryBus
-    @inject(types.EventBus) private readonly eventBus: EventBus,
+    @inject(sharedTypes.CardRepository) private readonly cardRepository: CardRepository, // TODO: decouple through queryBus
+    @inject(coreTypes.EventBus) private readonly eventBus: EventBus,
   ) { }
 
   async swipe({ uid, cardId, right }: Params) {

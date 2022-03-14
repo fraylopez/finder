@@ -3,7 +3,7 @@ import { types } from "../../../../../apps/matchmaker/ioc/types";
 import { DomainEvent } from "../../../../_core/domain/bus/DomainEvent";
 import { DomainEventClass } from "../../../../_core/domain/bus/DomainEventClass";
 import { EventHandler } from "../../../../_core/domain/bus/EventHandler";
-import { EventExposer } from "../../../../_shared/domain/EventExposer";
+import { EventExposer } from "../../domain/EventExposer";
 import { SwipeCreatedEvent } from "../../domain/events/SwipeCreatedEvent";
 
 @injectable()

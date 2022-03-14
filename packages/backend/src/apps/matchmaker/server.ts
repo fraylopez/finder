@@ -11,6 +11,7 @@ import { container } from "./ioc/installer";
 import { types } from "./ioc/types";
 import { registerRoutes } from './routes';
 import { WebSocketServer } from "../../contexts/_core/infrastructure/WebSocketServer";
+import { coreTypes } from "../_core/ioc/coreTypes";
 
 export class Server {
   private express: express.Express;
@@ -20,7 +21,7 @@ export class Server {
 
   constructor(port: string) {
     this.port = port;
-    this.logger = container.get(types.Logger);
+    this.logger = container.get(coreTypes.Logger);
     this.express = express();
     this.express.use(bodyParser.json());
     this.express.use(bodyParser.urlencoded({ extended: true }));

@@ -1,5 +1,6 @@
 import { inject, injectable } from "inversify";
 import { types } from "../../../../../apps/matchmaker/ioc/types";
+import { coreTypes } from "../../../../../apps/_core/ioc/coreTypes";
 import { EventBus } from "../../../../_core/domain/bus/EventBus";
 import { Uuid } from "../../../../_core/domain/value-object/Uuid";
 import { Candidate } from "../../domain/Candidate";
@@ -13,7 +14,7 @@ type Params = {
 export class CandidateCreator {
   constructor(
     @inject(types.CandidateRepository) private repository: CandidateRepository,
-    @inject(types.EventBus) private eventBus: EventBus,
+    @inject(coreTypes.EventBus) private eventBus: EventBus,
   ) { }
 
   async create({ id }: Params) {

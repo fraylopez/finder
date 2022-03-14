@@ -1,7 +1,7 @@
 import { expect } from "chai";
-import { Conversation } from "../../../../../../src/contexts/matchmaker/candidate/domain/chatbot/Conversation";
-import { DefaultLines } from "../../../../../../src/contexts/matchmaker/candidate/domain/chatbot/DefaultLines";
-import { TestUtils } from "../../../../../utils/TestUtils";
+import { Conversation } from "../../../../../src/contexts/_shared/domain/chat/Conversation";
+import { DefaultLines } from "../../../../../src/contexts/_shared/domain/chat/DefaultLines";
+import { TestUtils } from "../../../../utils/TestUtils";
 import { ConversationMother } from "./ConversationMother";
 import { LineMother } from "./LineMother";
 

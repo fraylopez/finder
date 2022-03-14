@@ -1,6 +1,7 @@
 import assert from "assert";
 import { inject, injectable } from "inversify";
 import { types } from "../../../../../apps/matchmaker/ioc/types";
+import { coreTypes } from "../../../../../apps/_core/ioc/coreTypes";
 import { EventBus } from "../../../../_core/domain/bus/EventBus";
 import { Uuid } from "../../../../_core/domain/value-object/Uuid";
 import { CandidateRepository } from "../../domain/CandidateRepository";
@@ -16,7 +17,7 @@ export class CandidateEvaluator {
   constructor(
     @inject(types.CandidateRepository) private readonly candidateRepository: CandidateRepository,
     @inject(types.MatchEvaluator) private readonly candidateEvaluator: MatchEvaluator,
-    @inject(types.EventBus) private readonly eventBus: EventBus,
+    @inject(coreTypes.EventBus) private readonly eventBus: EventBus,
   ) { }
 
   async evaluate({ uid }: Params) {

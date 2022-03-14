@@ -1,7 +1,7 @@
 import { inject, injectable } from "inversify";
 import { types } from "../../../../apps/matchmaker/ioc/types";
 import { WebSocketServer } from "../../../_core/infrastructure/WebSocketServer";
-import { ChatItem } from "../domain/chatbot/ChatItem";
+import { ChatItem } from "../domain/chat/ChatItem";
 import { ChatItemSender } from "../domain/ConversationItemSender";
 
 @injectable()

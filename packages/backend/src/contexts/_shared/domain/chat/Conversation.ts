@@ -3,6 +3,9 @@ import { ConversationItem } from "./ConversationItem";
 import { ConversationLine } from "./ConversationLine";
 import { DefaultLines } from "./DefaultLines";
 
+interface Params {
+  id: string;
+}
 interface Primitives {
   id: string;
   cursor: string;
@@ -15,6 +18,12 @@ export class Conversation implements ConversationItem {
   constructor(private id: string) {
     this.items = new Map();
   }
+
+  static create({ id }: Params) {
+    const conversation = new Conversation(id);
+    return conversation;
+  }
+
   getId(): string {
     return this.id;
   }

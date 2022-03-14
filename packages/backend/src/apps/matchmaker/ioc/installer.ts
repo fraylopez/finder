@@ -26,17 +26,23 @@ import { MailPatchController } from "../controllers/MailPatchController";
 import { MailUpdater } from "../../../contexts/matchmaker/candidate/application/update/MailUpdater";
 import { MongoClientFactory } from "../../../contexts/_core/infrastructure/persistence/mongo/MongoClientFactory";
 import { setupEnvDependencies } from "./env-config";
+import { sharedTypes } from "../../_shared/ioc/sharedTypes";
+import { coreTypes } from "../../_core/ioc/coreTypes";
+import { MongoCardRepository } from "../../../contexts/backoffice/card/infrastructure/MongoCardRepository";
+import { MongoCandidateRepository } from "../../../contexts/matchmaker/candidate/infrastructure/MongoCandidateRepository";
 
 export const container = new Container();
-// Shared
-container.bind(types.Logger).to(ConsoleLogger).inSingletonScope();
-container.bind(types.EventBus).to(InMemoryAsyncEventBus).inSingletonScope();
+// Core
+container.bind(coreTypes.Logger).to(ConsoleLogger).inSingletonScope();
+container.bind(coreTypes.EventBus).to(InMemoryAsyncEventBus).inSingletonScope();
+container.bind(coreTypes.EventHandler).to(AllEventsHandler).inSingletonScope();
+container.bind(MongoClientFactory).to(MongoClientFactory).inSingletonScope();
 
+// Shared
 container.bind(EventLogger).to(EventLogger).inSingletonScope();
-container.bind(types.EventHandler).to(AllEventsHandler).inSingletonScope();
 container.bind(types.EventExposer).to(WebSocketCandidateEventExposer).inSingletonScope();
 container.bind(types.WebSocketServer).to(WebSocketServer).inSingletonScope();
-container.bind(MongoClientFactory).to(MongoClientFactory).inSingletonScope();
+container.bind(sharedTypes.CardRepository).to(MongoCardRepository).inSingletonScope();
 
 // Status
 container.bind(StatusGetController).toSelf().inSingletonScope();
@@ -60,8 +66,9 @@ container.bind(MailUpdater).toSelf().inSingletonScope();
 container.bind(types.MatchEvaluator).to(ScoreMatchEvaluator).inSingletonScope();
 container.bind(types.ConversationItemSender).to(WebSocketChatItemSender).inSingletonScope();
 
-container.bind(types.EventHandler).to(ExposeSwipeOnSwipeCreatedEventHandler).inSingletonScope();
-container.bind(types.EventHandler).to(EvaluateOnCandidateScoreUpdatedEvent).inSingletonScope();
-container.bind(types.EventHandler).to(StartChatOnMatchCreatedEvent).inSingletonScope();
+container.bind(coreTypes.EventHandler).to(ExposeSwipeOnSwipeCreatedEventHandler).inSingletonScope();
+container.bind(coreTypes.EventHandler).to(EvaluateOnCandidateScoreUpdatedEvent).inSingletonScope();
+container.bind(coreTypes.EventHandler).to(StartChatOnMatchCreatedEvent).inSingletonScope();
+container.bind(types.CandidateRepository).to(MongoCandidateRepository).inSingletonScope();
 
 setupEnvDependencies(container);

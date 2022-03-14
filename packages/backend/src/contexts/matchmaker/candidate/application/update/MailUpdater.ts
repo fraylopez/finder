@@ -1,6 +1,7 @@
 import assert from "assert";
 import { inject, injectable } from "inversify";
 import { types } from "../../../../../apps/matchmaker/ioc/types";
+import { coreTypes } from "../../../../../apps/_core/ioc/coreTypes";
 import { EventBus } from "../../../../_core/domain/bus/EventBus";
 import { Mail } from "../../../../_core/domain/Mail";
 import { Uuid } from "../../../../_core/domain/value-object/Uuid";
@@ -16,7 +17,7 @@ interface Params {
 export class MailUpdater {
   constructor(
     @inject(types.CandidateRepository) private readonly candidateRepository: CandidateRepository,
-    @inject(types.EventBus) private readonly eventBus: EventBus,
+    @inject(coreTypes.EventBus) private readonly eventBus: EventBus,
   ) { }
 
   async update({ uid, mail }: Params) {

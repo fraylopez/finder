@@ -1,9 +1,9 @@
-import { Conversation } from "../../../../../../src/contexts/matchmaker/candidate/domain/chatbot/Conversation";
-import { ConversationItem } from "../../../../../../src/contexts/matchmaker/candidate/domain/chatbot/ConversationItem";
-import { ConversationLine } from "../../../../../../src/contexts/matchmaker/candidate/domain/chatbot/ConversationLine";
-import { DefaultLines } from "../../../../../../src/contexts/matchmaker/candidate/domain/chatbot/DefaultLines";
-import { Uuid } from "../../../../../../src/contexts/_core/domain/value-object/Uuid";
-import { MotherCreator } from "../../../../_shared/domain/MotherCreator";
+import { Conversation } from "../../../../../src/contexts/_shared/domain/chat/Conversation";
+import { ConversationItem } from "../../../../../src/contexts/_shared/domain/chat/ConversationItem";
+import { ConversationLine } from "../../../../../src/contexts/_shared/domain/chat/ConversationLine";
+import { DefaultLines } from "../../../../../src/contexts/_shared/domain/chat/DefaultLines";
+import { Uuid } from "../../../../../src/contexts/_core/domain/value-object/Uuid";
+import { MotherCreator } from "../MotherCreator";
 import { LineMother } from "./LineMother";
 
 export class ConversationMother {

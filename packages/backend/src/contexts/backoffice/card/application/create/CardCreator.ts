@@ -1,5 +1,6 @@
 import { inject, injectable } from "inversify";
-import { types } from "../../../../../apps/matchmaker/ioc/types";
+import { coreTypes } from "../../../../../apps/_core/ioc/coreTypes";
+import { sharedTypes } from "../../../../../apps/_shared/ioc/sharedTypes";
 import { EventBus } from "../../../../_core/domain/bus/EventBus";
 import { Uuid } from "../../../../_core/domain/value-object/Uuid";
 import { Card } from "../../../../_shared/domain/card/Card";
@@ -15,8 +16,8 @@ type Params = {
 @injectable()
 export class CardCreator {
   constructor(
-    @inject(types.CardRepository) private repository: CardRepository,
-    @inject(types.EventBus) private evetBus: EventBus,
+    @inject(sharedTypes.CardRepository) private repository: CardRepository,
+    @inject(coreTypes.EventBus) private evetBus: EventBus,
   ) { }
 
   async run({ id, title, score, imageUrl }: Params) {

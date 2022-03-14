@@ -1,5 +1,5 @@
 import { DomainEvent } from "../../../_core/domain/bus/DomainEvent";
-import { EventExposer } from "../../../_shared/domain/EventExposer";
+import { EventExposer } from "../domain/EventExposer";
 import { inject, injectable } from "inversify";
 import { types } from "../../../../apps/matchmaker/ioc/types";
 import { WebSocketServer } from "../../../_core/infrastructure/WebSocketServer";
