@@ -8,8 +8,9 @@ export class MongoConversationRepository extends MongoRepository<Conversation> i
   protected moduleName(): string {
     return "chat";
   }
-  find(id: string): Promise<Conversation | null> {
-    return this.findOne(id);
+  async find(id: string): Promise<Conversation | null> {
+    const doc = await this.findOne(id);
+    return doc ? Conversation.fromPrimitives({ ...doc, id: doc._id }) : null;
   }
   create(conversation: Conversation): Promise<void> {
     return this.persist(conversation.getId(), conversation);

@@ -1,10 +1,6 @@
-import { Container } from "inversify";
 import "reflect-metadata";
 import { CardCreator } from "../../../contexts/backoffice/card/application/create/CardCreator";
 import { CandidateFinder } from "../../../contexts/backoffice/candidate/application/find/CandidateFinder";
-import { InMemoryAsyncEventBus } from "../../../contexts/_core/infrastructure/bus/event/InMemoryAsyncEventBus";
-import { ConsoleLogger } from "../../../contexts/_core/infrastructure/logger/ConsoleLogger";
-import { MongoClientFactory } from "../../../contexts/_core/infrastructure/persistence/mongo/MongoClientFactory";
 import { AllCandidatesGetController } from "../controllers/AllCandidatesGetController";
 import { CandidateGetController } from "../controllers/CandidateGetController";
 import { CardPutController } from "../controllers/CardPutController";
@@ -23,12 +19,9 @@ import { MemoryConversationRepository } from "../../../contexts/_shared/infrastr
 import { ConversationNestedPatchController } from "../controllers/ConversationNestedPatchController";
 import { EventLogger } from "../../../contexts/_shared/application/EventLogger";
 import { LogAllEventsHandler } from "../../../contexts/_shared/application/LogAllEventsHandler";
+import { getContainer } from "../../_core/ioc/installer";
 
-export const container = new Container();
-// Core
-container.bind(coreTypes.Logger).to(ConsoleLogger).inSingletonScope();
-container.bind(coreTypes.EventBus).to(InMemoryAsyncEventBus).inSingletonScope();
-container.bind(MongoClientFactory).to(MongoClientFactory).inSingletonScope();
+export const container = getContainer();
 
 // Shared
 container.bind(sharedTypes.CardRepository).to(MongoCardRepository).inSingletonScope();

@@ -27,6 +27,12 @@ export class Conversation extends AggregateRoot implements ConversationItem {
     return conversation;
   }
 
+  static fromPrimitives({ id, cursor }: Primitives) {
+    const conversation = new Conversation(id);
+    conversation.setCursor(cursor);
+    return conversation;
+  }
+
   getId(): string {
     return this.id;
   }
@@ -34,10 +40,14 @@ export class Conversation extends AggregateRoot implements ConversationItem {
     return this.getCurrentNode().getValue();
   }
   getCurrentNode(): ConversationItem {
-    return this.items.get(this.getCursor())?.item || ConversationLine.fromLine(DefaultLines.UNKNOWN);
+    this.cursor = this.getCursor();
+    if (this.cursor) {
+      return this.items.get(this.cursor)?.item || ConversationLine.fromLine(DefaultLines.UNKNOWN);
+    }
+    return this;
   }
   getNext(): ConversationItem[] {
-    return this.items.get(this.getCurrentNode().getId())!.next;
+    return this.items.get(this.getCurrentNode().getId())?.next || [];
   }
 
   addNode(node: ConversationItem, next: ConversationItem | ConversationItem[] = []) {
@@ -54,9 +64,8 @@ export class Conversation extends AggregateRoot implements ConversationItem {
     this.record(new ConversationUpdatedEvent(this.id));
   }
 
-  getCursor(): string {
-    if (!this.cursor) {
-      assert(this.items.size);
+  getCursor(): string | undefined {
+    if (!this.cursor && this.items.size) {
       this.cursor = Array.from(this.items.values())[0].item.getId();
     }
     return this.cursor;

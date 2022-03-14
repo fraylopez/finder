@@ -12,9 +12,7 @@ export class BackofficeBackendApp {
     const port = process.env.BACKOFFICE_PORT || '3001';
     this.server = new Server(port);
     await this.registerSubscribers();
-
     await this.server.listen();
-
   }
 
   async stop() {

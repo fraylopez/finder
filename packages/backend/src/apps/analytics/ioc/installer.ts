@@ -1,21 +1,13 @@
 import "reflect-metadata";
-import { Container } from "inversify";
-import { InMemoryAsyncEventBus } from "../../../contexts/_core/infrastructure/bus/event/InMemoryAsyncEventBus";
-import { ConsoleLogger } from "../../../contexts/_core/infrastructure/logger/ConsoleLogger";
 import { coreTypes } from "../../_core/ioc/coreTypes";
 import { TrackSwipeOnSwipeCreatedEvent } from "../../../contexts/analytics/candidate/application/TrackSwipeOnSwipeCreatedEvent";
 import { setupEnvDependencies } from "./env-config";
 import { types } from "./types";
 import { MongoSwipeTrackerService } from "../../../contexts/analytics/candidate/infrastructure/MongoSwipeTracker";
 import { SwipeTracker } from "../../../contexts/analytics/candidate/application/SwipeTracker";
-import { MongoClientFactory } from "../../../contexts/_core/infrastructure/persistence/mongo/MongoClientFactory";
+import { getContainer } from "../../_core/ioc/installer";
 
-export const container = new Container();
-// Core
-container.bind(coreTypes.Logger).to(ConsoleLogger).inSingletonScope();
-container.bind(coreTypes.EventBus).to(InMemoryAsyncEventBus).inSingletonScope();
-container.bind(MongoClientFactory).to(MongoClientFactory).inSingletonScope();
-
+export const container = getContainer();
 
 // Tracking
 container.bind(SwipeTracker).toSelf().inSingletonScope();

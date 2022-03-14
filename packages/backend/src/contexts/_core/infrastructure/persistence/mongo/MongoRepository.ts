@@ -30,16 +30,19 @@ export abstract class MongoRepository<TAggregateRoot extends AggregateRoot> {
     const collection = await this.collection();
     return await collection.findOne({ _id: id }) as T | null;
   }
+
   protected async findMany<T = any>(query: object = {}): Promise<T[]> {
     const collection = await this.collection();
     const data = await collection.find(query).toArray();
     return data as any as T[];
   }
+
   protected async persist(id: string, aggregateRoot: TAggregateRoot): Promise<void> {
     const document = { ...aggregateRoot.toPrimitives(), _id: id, id: undefined };
     const collection = await this.collection();
     await collection.updateOne({ _id: id }, { $set: document }, { upsert: true });
   }
+
   protected async updateOne(id: string, aggregateRoot: TAggregateRoot): Promise<void> {
     await this.persist(id, aggregateRoot);
   }

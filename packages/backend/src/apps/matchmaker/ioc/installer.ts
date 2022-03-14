@@ -1,10 +1,7 @@
 import "reflect-metadata";
-import { Container } from "inversify";
-import { ConsoleLogger } from "../../../contexts/_core/infrastructure/logger/ConsoleLogger";
 import { CardGetController } from "../controllers/CardGetController";
 import { types } from "./types";
 import { CardFinder } from "../../../contexts/matchmaker/card/application/get-cards/CardFinder";
-import { InMemoryAsyncEventBus } from "../../../contexts/_core/infrastructure/bus/event/InMemoryAsyncEventBus";
 import { EventLogger } from "../../../contexts/_shared/application/EventLogger";
 import { LogAllEventsHandler } from "../../../contexts/_shared/application/LogAllEventsHandler";
 import { SwipePutController } from "../controllers/SwipePutController";
@@ -24,18 +21,14 @@ import { WebSocketServer } from "../../../contexts/_core/infrastructure/WebSocke
 import { WebSocketChatItemSender } from "../../../contexts/matchmaker/candidate/infrastructure/WebSocketChatItemSender";
 import { MailPatchController } from "../controllers/MailPatchController";
 import { MailUpdater } from "../../../contexts/matchmaker/candidate/application/update/MailUpdater";
-import { MongoClientFactory } from "../../../contexts/_core/infrastructure/persistence/mongo/MongoClientFactory";
 import { setupEnvDependencies } from "./env-config";
 import { sharedTypes } from "../../_shared/ioc/sharedTypes";
 import { coreTypes } from "../../_core/ioc/coreTypes";
 import { MongoCardRepository } from "../../../contexts/backoffice/card/infrastructure/MongoCardRepository";
 import { MongoCandidateRepository } from "../../../contexts/matchmaker/candidate/infrastructure/MongoCandidateRepository";
+import { getContainer } from "../../_core/ioc/installer";
 
-export const container = new Container();
-// Core
-container.bind(coreTypes.Logger).to(ConsoleLogger).inSingletonScope();
-container.bind(coreTypes.EventBus).to(InMemoryAsyncEventBus).inSingletonScope();
-container.bind(MongoClientFactory).to(MongoClientFactory).inSingletonScope();
+export const container = getContainer();
 
 // Shared
 container.bind(sharedTypes.CardRepository).to(MongoCardRepository).inSingletonScope();

@@ -10,7 +10,7 @@ import { EventBus } from "../../../../src/contexts/_core/domain/bus/EventBus";
 import { Uuid } from "../../../../src/contexts/_core/domain/value-object/Uuid";
 import { CardRepository } from "../../../../src/contexts/_shared/domain/card/CardRepository";
 import { BackofficeCandidateMother } from "../../../contexts/backoffice/domain/BackofficeCandidateMother";
-import { MongoBackofficeCandidateTestRepositroy } from "../../../contexts/backoffice/infrastructure/BackofficeCandidateTestRepositroy";
+import { MongoBackofficeCandidateTestRepository } from "../../../contexts/backoffice/infrastructure/BackofficeCandidateTestRepositroy";
 import { CardMother } from "../../../contexts/_shared/domain/card/CardMother";
 
 export class BackofficeBackendAcceptanceTest {
@@ -54,7 +54,7 @@ export class BackofficeBackendAcceptanceTest {
   }
   static async addRandomCandidate(candidateId?: Uuid) {
     const candidate = BackofficeCandidateMother.random(candidateId);
-    const repository = container.get<MongoBackofficeCandidateTestRepositroy>(types.CandidateRepository);
+    const repository = container.get<MongoBackofficeCandidateTestRepository>(types.CandidateRepository);
     await repository.add(candidate);
     return candidate;
   }
