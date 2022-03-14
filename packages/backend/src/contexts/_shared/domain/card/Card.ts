@@ -5,18 +5,19 @@ import { CardCreatedEvent } from "./events/CardCreatedEvent";
 interface Params {
   id: Uuid,
   title: string,
-  score: number,
+  score?: { left: number, right: number; },
   imageUrl?: string,
 }
 export class Card extends AggregateRoot {
-
+  public readonly score: { left: number, right: number; };
   constructor(
     public readonly id: Uuid,
     public readonly title: string,
-    public readonly score: number,
+    score?: { left: number, right: number; },
     public readonly imageUrl?: string,
   ) {
     super();
+    this.score = score || { left: 0, right: 0 };
   }
 
   static create({ id, title, imageUrl, score }: Params) {

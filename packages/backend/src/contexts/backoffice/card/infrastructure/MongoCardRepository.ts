@@ -13,7 +13,7 @@ export class MongoCardRepository extends MongoRepository<Card> implements CardRe
 
   async find(id: Uuid): Promise<Nullable<Card>> {
     const doc = await this.findOne(id.toString());
-    return doc ? Card.fromPrimitives({ ...doc, id: new Uuid(doc._id) }) : null;
+    return doc ? Card.fromPrimitives({ ...doc, id: doc._id }) : null;
   }
 
   async add(card: Card): Promise<void> {
@@ -22,6 +22,6 @@ export class MongoCardRepository extends MongoRepository<Card> implements CardRe
 
   async findAll(): Promise<Card[]> {
     const docs = await this.findMany();
-    return docs.map(doc => Card.fromPrimitives({ ...doc, id: new Uuid(doc._id) }));
+    return docs.map(doc => Card.fromPrimitives({ ...doc, id: doc._id }));
   }
 }

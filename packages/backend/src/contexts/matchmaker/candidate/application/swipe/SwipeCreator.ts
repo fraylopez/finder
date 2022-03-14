@@ -34,7 +34,7 @@ export class SwipeCreator {
       new Swipe(
         new Uuid(cardId),
         right,
-        card.score
+        right ? card.score?.right : card.score?.left
       )
     );
     await this.candidateRepository.update(candidate);

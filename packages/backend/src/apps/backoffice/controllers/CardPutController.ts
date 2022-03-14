@@ -12,7 +12,7 @@ export class CardPutController extends Controller {
   protected run(req: Request, _res: Response) {
     const id: string = req.params.id;
     const title: string = req.body.title;
-    const score: number = req.body.score;
+    const score: { left: number, right: number; } = req.body.score;
     const imageUrl: string = req.body.imageUrl;
     return this.creator.run({ id, title, score, imageUrl });
   }

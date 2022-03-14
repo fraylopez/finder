@@ -9,7 +9,10 @@ export class CardMother {
     return Card.create({
       id: id || Uuid.random(),
       title: CardTitleMother.random(),
-      score: MotherCreator.random().datatype.number({ min: 0, max: 10 }),
+      score: {
+        right: MotherCreator.random().datatype.number({ min: 0, max: 10 }),
+        left: MotherCreator.random().datatype.number({ min: 0, max: 10 }),
+      },
       imageUrl: ImageMother.random(),
     });
   }

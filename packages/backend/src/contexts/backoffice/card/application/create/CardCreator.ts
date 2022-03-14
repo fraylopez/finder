@@ -9,7 +9,7 @@ import { CardRepository } from "../../../../_shared/domain/card/CardRepository";
 type Params = {
   id: string;
   title: string,
-  score: number,
+  score: { left: number, right: number; },
   imageUrl?: string,
 };
 
