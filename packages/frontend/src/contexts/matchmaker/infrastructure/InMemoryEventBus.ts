@@ -1,6 +1,6 @@
-import { DomainEvent } from "../../_shared/domain/DomainEvent";
-import { EventBus } from "../../_shared/domain/EventBus";
-import { EventHandler } from "../../_shared/domain/EventHandler";
+import { DomainEvent } from "../../_core/domain/DomainEvent";
+import { EventBus } from "../../_core/domain/EventBus";
+import { EventHandler } from "../../_core/domain/EventHandler";
 
 export class InMemoryEventBus implements EventBus {
   private readonly handlers: EventHandler[];

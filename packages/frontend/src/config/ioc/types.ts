@@ -7,4 +7,6 @@ export enum types {
   CardRepository = "CardRepository",
   CandidateRepository = "CandidateRepository",
   SwipeService = "SwipeService",
+  ChatService = "ChatService",
+  ChatRepository = "ChatRepository",
 }

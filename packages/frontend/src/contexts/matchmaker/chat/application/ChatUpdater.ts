@@ -1,6 +1,6 @@
-import { UpdateService } from "../domain/UpdateService";
+import { UpdateService } from "../../candidate/domain/UpdateService";
 
-export class MatchUpdater {
+export class ChatUpdater {
   private callback!: (message: any) => Promise<void> | void;
 
   constructor(private readonly updateService: UpdateService) {/*  */ }
@@ -10,7 +10,6 @@ export class MatchUpdater {
 
   register(uid: string) {
     this.updateService.connect(uid);
-    this.updateService.subscribe("match.created", this.callback);
-    this.updateService.subscribe("swipe.created", this.callback); // TODO: remove this. dev purposes
+    this.updateService.subscribe("chat.message", this.callback);
   }
 }

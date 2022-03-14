@@ -11,12 +11,13 @@ export class WebSocketChatItemSender implements ChatItemSender {
   send(uid: string, conversationItem: ChatItem): void {
     this.websocketServer.emit(
       uid,
-      conversationItem.current.getValue(),
+      "chat.message",
       {
+        value: conversationItem.current.getValue(),
         next: conversationItem.next
           .map(i => ({
             id: i.getId(),
-            text: i.getValue(),
+            value: i.getValue(),
           }))
       }
     );

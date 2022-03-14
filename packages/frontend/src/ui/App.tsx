@@ -3,8 +3,8 @@ import CardsView from "./matchmaker/home/CardsView";
 import { container } from "../config/ioc/installer";
 import { CandidateCreator } from "../contexts/matchmaker/candidate/application/CandidateCreator";
 import { useEffect, useState } from "react";
-import ChatView from "./matchmaker/home/ChatView";
 import { initApp } from "./initApp";
+import Chat2View from "./matchmaker/home/Chat2View";
 
 export default function Example() {
   useEffect(() => {
@@ -24,7 +24,7 @@ export default function Example() {
         <Header page={page} setPage={setPage} />
         <main className="h-screen pt-16">
           {page === "swipe" && (<CardsView />)}
-          {page === "chats" && (<ChatView />)}
+          {page === "chats" && (<Chat2View />)}
         </main>
       </div>
     </>

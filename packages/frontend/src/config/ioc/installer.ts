@@ -10,15 +10,21 @@ import { HttpSwipeService } from "../../contexts/matchmaker/candidate/infrastruc
 import { CompositeCandidateRepository } from "../../contexts/matchmaker/candidate/infrastructure/CompositeCandidateRepository";
 import { MapContainer } from "./MapContainer";
 import { InMemoryEventBus } from "../../contexts/matchmaker/infrastructure/InMemoryEventBus";
-import { HandshakeCandidateOnCandidateCreatedEventHandler } from "../../contexts/matchmaker/candidate/application/SubscribeToMatchOnCandidateCreatedEventHandler";
+import { SubscribeToMatchOnCandidateCreatedEventHandler } from "../../contexts/matchmaker/candidate/application/SubscribeToMatchOnCandidateCreatedEventHandler";
+import { ChatUpdater } from "../../contexts/matchmaker/chat/application/ChatUpdater";
+import { HttpChatService } from "../../contexts/matchmaker/infrastructure/HttpChatService";
+import { SubscribeToChatMessageOnCandidateCreatedEventHandler } from "../../contexts/matchmaker/chat/application/SubscribeToChatMessageOnCandidateCreatedEventHandler";
+import { MemoryChatRepository } from "../../contexts/matchmaker/chat/infrastructure/MemoryChatRepository";
+import { ChatFinder } from "../../contexts/matchmaker/chat/application/ChatFinder";
+import { ChatCreator } from "../../contexts/matchmaker/chat/application/ChatCreator";
 
 
 const container = new MapContainer();
 
-container.bind(types.BaseHttpUrl, "http://10.1.0.238:3000");
-container.bind(types.BaseWsUrl, "ws://10.1.0.238:3000");
-// container.bind(types.BaseHttpUrl, "http://localhost:3000");
-// container.bind(types.BaseWsUrl, "ws://localhost:3000");
+// container.bind(types.BaseHttpUrl, "http://10.1.0.238:3000");
+// container.bind(types.BaseWsUrl, "ws://10.1.0.238:3000");
+container.bind(types.BaseHttpUrl, "http://localhost:3000");
+container.bind(types.BaseWsUrl, "ws://localhost:3000");
 
 container.bind(types.EventBus, new InMemoryEventBus());
 container.bind(types.UpdateService, new WebSocketClient(container.get(types.BaseWsUrl)));
@@ -36,5 +42,18 @@ container.bind(CandidateFinder, new CandidateFinder(container.get(types.Candidat
 container.bind(types.SwipeService, new HttpSwipeService(container.get(types.BaseHttpUrl)));
 container.bind(SwipeCreator, new SwipeCreator(container.get(types.SwipeService)));
 
-container.bind(types.EventHandler, new HandshakeCandidateOnCandidateCreatedEventHandler(container.get(MatchUpdater)));
+container.bind(types.EventHandler, new SubscribeToMatchOnCandidateCreatedEventHandler(container.get(MatchUpdater)));
+
+
+container.bind(types.ChatService, new HttpChatService(container.get(types.BaseHttpUrl)));
+container.bind(ChatUpdater, new ChatUpdater(container.get(types.UpdateService)));
+container.bind(types.ChatRepository, new MemoryChatRepository());
+container.bind(ChatFinder, new ChatFinder(container.get(types.ChatRepository)));
+container.bind(ChatCreator, new ChatCreator(container.get(types.ChatRepository)));
+
+container.bind(types.EventHandler, new SubscribeToChatMessageOnCandidateCreatedEventHandler(container.get(ChatUpdater)));
+
+
+
+
 export { container };

@@ -9,7 +9,7 @@ import { CardRepository } from "../../../_shared/domain/card/CardRepository";
 export class MemoryCardRepository extends MemoryRepository<Card> implements CardRepository {
   constructor() {
     super();
-    this.items = testData;
+    this.items = testData;// .reverse(); // TODO: fix frontend
   }
   find(id: Uuid): Promise<Card | null> {
     return this.findOne(id.toString(), (card: Card) => card.id.toString());
