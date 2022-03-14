@@ -6,7 +6,7 @@ import { types } from "./types";
 import { CardFinder } from "../../../contexts/matchmaker/card/application/get-cards/CardFinder";
 import { InMemoryAsyncEventBus } from "../../../contexts/_core/infrastructure/bus/event/InMemoryAsyncEventBus";
 import { EventLogger } from "../../../contexts/_shared/application/EventLogger";
-import { AllEventsHandler } from "../../../contexts/_shared/application/AllEventsHandler";
+import { LogAllEventsHandler } from "../../../contexts/_shared/application/LogAllEventsHandler";
 import { SwipePutController } from "../controllers/SwipePutController";
 import { SwipeCreator } from "../../../contexts/matchmaker/candidate/application/swipe/SwipeCreator";
 import { CandidateCreator } from "../../../contexts/matchmaker/candidate/application/add/CandidateCreator";
@@ -35,14 +35,18 @@ export const container = new Container();
 // Core
 container.bind(coreTypes.Logger).to(ConsoleLogger).inSingletonScope();
 container.bind(coreTypes.EventBus).to(InMemoryAsyncEventBus).inSingletonScope();
-container.bind(coreTypes.EventHandler).to(AllEventsHandler).inSingletonScope();
 container.bind(MongoClientFactory).to(MongoClientFactory).inSingletonScope();
 
 // Shared
-container.bind(EventLogger).to(EventLogger).inSingletonScope();
+container.bind(sharedTypes.CardRepository).to(MongoCardRepository).inSingletonScope();
+
+// Websocket
 container.bind(types.EventExposer).to(WebSocketCandidateEventExposer).inSingletonScope();
 container.bind(types.WebSocketServer).to(WebSocketServer).inSingletonScope();
-container.bind(sharedTypes.CardRepository).to(MongoCardRepository).inSingletonScope();
+
+// Event Logger
+container.bind(EventLogger).to(EventLogger).inSingletonScope();
+container.bind(coreTypes.EventHandler).to(LogAllEventsHandler).inSingletonScope();
 
 // Status
 container.bind(StatusGetController).toSelf().inSingletonScope();

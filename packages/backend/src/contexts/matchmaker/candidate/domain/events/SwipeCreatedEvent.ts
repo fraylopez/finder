@@ -4,7 +4,7 @@ import { Uuid } from "../../../../_core/domain/value-object/Uuid";
 
 export class SwipeCreatedEvent extends DomainEvent {
   static readonly NAME = 'swipe.created';
-  constructor(uid: Uuid, private readonly cardId: Uuid, private readonly right: boolean) {
+  constructor(uid: Uuid, public readonly cardId: Uuid, public readonly right: boolean) {
     super(SwipeCreatedEvent.NAME, uid.toString());
   }
 

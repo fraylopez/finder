@@ -6,7 +6,7 @@ import { WildcardEvent } from "../../_core/domain/bus/WildcardEvent";
 import { EventLogger } from "./EventLogger";
 
 @injectable()
-export class AllEventsHandler implements EventHandler {
+export class LogAllEventsHandler implements EventHandler {
   constructor(@inject(EventLogger) private readonly eventLogger: EventLogger) { }
   subscribedTo(): DomainEventClass[] {
     return [WildcardEvent];

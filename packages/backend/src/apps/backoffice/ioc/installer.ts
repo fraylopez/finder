@@ -5,9 +5,6 @@ import { CandidateFinder } from "../../../contexts/backoffice/candidate/applicat
 import { InMemoryAsyncEventBus } from "../../../contexts/_core/infrastructure/bus/event/InMemoryAsyncEventBus";
 import { ConsoleLogger } from "../../../contexts/_core/infrastructure/logger/ConsoleLogger";
 import { MongoClientFactory } from "../../../contexts/_core/infrastructure/persistence/mongo/MongoClientFactory";
-import { WebSocketServer } from "../../../contexts/_core/infrastructure/WebSocketServer";
-import { AllEventsHandler } from "../../../contexts/_shared/application/AllEventsHandler";
-import { EventLogger } from "../../../contexts/_shared/application/EventLogger";
 import { AllCandidatesGetController } from "../controllers/AllCandidatesGetController";
 import { CandidateGetController } from "../controllers/CandidateGetController";
 import { CardPutController } from "../controllers/CardPutController";
@@ -24,19 +21,22 @@ import { ConversationLinePatchController } from "../controllers/ConversationLine
 import { sharedTypes } from "../../_shared/ioc/sharedTypes";
 import { MemoryConversationRepository } from "../../../contexts/_shared/infrastructure/chat/MemoryConversationRepository";
 import { ConversationNestedPatchController } from "../controllers/ConversationNestedPatchController";
+import { EventLogger } from "../../../contexts/_shared/application/EventLogger";
+import { LogAllEventsHandler } from "../../../contexts/_shared/application/LogAllEventsHandler";
 
 export const container = new Container();
 // Core
 container.bind(coreTypes.Logger).to(ConsoleLogger).inSingletonScope();
 container.bind(coreTypes.EventBus).to(InMemoryAsyncEventBus).inSingletonScope();
-container.bind(coreTypes.EventHandler).to(AllEventsHandler).inSingletonScope();
+container.bind(MongoClientFactory).to(MongoClientFactory).inSingletonScope();
 
 // Shared
-container.bind(EventLogger).to(EventLogger).inSingletonScope();
-container.bind(types.WebSocketServer).to(WebSocketServer).inSingletonScope();
-container.bind(MongoClientFactory).to(MongoClientFactory).inSingletonScope();
 container.bind(sharedTypes.CardRepository).to(MongoCardRepository).inSingletonScope();
 container.bind(sharedTypes.ConversationRepository).to(MemoryConversationRepository).inSingletonScope();
+
+// Event Logger
+container.bind(EventLogger).to(EventLogger).inSingletonScope();
+container.bind(coreTypes.EventHandler).to(LogAllEventsHandler).inSingletonScope();
 
 // Status
 container.bind(StatusGetController).toSelf().inSingletonScope();
