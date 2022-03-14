@@ -1,4 +1,6 @@
 import assert from "assert";
+import { ConversationUpdatedEvent } from "./events/ConversationUpdatedEvent";
+import { AggregateRoot } from "../../../_core/domain/AggregateRoot";
 import { ConversationItem } from "./ConversationItem";
 import { ConversationLine } from "./ConversationLine";
 import { DefaultLines } from "./DefaultLines";
@@ -11,11 +13,12 @@ interface Primitives {
   cursor: string;
 }
 
-export class Conversation implements ConversationItem {
+export class Conversation extends AggregateRoot implements ConversationItem {
   static readonly START_ID = "start";
   private items: Map<string, { item: ConversationItem, next: ConversationItem[]; }>;
   private cursor?: string;
   constructor(private id: string) {
+    super();
     this.items = new Map();
   }
 
@@ -40,6 +43,15 @@ export class Conversation implements ConversationItem {
   addNode(node: ConversationItem, next: ConversationItem | ConversationItem[] = []) {
     const _next = Array.isArray(next) ? next : [next];
     this.items.set(node.getId(), { item: node, next: _next });
+    this.record(new ConversationUpdatedEvent(this.id));
+  }
+
+  addNextNode(node: ConversationItem, from: string) {
+    const current = this.items.get(from);
+    assert(current, `Unknown origin node ${from}`);
+    current?.next.push(node);
+    this.items.set(from, current);
+    this.record(new ConversationUpdatedEvent(this.id));
   }
 
   getCursor(): string {

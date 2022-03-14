@@ -10,11 +10,13 @@ export class MongoBackofficeCandidateRepository extends MongoRepository<Backoffi
     return "candidate";
   }
 
-  find(id: Uuid): Promise<BackofficeCandidate | null> {
-    return this.findOne(id.toString());
+  async find(id: Uuid): Promise<BackofficeCandidate | null> {
+    const doc = await this.findOne(id.toString());
+    return BackofficeCandidate.fromPrimitives({ ...doc, id: doc._id });
   }
+
   async findAll(): Promise<BackofficeCandidate[]> {
     const docs = await this.findMany();
-    return docs.map(doc => BackofficeCandidate.fromPrimitives({ ...doc, id: new Uuid(doc._id) }));
+    return docs.map(doc => BackofficeCandidate.fromPrimitives({ ...doc, id: doc._id }));
   }
 }

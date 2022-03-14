@@ -3,6 +3,6 @@ import { Card } from "./Card";
 
 export interface CardRepository {
   add(card: Card): Promise<void>;
-  searchAll(): Promise<Array<Card>>;
+  findAll(): Promise<Array<Card>>;
   find(id: Uuid): Promise<Card | null>;
 }

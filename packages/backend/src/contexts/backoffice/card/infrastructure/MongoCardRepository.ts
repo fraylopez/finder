@@ -20,7 +20,7 @@ export class MongoCardRepository extends MongoRepository<Card> implements CardRe
     await this.persist(card.id.toString(), card);
   }
 
-  async searchAll(): Promise<Card[]> {
+  async findAll(): Promise<Card[]> {
     const docs = await this.findMany();
     return docs.map(doc => Card.fromPrimitives({ ...doc, id: new Uuid(doc._id) }));
   }

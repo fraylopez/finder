@@ -40,4 +40,7 @@ export abstract class MongoRepository<TAggregateRoot extends AggregateRoot> {
     const collection = await this.collection();
     await collection.updateOne({ _id: id }, { $set: document }, { upsert: true });
   }
+  protected async updateOne(id: string, aggregateRoot: TAggregateRoot): Promise<void> {
+    await this.persist(id, aggregateRoot);
+  }
 }

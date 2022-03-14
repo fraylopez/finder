@@ -5,17 +5,18 @@ import { container } from "../../../../src/apps/matchmaker/ioc/installer";
 import { types } from "../../../../src/apps/matchmaker/ioc/types";
 import { coreTypes } from "../../../../src/apps/_core/ioc/coreTypes";
 import { sharedTypes } from "../../../../src/apps/_shared/ioc/sharedTypes";
-import { CandidateRepository } from "../../../../src/contexts/matchmaker/candidate/domain/CandidateRepository";
 import { DomainEvent } from "../../../../src/contexts/_core/domain/bus/DomainEvent";
 import { EventBus } from "../../../../src/contexts/_core/domain/bus/EventBus";
 import { Uuid } from "../../../../src/contexts/_core/domain/value-object/Uuid";
 import { CardRepository } from "../../../../src/contexts/_shared/domain/card/CardRepository";
-import { CandidateMother } from "../../../contexts/matchmaker/candidate/domain/CandidateMother";
+import { BackofficeCandidateMother } from "../../../contexts/backoffice/domain/BackofficeCandidateMother";
+import { MongoBackofficeCandidateTestRepositroy } from "../../../contexts/backoffice/infrastructure/BackofficeCandidateTestRepositroy";
 import { CardMother } from "../../../contexts/_shared/domain/card/CardMother";
 
 export class BackofficeBackendAcceptanceTest {
   private static application: BackofficeBackendApp;
   private static cachedEnv?: string;
+
   static async start() {
     this.cachedEnv = process.env.NODE_ENV;
     process.env.NODE_ENV = "acceptance";
@@ -37,6 +38,9 @@ export class BackofficeBackendAcceptanceTest {
   static async patch(route: string, body?: object) {
     return request(this.application.httpServer).patch(route).send(body);
   }
+  static async post(route: string, body?: object) {
+    return request(this.application.httpServer).post(route).send(body);
+  }
   static async publish(event: DomainEvent) {
     const eventBus = container.get<EventBus>(coreTypes.EventBus);
     await eventBus.publish([event]);
@@ -44,14 +48,14 @@ export class BackofficeBackendAcceptanceTest {
 
   static async addRandomCard(cardId?: Uuid) {
     const card = CardMother.random(cardId);
-    const cardRepsitory = container.get<CardRepository>(sharedTypes.CardRepository);
-    await cardRepsitory.add(card);
+    const repository = container.get<CardRepository>(sharedTypes.CardRepository);
+    await repository.add(card);
     return card;
   }
   static async addRandomCandidate(candidateId?: Uuid) {
-    const candidate = CandidateMother.random(candidateId);
-    const cardRepsitory = container.get<CandidateRepository>(types.CandidateRepository);
-    await cardRepsitory.add(candidate);
+    const candidate = BackofficeCandidateMother.random(candidateId);
+    const repository = container.get<MongoBackofficeCandidateTestRepositroy>(types.CandidateRepository);
+    await repository.add(candidate);
     return candidate;
   }
 }

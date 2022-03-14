@@ -13,7 +13,7 @@ export class MongoCandidateRepository extends MongoRepository<Candidate> impleme
 
   async find(id: Uuid): Promise<Nullable<Candidate>> {
     const doc = await this.findOne<any>(id.toString());
-    return doc ? Candidate.fromPrimitives({ ...doc, id: new Uuid(doc._id) }) : null;
+    return doc ? Candidate.fromPrimitives({ ...doc, id: doc.id }) : null;
   }
 
   async update(candidate: Candidate): Promise<void> {

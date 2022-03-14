@@ -20,9 +20,10 @@ import { coreTypes } from "../../_core/ioc/coreTypes";
 import { ChatCreator } from "../../../contexts/backoffice/chat/application/ChatCreator";
 import { ChatUpdater } from "../../../contexts/backoffice/chat/application/ChatUpdater";
 import { ConversationPostController } from "../controllers/ConversationPostController";
-import { ConversationPatchController } from "../controllers/ConversationPatchController";
+import { ConversationLinePatchController } from "../controllers/ConversationLinePatchController";
 import { sharedTypes } from "../../_shared/ioc/sharedTypes";
 import { MemoryConversationRepository } from "../../../contexts/_shared/infrastructure/chat/MemoryConversationRepository";
+import { ConversationNestedPatchController } from "../controllers/ConversationNestedPatchController";
 
 export const container = new Container();
 // Core
@@ -55,7 +56,8 @@ container.bind(types.CandidateRepository).to(MongoBackofficeCandidateRepository)
 
 // Chat
 container.bind(ConversationPostController).toSelf().inSingletonScope();
-container.bind(ConversationPatchController).toSelf().inSingletonScope();
+container.bind(ConversationLinePatchController).toSelf().inSingletonScope();
+container.bind(ConversationNestedPatchController).toSelf().inSingletonScope();
 
 container.bind(ChatCreator).toSelf().inSingletonScope();
 container.bind(ChatUpdater).toSelf().inSingletonScope();

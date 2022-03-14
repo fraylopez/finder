@@ -8,7 +8,7 @@ export class CardFinder {
   constructor(@inject(sharedTypes.CardRepository) private repository: CardRepository) { }
 
   async run() {
-    const cards = await this.repository.searchAll();
+    const cards = await this.repository.findAll();
     return new CardsResponse(cards);
   }
 }

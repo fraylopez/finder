@@ -1,27 +1,20 @@
 import { injectable } from "inversify";
 import { Uuid } from "../../../_core/domain/value-object/Uuid";
+import { MemoryRepository } from "../../../_core/infrastructure/persistence/memory/MemoryReposirtory";
 import { Candidate } from "../domain/Candidate";
 import { CandidateRepository } from "../domain/CandidateRepository";
 
 @injectable()
-export class MemoryCandidateRepository implements CandidateRepository {
-  protected candidates: Candidate[];
-  constructor() {
-    this.candidates = [];
-  }
+export class MemoryCandidateRepository extends MemoryRepository<Candidate> implements CandidateRepository {
 
   add(candidate: Candidate): Promise<void> {
-    this.candidates.push(candidate);
-    return Promise.resolve();
+    return this.persist(candidate.id.toString(), candidate);
   }
   find(id: Uuid): Promise<Candidate | null> {
-    const candidate = this.candidates.find(c => c.id.equals(id));
-    return Promise.resolve(candidate || null);
+    return this.findOne(id.toString(), c => c.id.toString());
   }
 
-  update(candidate: Candidate): Promise<void> {
-    const candidateIndex = this.candidates.findIndex(c => c.id.equals(candidate.id));
-    this.candidates[candidateIndex] = candidate;
-    return Promise.resolve();
+  async update(candidate: Candidate): Promise<void> {
+    await this.updateOne(candidate.id.toString(), candidate, c => c.id.toString());
   }
 }
