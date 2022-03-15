@@ -32,7 +32,7 @@ export class ConversationMother {
     sampleConversation
       .addNext(
         ConversationLine.fromLine(new Line("hello", "Hello there! It looks like you are a match!"), "bot")
-          .addNext(ConversationLine.fromLine(new Line("hello_response_1", "A match of what?"), "bot"))
+          .addNext(ConversationLine.fromLine(new Line("hello_response_1", "A match for what?"), "bot"))
           .addNext(ConversationLine.fromLine(new Line("hello_response_2", "Hello to you!"), "bot"))
       )
       .attachNodeTo(
