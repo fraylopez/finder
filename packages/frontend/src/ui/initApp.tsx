@@ -1,7 +1,7 @@
 import { container } from "../config/ioc/installer";
 import { types } from "../config/ioc/types";
-import { EventBus } from "../contexts/_shared/domain/EventBus";
-import { EventHandler } from "../contexts/_shared/domain/EventHandler";
+import { EventBus } from "../contexts/_core/domain/EventBus";
+import { EventHandler } from "../contexts/_core/domain/EventHandler";
 
 export function initApp() {
   const eventHandlers: EventHandler[] = container.getAll(types.EventHandler);

@@ -12,6 +12,7 @@ import { Line } from "../../../_shared/domain/chat/Line";
 interface LineParams {
   id: string;
   value: string;
+  from?: string;
   fromNodeId?: string;
 }
 interface ConversationParams {
@@ -27,10 +28,17 @@ export class ChatUpdater {
     @inject(coreTypes.EventBus) private readonly eventBus: EventBus,
   ) { }
 
-  async addLine({ id, value, fromNodeId }: LineParams) {
+  async addLine({ id, value, from, fromNodeId }: LineParams) {
     const conversation = await this.repository.find(id);
     assert(conversation, `Uknown conversation ${id}`);
-    await this.addNode(conversation!, new ConversationLine(new Line(id, value))!, fromNodeId);
+    await this.addNode(
+      conversation!,
+      new ConversationLine(
+        new Line(id, value),
+        from
+      ),
+      fromNodeId,
+    );
   }
 
   async addNestedConversation({ conversationId, linkToConversationId, fromNodeId }: ConversationParams) {
@@ -43,9 +51,9 @@ export class ChatUpdater {
 
   private async addNode(conversation: Conversation, node: ConversationItem, fromNodeId?: string) {
     if (fromNodeId) {
-      conversation.addNextNode(node, fromNodeId);
+      conversation.addNodeFrom(node, fromNodeId);
     } else {
-      conversation.addNode(node);
+      conversation.addNext(node);
     }
     await this.repository.update(conversation);
     await this.eventBus.publish(conversation.pullDomainEvents());

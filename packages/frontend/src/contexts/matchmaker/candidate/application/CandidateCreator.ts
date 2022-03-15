@@ -1,4 +1,4 @@
-import { EventBus } from "../../../_shared/domain/EventBus";
+import { EventBus } from "../../../_core/domain/EventBus";
 import { Candidate } from "../domain/Candidate";
 import { CandidateRepository } from "../domain/CandidateRepository";
 
@@ -11,6 +11,7 @@ export class CandidateCreator {
     const candidate = Candidate.create();
     await this.candidateRepository.add(candidate);
     await this.eventBus.publish(candidate.pullDomainEvents());
+    return candidate;
   }
 
 }

@@ -19,16 +19,16 @@ function CardsView() {
 
 
   const [isSending, setIsSending] = useState(false);
-  
+
   const sendSwipe = async (cardId: string, right: boolean) => {
     if (isSending) return;
     setIsSending(true);
     const candidate = await container.get(CandidateFinder).get();
     await container.get(SwipeCreator).swipe(candidate!.id, cardId, right);
-  
-    setCards(cards.slice(0, -1))
+
+    setCards(cards.slice(0, -1));
     setIsSending(false);
-  }
+  };
 
   return (
     <div className="w-full h-full relative pt-10 pb-16 max-w-4xl mx-auto px-6 lg:px-8">
@@ -45,7 +45,7 @@ function CardsView() {
           className="inline-flex items-center p-3 border border-transparent rounded-full shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
         >
           <HeartIcon className="h-8 w-8" aria-hidden="true" />
-        </button>    
+        </button>
       </div>
     </div>
   );

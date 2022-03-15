@@ -6,18 +6,16 @@ interface CardStackProps {
     title: string;
     imageUrl: string;
   }[],
-  onVote: Function
+  onVote: Function;
 }
 
-const CardStack = ({cards, onVote}: CardStackProps) => {
-
-
+const CardStack = ({ cards, onVote }: CardStackProps) => {
   return (
     <div className="relative justify-center items-center h-full">
       {cards.map((card, index) => <Card key={card.id} index={cards.length - index - 1} {...card} onVote={onVote} />)}
     </div>
-  )
+  );
 
-}
+};
 
 export default CardStack;

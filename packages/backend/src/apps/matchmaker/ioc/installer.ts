@@ -15,7 +15,7 @@ import { CandidateEvaluator } from "../../../contexts/matchmaker/candidate/appli
 import { ScoreMatchEvaluator } from "../../../contexts/matchmaker/candidate/domain/ScoreMatchEvaluator";
 import { StartChatOnMatchCreatedEvent } from "../../../contexts/matchmaker/candidate/application/chat/StartChatOnMatchCreatedEvent";
 import { ChatController } from "../../../contexts/matchmaker/candidate/application/chat/ChatController";
-import { ConversationPutController } from "../controllers/ConversationPutController";
+import { ChatPutController } from "../controllers/ChatPutController";
 import { StatusGetController } from "../controllers/StatusGetController";
 import { WebSocketServer } from "../../../contexts/_core/infrastructure/WebSocketServer";
 import { WebSocketChatItemSender } from "../../../contexts/matchmaker/candidate/infrastructure/WebSocketChatItemSender";
@@ -27,6 +27,8 @@ import { coreTypes } from "../../_core/ioc/coreTypes";
 import { MongoCardRepository } from "../../../contexts/backoffice/card/infrastructure/MongoCardRepository";
 import { MongoCandidateRepository } from "../../../contexts/matchmaker/candidate/infrastructure/MongoCandidateRepository";
 import { getContainer } from "../../_core/ioc/installer";
+import { ChatGetController } from "../controllers/ChatGetController";
+import { ChatFinder } from "../../../contexts/matchmaker/candidate/application/chat/ChatFinder";
 
 export const container = getContainer();
 
@@ -52,13 +54,15 @@ container.bind(CardFinder).toSelf().inSingletonScope();
 container.bind(CandidatePutController).toSelf().inSingletonScope();
 container.bind(SwipePutController).toSelf().inSingletonScope();
 container.bind(CandidateEvaluator).toSelf().inSingletonScope();
-container.bind(ConversationPutController).toSelf().inSingletonScope();
+container.bind(ChatPutController).toSelf().inSingletonScope();
 container.bind(MailPatchController).toSelf().inSingletonScope();
+container.bind(ChatGetController).toSelf().inSingletonScope();
 
 container.bind(CandidateCreator).toSelf().inSingletonScope();
 container.bind(SwipeCreator).toSelf().inSingletonScope();
 container.bind(ChatController).toSelf().inSingletonScope();
 container.bind(MailUpdater).toSelf().inSingletonScope();
+container.bind(ChatFinder).toSelf().inSingletonScope();
 
 container.bind(types.MatchEvaluator).to(ScoreMatchEvaluator).inSingletonScope();
 container.bind(types.ConversationItemSender).to(WebSocketChatItemSender).inSingletonScope();

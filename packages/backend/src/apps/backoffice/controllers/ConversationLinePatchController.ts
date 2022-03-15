@@ -12,8 +12,9 @@ export class ConversationLinePatchController extends Controller {
   protected run(req: Request, _res: Response) {
     const id: string = req.params.id;
     const value: string = req.body.value;
+    const from: string = req.body.from;
     const fromNodeId: string = req.body.fromNodeId;
-    return this.updater.addLine({ id, value, fromNodeId });
+    return this.updater.addLine({ id, value, fromNodeId, from });
   }
 }
 

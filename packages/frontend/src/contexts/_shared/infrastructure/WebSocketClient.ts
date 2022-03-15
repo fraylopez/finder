@@ -10,12 +10,18 @@ interface Message {
 export class WebSocketClient implements UpdateService {
   private wss!: typeof Socket;
   private subscriptions: Map<string, Array<Handler>>;
+  private connected: boolean;
 
   constructor(private readonly baseUrl: string) {
     this.subscriptions = new Map();
+    this.connected = false;
   }
 
   connect(uid: string) {
+    if (this.connected) {
+      return;
+    }
+    this.connected = true;
     this.wss = io(this.baseUrl, { autoConnect: false, query: { uid } });
     const wildcardPatch = wilcard(Manager);
     wildcardPatch(this.wss);
@@ -34,13 +40,15 @@ export class WebSocketClient implements UpdateService {
     this.subscriptions.set(topic, current);
     this.wss.disconnect();
     this.wss.off("*");
+    this.connected = false;
   }
 
   private onConnection() {
-    this.wss.on("*", this.onMessage.bind(this));
+    this.wss.on("*", (data: { data: [messageName: string, message: Message]; }) => this.onMessage(data.data[0], data.data[1]));
   }
 
-  private onMessage(message: Message) {
-    this.subscriptions.get(message.messageName)?.map(s => s(message));
+  private onMessage(messageName: string, message: Message) {
+    const handlers = this.subscriptions.get(messageName) || [];
+    handlers.forEach(s => s(message));
   }
 };

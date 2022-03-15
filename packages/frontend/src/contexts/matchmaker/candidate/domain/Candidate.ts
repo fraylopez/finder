@@ -1,5 +1,5 @@
-import { AggregateRoot } from "../../../_shared/domain/AggregateRoot";
-import { Uuid } from "../../../_shared/domain/Uuid";
+import { AggregateRoot } from "../../../_core/domain/AggregateRoot";
+import { Uuid } from "../../../_core/domain/Uuid";
 import { CandidateCreatedEvent } from "./CandidateCreatedEvent";
 
 export class Candidate extends AggregateRoot {

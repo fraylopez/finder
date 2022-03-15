@@ -6,7 +6,7 @@ import { UnknownCandidateError } from "../../../contexts/matchmaker/candidate/do
 import { Controller } from '../../_core/controllers/Controller';
 
 @injectable()
-export class ConversationPutController extends Controller {
+export class ChatPutController extends Controller {
   constructor(@inject(ChatController) private readonly controller: ChatController) {
     super();
     this.addHandledError(UnknownCandidateError, 404);

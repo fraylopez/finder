@@ -67,16 +67,21 @@ export class Candidate extends AggregateRoot {
     return this.isMatch;
   }
 
+
   startChat(conversation: Conversation) {
     this._chat = new Chat(conversation);
-    return this._chat.getChatItem();
+    return this.chat.getCurrentNode();
   }
 
   talk(line?: Line) {
     if (line) {
-      this.chat.talk(line);
+      this.chat.talk(line, this.id.toString());
     }
-    return this.chat.getChatItem();
+    return this.chat.getCurrentNode();
+  }
+
+  getChat() {
+    return this.chat;
   }
 
   setMail(mail: Mail) {

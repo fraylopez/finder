@@ -8,7 +8,7 @@ type Params = {
 };
 
 @injectable()
-export class CandidateFinder {
+export class BackofficeCandidateFinder {
   constructor(
     @inject(types.CandidateRepository) private repository: BackofficeCandidateRepository,
   ) { }

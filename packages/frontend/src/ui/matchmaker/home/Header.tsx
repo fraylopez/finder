@@ -4,6 +4,8 @@ import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
 import { container } from "../../../config/ioc/installer";
 import { MatchUpdater } from "../../../contexts/matchmaker/candidate/application/MatchUpdater";
+import { ChatUpdater, ReceivedMessage } from "../../../contexts/matchmaker/chat/application/ChatUpdater";
+import { ChatMessage } from "../../../contexts/matchmaker/chat/domain/ChatMessage";
 
 const user = {
   name: 'Tom Cook',
@@ -31,11 +33,23 @@ function Header({ page, setPage }: { page: string, setPage: Function; }) {
     return m + 1;
   }, 0);
 
+  const [messages, addMessage] = useReducer((messages: ChatMessage[], message: ChatMessage): ChatMessage[] => {
+    return [...messages, message];
+  }, []);
+
+
   useEffect(() => {
     container.get(MatchUpdater).addCallback((message: any) => {
       incrementCount();
     });
     // return container.get(MatchUpdater).unregister();
+  }, []);
+
+  useEffect(() => {
+    container.get(ChatUpdater).addCallback((message: ReceivedMessage) => {
+      addMessage(message.current);
+    });
+    // return container.get(ChatUpdater).unregister();
   }, []);
 
   return (
@@ -81,10 +95,10 @@ function Header({ page, setPage }: { page: string, setPage: Function; }) {
                   className="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 relative"
                 >
                   <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  {!!matchCount && (
+                  <BellIcon className="h-6 w-6" aria-hidden="true" onClick={() => setPage("chats")} />
+                  {!!messages.length && (
                     <span className="absolute top-0 right-1 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
-                      {matchCount}
+                      {messages.length}
                     </span>
                   )}
                 </button>

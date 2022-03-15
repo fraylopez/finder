@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { CardCreator } from "../../../contexts/backoffice/card/application/create/CardCreator";
-import { CandidateFinder } from "../../../contexts/backoffice/candidate/application/find/CandidateFinder";
+import { BackofficeCandidateFinder } from "../../../contexts/backoffice/candidate/application/find/BackofficeCandidateFinder";
 import { AllCandidatesGetController } from "../controllers/AllCandidatesGetController";
 import { CandidateGetController } from "../controllers/CandidateGetController";
 import { CardPutController } from "../controllers/CardPutController";
@@ -43,7 +43,7 @@ container.bind(CardCreator).toSelf().inSingletonScope();
 container.bind(AllCandidatesGetController).toSelf().inSingletonScope();
 container.bind(CandidateGetController).toSelf().inSingletonScope();
 
-container.bind(CandidateFinder).toSelf().inSingletonScope();
+container.bind(BackofficeCandidateFinder).toSelf().inSingletonScope();
 
 container.bind(types.CandidateRepository).to(MongoBackofficeCandidateRepository).inSingletonScope();
 
