@@ -9,6 +9,7 @@ export class ConversationFactory {
   static get(id: string) {
     const conversation = this.conversations.find(c => c.getId() === id);
     assert(conversation, `Unknown conversation ${id}`);
+    conversation.restart();
     return conversation;
   }
 }

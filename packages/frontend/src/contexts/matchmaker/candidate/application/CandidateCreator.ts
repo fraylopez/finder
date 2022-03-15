@@ -11,6 +11,7 @@ export class CandidateCreator {
     const candidate = Candidate.create();
     await this.candidateRepository.add(candidate);
     await this.eventBus.publish(candidate.pullDomainEvents());
+    return candidate;
   }
 
 }

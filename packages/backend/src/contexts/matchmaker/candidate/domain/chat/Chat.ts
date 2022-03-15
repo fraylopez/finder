@@ -1,50 +1,53 @@
-import { ChatItem } from "./ChatItem";
 import { Conversation } from "../../../../_shared/domain/chat/Conversation";
 import { Line } from "../../../../_shared/domain/chat/Line";
 import { ConversationFactory } from "../../../../_shared/domain/chat/ConversationFactory";
-import { ConversationLine } from "../../../../_shared/domain/chat/ConversationLine";
 import { ConversationItem } from "../../../../_shared/domain/chat/ConversationItem";
 
+interface ConversationPath {
+  id: string,
+  value: string;
+  from: string;
+}
 interface Primitives {
   conversation: any;
-  lines: { id: string, value: string; }[];
+  path: ConversationPath[];
 }
 export class Chat {
-  private path: ConversationItem[];
+  private path: ConversationPath[];
   constructor(private readonly conversation: Conversation) {
     this.path = [];
     const first = conversation.getFirstNode();
     if (first) {
-      this.path.push(first);
+      this.path.push({ id: first.getId(), value: first.getValue(), from: first.getFrom() });
     }
   }
 
-  static fromPrimitives({ conversation, lines }: Primitives) {
+  static fromPrimitives({ conversation, path }: Primitives) {
     const currentConversation = ConversationFactory.get(conversation.id)!;
     currentConversation.setPrimitives(conversation);
     const chat = new Chat(currentConversation);
-    chat.path = lines.map(l => ConversationLine.fromLine(new Line(l.id, l.value)));
+    chat.path = path;
     return chat;
   }
 
-  talk(line: Line): ChatItem {
-    this.path.push(ConversationLine.fromLine(line));
+  talk(line: Line, from: string): ConversationItem {
+    this.path.push({ id: line.id, value: line.value, from });
     this.conversation.listen(line.id);
-    return this.getChatItem();
+    return this.getCurrentNode();
   }
 
   toPrimitives() {
     return {
       conversation: this.conversation.toPrimitives(),
-      lines: this.path.map(l => ({ id: l.getId(), value: l.getValue() }))
+      path: this.path,
     };
   }
 
-  getChatItem(): ChatItem {
-    return {
-      current: this.conversation.getCurrentNode(),
-      next: this.conversation.getNext(),
-    };
+  getCurrentNode(): ConversationItem {
+    return this.conversation.getCurrentNode();
   }
 
+  getPath() {
+    return this.path;
+  }
 }

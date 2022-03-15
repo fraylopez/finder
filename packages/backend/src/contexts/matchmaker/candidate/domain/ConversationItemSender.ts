@@ -1,5 +1,5 @@
-import { ChatItem } from "./chat/ChatItem";
+import { ConversationItem } from "../../../_shared/domain/chat/ConversationItem";
 
 export interface ChatItemSender {
-  send(uid: string, conversationItem: ChatItem): void;
+  send(uid: string, conversationLine: ConversationItem): void;
 }

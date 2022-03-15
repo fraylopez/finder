@@ -21,7 +21,7 @@ export class ConversationMother {
   }
   static emptyWithHello(id?: string) {
     const conversation = new Conversation(id || Uuid.random().toString());
-    conversation.addNext(ConversationLine.fromLine(DefaultLines.HELLO));
+    conversation.addNext(ConversationLine.fromLine(DefaultLines.HELLO, "bot"));
     return conversation;
   }
 }

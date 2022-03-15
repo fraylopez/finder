@@ -19,6 +19,9 @@ export class ChatGetController extends Controller {
   }
 
   private toResponse(chat?: Chat) {
-    return chat?.toPrimitives();
+    return {
+      path: chat?.getPath(),
+      next: chat?.getCurrentNode().getNext().map(n => ({ id: n.getId(), value: n.getValue() }))
+    };
   }
 }

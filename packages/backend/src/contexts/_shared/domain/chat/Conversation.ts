@@ -13,6 +13,7 @@ interface Primitives {
 }
 
 export class Conversation extends AggregateRoot implements ConversationItem {
+  static readonly FROM_COMPANY = "company";
   private entryPoint?: ConversationLine;
   private cursor?: string;
   constructor(private id: string) {
@@ -29,8 +30,7 @@ export class Conversation extends AggregateRoot implements ConversationItem {
   }
 
   getValue(): string {
-    assert(this.entryPoint, "Conversation never started");
-    return this.entryPoint.getValue();
+    return this.getCurrentNode().getValue();
   }
 
   getFirstNode() {
@@ -44,6 +44,10 @@ export class Conversation extends AggregateRoot implements ConversationItem {
 
   getNext(): ConversationItem[] {
     return this.getCurrentNode().getNext();
+  }
+
+  getFrom() {
+    return this.getCurrentNode().getFrom();
   }
 
   addNext(item: ConversationItem): void {

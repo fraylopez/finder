@@ -6,7 +6,8 @@ import { WordMother } from "../WordMother";
 export class LineMother {
   static random(id?: string) {
     return ConversationLine.fromLine(
-      new Line(id || Uuid.random().toString(), WordMother.random(5))
+      new Line(id || Uuid.random().toString(), WordMother.random(5)),
+      "bot",
     );
   }
 

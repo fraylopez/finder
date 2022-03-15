@@ -70,14 +70,14 @@ export class Candidate extends AggregateRoot {
 
   startChat(conversation: Conversation) {
     this._chat = new Chat(conversation);
-    return this.chat.getChatItem();
+    return this.chat.getCurrentNode();
   }
 
   talk(line?: Line) {
     if (line) {
-      this.chat.talk(line);
+      this.chat.talk(line, this.id.toString());
     }
-    return this.chat.getChatItem();
+    return this.chat.getCurrentNode();
   }
 
   getChat() {

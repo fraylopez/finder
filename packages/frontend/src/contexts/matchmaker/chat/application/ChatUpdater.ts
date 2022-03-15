@@ -1,15 +1,14 @@
 import { UpdateService } from "../../candidate/domain/UpdateService";
+import { ChatMessage } from "../domain/ChatMessage";
+
+export interface ReceivedMessage {
+  current: ChatMessage;
+  next: ChatMessage[];
+}
 
 export class ChatUpdater {
-  private callback!: (message: any) => Promise<void> | void;
-
   constructor(private readonly updateService: UpdateService) {/*  */ }
-  addCallback(callback: (message: any) => Promise<void> | void) {
-    this.callback = callback;
-  }
-
-  register(uid: string) {
-    this.updateService.connect(uid);
-    this.updateService.subscribe("chat.message", this.callback);
+  addCallback(callback: (message: ReceivedMessage) => Promise<void> | void) {
+    this.updateService.subscribe("chat.message", callback);
   }
 }

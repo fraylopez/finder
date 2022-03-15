@@ -1,3 +1,7 @@
+import { Chat } from "./Chat";
+
 export interface ChatService {
-  answer(responseId: string): Promise<void>;
+  talk(uid: string, responseId: string): Promise<void>;
+  get(uid: string): Promise<Chat>;
 }
+

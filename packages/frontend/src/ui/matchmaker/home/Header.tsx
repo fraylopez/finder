@@ -4,10 +4,8 @@ import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
 import { container } from "../../../config/ioc/installer";
 import { MatchUpdater } from "../../../contexts/matchmaker/candidate/application/MatchUpdater";
-import { ChatUpdater } from "../../../contexts/matchmaker/chat/application/ChatUpdater";
+import { ChatUpdater, ReceivedMessage } from "../../../contexts/matchmaker/chat/application/ChatUpdater";
 import { ChatMessage } from "../../../contexts/matchmaker/chat/domain/ChatMessage";
-import { types } from "../../../config/ioc/types";
-import { ChatRepository } from "../../../contexts/matchmaker/chat/domain/ChatRepository";
 
 const user = {
   name: 'Tom Cook',
@@ -48,9 +46,8 @@ function Header({ page, setPage }: { page: string, setPage: Function; }) {
   }, []);
 
   useEffect(() => {
-    container.get(ChatUpdater).addCallback((message: ChatMessage) => {
-      addMessage(message);
-      container.get<ChatRepository>(types.ChatRepository).add(message);
+    container.get(ChatUpdater).addCallback((message: ReceivedMessage) => {
+      addMessage(message.current);
     });
     // return container.get(ChatUpdater).unregister();
   }, []);

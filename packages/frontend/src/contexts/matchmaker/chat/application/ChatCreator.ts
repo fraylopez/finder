@@ -1,10 +1,9 @@
-import { ChatMessage } from "../domain/ChatMessage";
-import { ChatRepository } from "../domain/ChatRepository";
+import { ChatService } from "../domain/ChatService";
 
 export class ChatCreator {
-  constructor(private readonly repository: ChatRepository) { }
+  constructor(private readonly service: ChatService) { }
 
-  add(message: ChatMessage) {
-    return this.repository.add(message);
+  add(uid: string, responseId: string) {
+    return this.service.talk(uid, responseId);
   }
 }

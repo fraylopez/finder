@@ -31,7 +31,9 @@ export class ChatController {
 
   async talk({ uid, responseId, message }: TalkParams) {
     const candidate = await this.findCandidate(uid);
-    const currentMessage = candidate.talk(new CandidateLine(responseId, message));
+    candidate.talk(new CandidateLine(responseId, message));
+    const nextMessage = candidate.getChat().getCurrentNode().getNext()[0];
+    const currentMessage = candidate.talk(new CandidateLine(nextMessage.getId(), message));
     await this.candidateRepository.update(candidate);
     this.conversationItemSender.send(uid, currentMessage);
   }

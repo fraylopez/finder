@@ -1,4 +1,5 @@
 export interface ConversationItem {
+  getFrom(): string;
   getId(): string;
   getValue(): string;
   getCurrentNode(): ConversationItem;

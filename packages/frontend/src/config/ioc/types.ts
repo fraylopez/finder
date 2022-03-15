@@ -8,5 +8,4 @@ export enum types {
   CandidateRepository = "CandidateRepository",
   SwipeService = "SwipeService",
   ChatService = "ChatService",
-  ChatRepository = "ChatRepository",
 }
