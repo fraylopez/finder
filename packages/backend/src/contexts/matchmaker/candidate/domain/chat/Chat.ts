@@ -33,6 +33,7 @@ export class Chat {
   talk(line: Line, from: string): ConversationItem {
     this.path.push({ id: line.id, value: line.value, from });
     this.conversation.listen(line.id);
+    this.conversation.respond();
     return this.getCurrentNode();
   }
 
