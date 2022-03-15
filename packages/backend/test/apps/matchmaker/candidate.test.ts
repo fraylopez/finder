@@ -83,6 +83,18 @@ describe(`${TestUtils.getAcceptanceTestPath(__dirname)}`, () => {
         candidateRepository = container.get(types.CandidateRepository);
       });
 
+      it('should retrieve current chat', async () => {
+        const candidate = CandidateMother.match();
+        candidate.startChat(ConversationMother.randomSequential("test"));
+
+        const uid = candidate.id.toString();
+        await candidateRepository.add(candidate);
+        const response = await MatchMakerBackendAcceptanceTest.get(
+          `/candidate/${uid}/chat`,
+        );
+        expect(response.status).eq(200);
+      });
+
       it('should handle match candidate conversations', async () => {
         const candidate = CandidateMother.match();
         candidate.startChat(ConversationMother.randomSequential("test"));
@@ -90,7 +102,7 @@ describe(`${TestUtils.getAcceptanceTestPath(__dirname)}`, () => {
         const uid = candidate.id.toString();
         await candidateRepository.add(candidate);
         const response = await MatchMakerBackendAcceptanceTest.put(
-          `/candidate/${uid}/talk`,
+          `/candidate/${uid}/chat`,
           {
             responseId: "some-id"
           }
@@ -104,7 +116,7 @@ describe(`${TestUtils.getAcceptanceTestPath(__dirname)}`, () => {
         await candidateRepository.add(candidate);
 
         const response = await MatchMakerBackendAcceptanceTest.put(
-          `/candidate/${uid}/talk`,
+          `/candidate/${uid}/chat`,
           {
             responseId: "some-id"
           }

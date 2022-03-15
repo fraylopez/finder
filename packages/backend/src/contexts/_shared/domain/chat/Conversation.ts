@@ -1,25 +1,22 @@
 import assert from "assert";
-import { ConversationUpdatedEvent } from "./events/ConversationUpdatedEvent";
 import { AggregateRoot } from "../../../_core/domain/AggregateRoot";
 import { ConversationItem } from "./ConversationItem";
 import { ConversationLine } from "./ConversationLine";
-import { DefaultLines } from "./DefaultLines";
 
 interface Params {
   id: string;
 }
 interface Primitives {
   id: string;
-  cursor: string;
+  cursor?: string;
+  entryPoint?: any;
 }
 
 export class Conversation extends AggregateRoot implements ConversationItem {
-  static readonly START_ID = "start";
-  private items: Map<string, { item: ConversationItem, next: ConversationItem[]; }>;
+  private entryPoint?: ConversationLine;
   private cursor?: string;
   constructor(private id: string) {
     super();
-    this.items = new Map();
   }
 
   static create({ id }: Params) {
@@ -27,53 +24,53 @@ export class Conversation extends AggregateRoot implements ConversationItem {
     return conversation;
   }
 
-  static fromPrimitives({ id, cursor }: Primitives) {
-    const conversation = new Conversation(id);
-    conversation.setCursor(cursor);
-    return conversation;
-  }
-
   getId(): string {
     return this.id;
   }
+
   getValue(): string {
-    return this.getCurrentNode().getValue();
+    assert(this.entryPoint, "Conversation never started");
+    return this.entryPoint.getValue();
   }
+
+  getFirstNode() {
+    const first = this.entryPoint;
+    return first;
+  }
+
   getCurrentNode(): ConversationItem {
-    this.cursor = this.getCursor();
-    if (this.cursor) {
-      return this.items.get(this.cursor)?.item || ConversationLine.fromLine(DefaultLines.UNKNOWN);
-    }
-    return this;
+    return this.getNodeById(this.getCursor(), this.getEntryPoint())!;
   }
+
   getNext(): ConversationItem[] {
-    return this.items.get(this.getCurrentNode().getId())?.next || [];
+    return this.getCurrentNode().getNext();
   }
 
-  addNode(node: ConversationItem, next: ConversationItem | ConversationItem[] = []) {
-    const _next = Array.isArray(next) ? next : [next];
-    this.items.set(node.getId(), { item: node, next: _next });
-    this.record(new ConversationUpdatedEvent(this.id));
-  }
-
-  addNextNode(node: ConversationItem, from: string) {
-    const current = this.items.get(from);
-    assert(current, `Unknown origin node ${from}`);
-    current?.next.push(node);
-    this.items.set(from, current);
-    this.record(new ConversationUpdatedEvent(this.id));
-  }
-
-  getCursor(): string | undefined {
-    if (!this.cursor && this.items.size) {
-      this.cursor = Array.from(this.items.values())[0].item.getId();
+  addNext(item: ConversationItem): void {
+    if (!this.entryPoint) {
+      assert(item instanceof ConversationLine, "Conversation must start with a line");
+      this.entryPoint = item;
+      this.setCursor(item.getId());
     }
+    else {
+      this.getCurrentNode().addNext(item);
+    }
+  }
+
+  addNodeFrom(node: ConversationItem, from: string) {
+    const parent = this.getNodeById(from, this.getEntryPoint());
+    assert(parent, `Unknown origin node ${from}`);
+    parent.addNext(node);
+  }
+
+  getCursor(): string {
+    assert(this.cursor, "Conversation never started");
     return this.cursor;
   }
 
   listen(next: string) {
-    if (this.nodeExists(next)) {
-      this.cursor = next;
+    if (this.geNextById(next)) {
+      this.setCursor(next);
     }
     return this;
   }
@@ -81,22 +78,45 @@ export class Conversation extends AggregateRoot implements ConversationItem {
   setCursor(cursor: string) {
     this.cursor = cursor;
   }
+
   restart() {
-    this.cursor = undefined;
+    this.setCursor(this.getEntryPoint().getId());
   }
 
   toPrimitives() {
     return {
       id: this.id,
-      cursor: this.getCursor(),
+      cursor: this.cursor,
+      entryPoint: this.entryPoint?.toPrimitives()
     };
   }
-  setPrimitives({ id, cursor }: Primitives) {
+
+  setPrimitives({ id, cursor, entryPoint }: Primitives) {
     this.id = id;
     this.cursor = cursor;
+    this.entryPoint = entryPoint ? ConversationLine.fromPrimitives(entryPoint) : undefined;
+    return this;
+  }
+  private geNextById(id: string,): ConversationItem | undefined {
+    return this.getCurrentNode().getNext().find(i => i.getId() === id);
   }
 
-  private nodeExists(id: string) {
-    return this.items.get(id);
+  private getNodeById(id: string, parent: ConversationItem): ConversationItem | undefined {
+    if (parent.getId() === id) {
+      return parent;
+    }
+    const next: ConversationItem[] = parent.getNext();
+    for (const item of next) {
+      const found = item.getId() === id;
+      if (found) {
+        return item;
+      }
+      return this.getNodeById(id, item);
+    }
+  }
+
+  private getEntryPoint() {
+    assert(this.entryPoint, "Conversation never started");
+    return this.entryPoint;
   }
 }

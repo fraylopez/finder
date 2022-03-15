@@ -67,9 +67,10 @@ export class Candidate extends AggregateRoot {
     return this.isMatch;
   }
 
+
   startChat(conversation: Conversation) {
     this._chat = new Chat(conversation);
-    return this._chat.getChatItem();
+    return this.chat.getChatItem();
   }
 
   talk(line?: Line) {
@@ -77,6 +78,10 @@ export class Candidate extends AggregateRoot {
       this.chat.talk(line);
     }
     return this.chat.getChatItem();
+  }
+
+  getChat() {
+    return this.chat;
   }
 
   setMail(mail: Mail) {

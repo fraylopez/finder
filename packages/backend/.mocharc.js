@@ -7,6 +7,6 @@ module.exports = {
   "full-trace": true,
   bail: false,
   exit: true,
-  spec: "test/**/*.test.ts",
+  // spec: "test/**/*.test.ts",
 
 };

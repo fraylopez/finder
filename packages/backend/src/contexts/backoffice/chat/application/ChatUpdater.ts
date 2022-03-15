@@ -43,9 +43,9 @@ export class ChatUpdater {
 
   private async addNode(conversation: Conversation, node: ConversationItem, fromNodeId?: string) {
     if (fromNodeId) {
-      conversation.addNextNode(node, fromNodeId);
+      conversation.addNodeFrom(node, fromNodeId);
     } else {
-      conversation.addNode(node);
+      conversation.addNext(node);
     }
     await this.repository.update(conversation);
     await this.eventBus.publish(conversation.pullDomainEvents());

@@ -10,7 +10,7 @@ export class MongoConversationRepository extends MongoRepository<Conversation> i
   }
   async find(id: string): Promise<Conversation | null> {
     const doc = await this.findOne(id);
-    return doc ? Conversation.fromPrimitives({ ...doc, id: doc._id }) : null;
+    return doc ? new Conversation(doc._id).setPrimitives({ ...doc, id: doc._id }) : null;
   }
   create(conversation: Conversation): Promise<void> {
     return this.persist(conversation.getId(), conversation);

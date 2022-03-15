@@ -4,10 +4,14 @@ export class Line {
     public readonly value: string
   ) { }
 
+
   toPrimitives() {
     return {
       id: this.id,
       value: this.value,
     };
+  }
+  static fromPrimitives(primitives: any) {
+    return new Line(primitives.id, primitives.value);
   }
 }

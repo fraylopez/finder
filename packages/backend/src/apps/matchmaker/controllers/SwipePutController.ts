@@ -11,7 +11,6 @@ export class SwipePutController extends Controller {
     super();
     this.addHandledError(UnknownCandidateError, 404);
     this.addHandledError(UnknownCardError, 404);
-
   }
 
   protected async run(req: Request, _res: Response) {

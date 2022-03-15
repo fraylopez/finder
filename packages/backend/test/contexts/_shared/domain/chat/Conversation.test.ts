@@ -14,6 +14,12 @@ describe(`${TestUtils.getUnitTestPath(__dirname, Conversation)}`, () => {
     conversation.restart();
   });
 
+  it('should serialize to primitives', async () => {
+    const serialized = conversation.toPrimitives();
+    const deserialized = new Conversation(serialized.id).setPrimitives(serialized);
+    expect(conversation).eql(deserialized);
+  });
+
   it('should have a first node', () => {
     expect(conversation.getCurrentNode().getValue()).not.eq(DefaultLines.UNKNOWN.value);
   });
@@ -25,11 +31,10 @@ describe(`${TestUtils.getUnitTestPath(__dirname, Conversation)}`, () => {
   });
   it('should increase cursor', () => {
     for (let index = 0; index < 5; index++) {
-      const prevValue = conversation.getValue();
+      const prevCursor = conversation.getCursor();
       const nextNode = conversation.getNext();
       conversation.listen(nextNode[0].getId());
-      expect(conversation.getCursor()).not.eq(prevValue);
-      expect(conversation.getValue()).not.eq(prevValue);
+      expect(conversation.getCursor()).not.eq(prevCursor);
     }
   });
 
@@ -37,7 +42,7 @@ describe(`${TestUtils.getUnitTestPath(__dirname, Conversation)}`, () => {
     const emptyConversation = ConversationMother.emptyWithHello("conversation-id");
     const otherConversation = ConversationMother.randomSequential("other-conversation-id");
 
-    emptyConversation.addNode(otherConversation);
+    emptyConversation.addNext(otherConversation);
     emptyConversation.listen("other-conversation-id");
     expect(emptyConversation.getCursor()).eq(otherConversation.getId());
   });
@@ -45,13 +50,10 @@ describe(`${TestUtils.getUnitTestPath(__dirname, Conversation)}`, () => {
   it('should branch conversations', () => {
     const branch1 = LineMother.random("branch1");
     const branch2 = LineMother.random("branch2");
-    const branchedConversation = ConversationMother.emptyWithHello("conversation-id", [branch1, branch2]);
-    branchedConversation.addNode(branch1);
-    branchedConversation.addNode(branch2, conversation);
+    const branchedConversation = ConversationMother.emptyWithHello("conversation-id");
+    branchedConversation.addNodeFrom(branch1, "hello",);
+    branchedConversation.addNodeFrom(branch2, "hello",);
 
     expect(branchedConversation.getNext()).lengthOf(2);
-    expect(branchedConversation.listen(branch1.getId()).getNext()).lengthOf(0);
-    expect(branchedConversation.listen(branch2.getId()).getNext()[0].getId())
-      .eq(conversation.getId());
   });
 });
