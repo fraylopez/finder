@@ -4,6 +4,7 @@ import { DefaultLines } from "../../../../../src/contexts/_shared/domain/chat/De
 import { Uuid } from "../../../../../src/contexts/_core/domain/value-object/Uuid";
 import { MotherCreator } from "../MotherCreator";
 import { LineMother } from "./LineMother";
+import { Line } from "../../../../../src/contexts/_shared/domain/chat/Line";
 
 export class ConversationMother {
   static randomSequential(id?: string, length?: number) {
@@ -17,6 +18,7 @@ export class ConversationMother {
         conversation.addNodeFrom(LineMother.random(index.toString()), (index - 1).toString());
       }
     }
+    conversation.addNodeFrom(ConversationLine.fromLine(new Line("end", "nothing else to say..."), "bot"), (_length - 1).toString());
     return conversation;
   }
   static emptyWithHello(id?: string) {

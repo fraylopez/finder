@@ -13,6 +13,7 @@ interface Primitives {
 }
 
 export class Conversation extends AggregateRoot implements ConversationItem {
+
   static readonly FROM_COMPANY = "company";
   private entryPoint?: ConversationLine;
   private cursor?: string;
@@ -61,9 +62,9 @@ export class Conversation extends AggregateRoot implements ConversationItem {
     }
   }
 
-  addNodeFrom(node: ConversationItem, from: string) {
-    const parent = this.getNodeById(from, this.getEntryPoint());
-    assert(parent, `Unknown origin node ${from}`);
+  addNodeFrom(node: ConversationItem, fromNodeId: string) {
+    const parent = this.getNodeById(fromNodeId, this.getEntryPoint());
+    assert(parent, `Unknown origin node ${fromNodeId}`);
     parent.addNext(node);
   }
 
@@ -77,6 +78,14 @@ export class Conversation extends AggregateRoot implements ConversationItem {
       this.setCursor(next);
     }
     return this;
+  }
+
+  respond() {
+    const next = this.getNext();
+    assert(next.length <= 1, "Conversation violates listen/respond structure");
+    if (next.length) {
+      this.setCursor(next[0].getId());
+    }
   }
 
   setCursor(cursor: string) {
