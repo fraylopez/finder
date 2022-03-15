@@ -444,6 +444,7 @@ function ChatView() {
                 {/* Thread section*/}
                 <ul role="list" className="py-4 space-y-2 sm:px-6 sm:space-y-4 lg:px-8">
                   {message.items.map((item) => (
+                  
                     <li key={item.id} className="bg-white px-4 py-6 shadow sm:rounded-lg sm:px-6">
                       <div className="sm:flex sm:justify-between sm:items-baseline">
                         <h3 className="text-base font-medium">
@@ -479,8 +480,9 @@ function ChatView() {
                   </div>
                 </div>
                 <nav aria-label="Message list" className="min-h-0 flex-1 overflow-y-auto">
-                  <ul role="list" className="border-b border-gray-200 divide-y divide-gray-200">
+                  <div role="list" className="border-b border-gray-200 divide-y divide-gray-200">
                     {messages.map((message) => (
+
                       <li
                         key={message.id}
                         className="relative bg-white py-5 px-6 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600"
@@ -505,7 +507,7 @@ function ChatView() {
                         </div>
                       </li>
                     ))}
-                  </ul>
+                  </div>
                 </nav>
               </div>
             </aside>
