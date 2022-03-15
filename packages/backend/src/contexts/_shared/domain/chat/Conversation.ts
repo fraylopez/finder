@@ -51,7 +51,7 @@ export class Conversation extends AggregateRoot implements ConversationItem {
     return this.getCurrentNode().getFrom();
   }
 
-  addNext(item: ConversationItem): void {
+  addNext(item: ConversationItem) {
     if (!this.entryPoint) {
       assert(item instanceof ConversationLine, "Conversation must start with a line");
       this.entryPoint = item;
@@ -60,12 +60,19 @@ export class Conversation extends AggregateRoot implements ConversationItem {
     else {
       this.getCurrentNode().addNext(item);
     }
+    return this;
   }
 
-  addNodeFrom(node: ConversationItem, fromNodeId: string) {
-    const parent = this.getNodeById(fromNodeId, this.getEntryPoint());
-    assert(parent, `Unknown origin node ${fromNodeId}`);
-    parent.addNext(node);
+  attachNodeTo(node: ConversationItem, fromNodeId: string): this;
+  attachNodeTo(node: ConversationItem, fromNodeId: string[]): this;
+  attachNodeTo(node: ConversationItem, fromNodeId: string | string[]): this {
+    const fromNodes = Array.isArray(fromNodeId) ? fromNodeId : [fromNodeId];
+    fromNodes.forEach(n => {
+      const parent = this.getNodeById(n, this.getEntryPoint());
+      assert(parent, `Unknown origin node ${n}`);
+      parent.addNext(node);
+    });
+    return this;
   }
 
   getCursor(): string {
@@ -124,6 +131,8 @@ export class Conversation extends AggregateRoot implements ConversationItem {
       if (found) {
         return item;
       }
+    }
+    for (const item of next) {
       return this.getNodeById(id, item);
     }
   }

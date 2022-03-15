@@ -4,7 +4,8 @@ import { Conversation } from "./Conversation";
 
 export class ConversationFactory {
   private static readonly conversations: Conversation[] = [
-    ConversationMother.randomSequential("test")
+    ConversationMother.randomSequential("test"),
+    ConversationMother.sample(),
   ];
   static get(id: string) {
     const conversation = this.conversations.find(c => c.getId() === id);
@@ -13,3 +14,5 @@ export class ConversationFactory {
     return conversation;
   }
 }
+
+

@@ -51,7 +51,7 @@ export class ChatUpdater {
 
   private async addNode(conversation: Conversation, node: ConversationItem, fromNodeId?: string) {
     if (fromNodeId) {
-      conversation.addNodeFrom(node, fromNodeId);
+      conversation.attachNodeTo(node, fromNodeId);
     } else {
       conversation.addNext(node);
     }

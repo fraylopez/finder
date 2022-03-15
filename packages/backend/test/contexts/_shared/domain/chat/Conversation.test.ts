@@ -51,8 +51,8 @@ describe(`${TestUtils.getUnitTestPath(__dirname, Conversation)}`, () => {
     const branch1 = LineMother.random("branch1");
     const branch2 = LineMother.random("branch2");
     const branchedConversation = ConversationMother.emptyWithHello("conversation-id");
-    branchedConversation.addNodeFrom(branch1, "hello",);
-    branchedConversation.addNodeFrom(branch2, "hello",);
+    branchedConversation.attachNodeTo(branch1, "hello",);
+    branchedConversation.attachNodeTo(branch2, "hello",);
 
     expect(branchedConversation.getNext()).lengthOf(2);
   });

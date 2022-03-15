@@ -31,8 +31,9 @@ export class ConversationLine implements ConversationItem {
     return this;
   }
 
-  addNext(item: ConversationLine): void {
+  addNext(item: ConversationLine) {
     this.next.push(item);
+    return this;
   }
 
   getNext(): ConversationLine[] {
