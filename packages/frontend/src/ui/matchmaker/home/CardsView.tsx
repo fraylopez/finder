@@ -12,7 +12,7 @@ function CardsView() {
   useEffect(() => {
     async function fetchCards() {
       const result = await container.get(CardFinder).find();
-      setCards(result);
+      setCards(result.reverse());
     }
     fetchCards();
   }, []);
@@ -25,7 +25,6 @@ function CardsView() {
     setIsSending(true);
     const candidate = await container.get(CandidateFinder).get();
     await container.get(SwipeCreator).swipe(candidate!.id, cardId, right);
-
     setCards(cards.slice(0, -1));
     setIsSending(false);
   };
