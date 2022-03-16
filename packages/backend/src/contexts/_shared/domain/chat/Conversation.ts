@@ -133,7 +133,10 @@ export class Conversation extends AggregateRoot implements ConversationItem {
       }
     }
     for (const item of next) {
-      return this.getNodeById(id, item);
+      const found = this.getNodeById(id, item);
+      if (found) {
+        return found;
+      }
     }
   }
 

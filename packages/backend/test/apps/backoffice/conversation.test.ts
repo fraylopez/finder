@@ -28,6 +28,7 @@ describe(`${TestUtils.getAcceptanceTestPath(__dirname)}`, () => {
       expect(stored).not.equal(null);
     });
 
+
     it('should add first line to a conversation', async () => {
       const conversationId = Uuid.random().toString();
       await BackofficeBackendAcceptanceTest.post(`/chat/${conversationId}`);
