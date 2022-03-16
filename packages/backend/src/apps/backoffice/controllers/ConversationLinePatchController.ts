@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import { inject, injectable } from "inversify";
 import { ChatUpdater } from "../../../contexts/backoffice/chat/application/ChatUpdater";
-import { Controller } from "../../_core/controllers/Controller";
+import { ExpressController } from "../../_core/controllers/ExpressController";
 
 @injectable()
-export class ConversationLinePatchController extends Controller {
+export class ConversationLinePatchController extends ExpressController {
   constructor(@inject(ChatUpdater) private readonly updater: ChatUpdater) {
     super();
   }

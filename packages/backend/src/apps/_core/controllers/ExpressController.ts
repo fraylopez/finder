@@ -4,7 +4,7 @@ import { injectable } from "inversify";
 import { DomainErrorConstructor } from "../../../contexts/_core/domain/bus/DomainErrorConstructor";
 
 @injectable()
-export abstract class Controller {
+export abstract class ExpressController {
   private readonly errors: Map<DomainErrorConstructor, { status: number, message?: string; }> = new Map();
   async request(req: Request, res: Response): Promise<void> {
     res.header('Access-Control-Allow-Origin', '*');

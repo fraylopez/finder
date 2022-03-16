@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { Application } from "express";
-import { CardGetController } from '../controllers/CardGetController';
+import { CardGetController } from "../controllers/http/CardGetController";
 import { container } from "../ioc/installer";
 
 export const register = (app: Application) => {

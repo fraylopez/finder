@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { Application } from "express";
-import { CandidatePutController } from "../controllers/CandidatePutController";
+import { CandidatePutController } from "../controllers/http/CandidatePutController";
 import { ChatGetController } from "../controllers/ChatGetController";
 import { ChatPutController } from "../controllers/ChatPutController";
 import { MailPatchController } from "../controllers/MailPatchController";

@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
 import { inject, injectable } from "inversify";
-import { ChatFinder } from "../../../contexts/matchmaker/candidate/application/chat/ChatFinder";
-import { Chat } from "../../../contexts/matchmaker/candidate/domain/chat/Chat";
-import { UnknownCandidateError } from "../../../contexts/matchmaker/candidate/domain/errors/UnknownCandidateError";
-import { Controller } from '../../_core/controllers/Controller';
+import { ChatFinder } from "../../../../contexts/matchmaker/candidate/application/chat/ChatFinder";
+import { Chat } from "../../../../contexts/matchmaker/candidate/domain/chat/Chat";
+import { UnknownCandidateError } from "../../../../contexts/matchmaker/candidate/domain/errors/UnknownCandidateError";
+import { ExpressController } from "../../../_core/controllers/ExpressController";
 
 @injectable()
-export class ChatGetController extends Controller {
+export class ChatGetController extends ExpressController {
   constructor(@inject(ChatFinder) private readonly candidateFinder: ChatFinder) {
     super();
     this.addHandledError(UnknownCandidateError, 404);

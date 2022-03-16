@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import { inject, injectable } from "inversify";
 import { CardCreator } from "../../../contexts/backoffice/card/application/create/CardCreator";
-import { Controller } from "../../_core/controllers/Controller";
+import { ExpressController } from "../../_core/controllers/ExpressController";
 
 @injectable()
-export class CardPutController extends Controller {
+export class CardPutController extends ExpressController {
   constructor(@inject(CardCreator) private readonly creator: CardCreator) {
     super();
   }

@@ -1,19 +1,18 @@
-import { Server } from "../../../apps/matchmaker/server";
 import * as socketIO from "socket.io";
 import { injectable } from "inversify";
+import { Server } from "http";
 
 @injectable()
 export class WebSocketServer {
   private connectedClients: Map<string, string>;
   private wss!: socketIO.Server;
 
-  constructor() {
+  constructor(httpServer: Server) {
     this.connectedClients = new Map();
-  }
-
-  init(server: Server) {
-    this.wss = new socketIO.Server(server.httpServer);
-    this.wss.on("connection", this.onClientConnect.bind(this));
+    httpServer?.on("connect", () => {
+      this.wss = new socketIO.Server(httpServer);
+      this.wss.on("connection", this.onClientConnect.bind(this));
+    });
   }
 
   emit(uid: string, eventName: string, data: object) {

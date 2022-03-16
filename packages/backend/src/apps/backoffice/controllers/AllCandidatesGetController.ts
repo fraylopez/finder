@@ -2,10 +2,10 @@ import { Request, Response } from 'express';
 import { inject, injectable } from "inversify";
 import { BackofficeCandidateFinder } from "../../../contexts/backoffice/candidate/application/find/BackofficeCandidateFinder";
 import { BackofficeCandidate } from "../../../contexts/backoffice/candidate/domain/BackofficeCandidate";
-import { Controller } from "../../_core/controllers/Controller";
+import { ExpressController } from "../../_core/controllers/ExpressController";
 
 @injectable()
-export class AllCandidatesGetController extends Controller {
+export class AllCandidatesGetController extends ExpressController {
   constructor(@inject(BackofficeCandidateFinder) private readonly finder: BackofficeCandidateFinder) {
     super();
   }
