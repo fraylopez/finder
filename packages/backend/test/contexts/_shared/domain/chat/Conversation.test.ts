@@ -62,13 +62,10 @@ describe(`${TestUtils.getUnitTestPath(__dirname, Conversation)}`, () => {
   it('should end a conversation', async () => {
     const sampleConversation = new Conversation("demo");
     sampleConversation
-      .addNext(
-        ConversationLine.fromLine(new Line("hello", "helloline"), "bot")
-          .addNext(ConversationLine.fromLine(new Line("hello_response_1", "responseline"), "bot"))
+      .addNext(ConversationLine.fromLine(new Line("hello", "helloline"), "bot")
+        .addNext(ConversationLine.fromLine(new Line("hello_response_1", "responseline"), "bot"))
       )
-      .attachNodeTo(
-        ConversationLine.fromLine(new Line("end_1", "endline"), "bot")
-        ,
+      .attachNodeTo(ConversationLine.fromLine(new Line("end_1", "endline"), "bot"),
         ["hello_response_1"]
       );
 
@@ -83,19 +80,14 @@ describe(`${TestUtils.getUnitTestPath(__dirname, Conversation)}`, () => {
   it('should end a 2 ending conversation', async () => {
     const sampleConversation = new Conversation("demo");
     sampleConversation
-      .addNext(
-        ConversationLine.fromLine(new Line("hello", "helloline"), "bot")
-          .addNext(ConversationLine.fromLine(new Line("hello_response_1", "responseline1"), "bot"))
-          .addNext(ConversationLine.fromLine(new Line("hello_response_2", "responseline2"), "bot"))
+      .addNext(ConversationLine.fromLine(new Line("hello", "helloline"), "bot")
+        .addNext(ConversationLine.fromLine(new Line("hello_response_1", "responseline1"), "bot"))
+        .addNext(ConversationLine.fromLine(new Line("hello_response_2", "responseline2"), "bot"))
       )
-      .attachNodeTo(
-        ConversationLine.fromLine(new Line("end_1", "endline1"), "bot")
-        ,
+      .attachNodeTo(ConversationLine.fromLine(new Line("end_1", "endline1"), "bot"),
         ["hello_response_1"]
       )
-      .attachNodeTo(
-        ConversationLine.fromLine(new Line("end_2", "endline2"), "bot")
-        ,
+      .attachNodeTo(ConversationLine.fromLine(new Line("end_2", "endline2"), "bot"),
         ["hello_response_2"]
       )
       ;
