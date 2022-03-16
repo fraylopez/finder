@@ -20,8 +20,10 @@ const container = new MapContainer();
 
 // container.bind(types.BaseHttpUrl, "http://10.1.0.238:3000");
 // container.bind(types.BaseWsUrl, "ws://10.1.0.238:3000");
-container.bind(types.BaseHttpUrl, "http://localhost:3000");
-container.bind(types.BaseWsUrl, "ws://localhost:3000");
+container.bind(types.BaseHttpUrl, "http://10.1.0.111.nip.io:3000");
+container.bind(types.BaseWsUrl, "ws://10.1.0.111.nip.io:3000");
+// container.bind(types.BaseHttpUrl, "http://localhost:3000");
+// container.bind(types.BaseWsUrl, "ws://localhost:3000");
 
 container.bind(types.EventBus, new InMemoryEventBus());
 container.bind(types.UpdateService, new WebSocketClient(container.get(types.BaseWsUrl)));

@@ -21,6 +21,6 @@ export class MongoCandidateRepository extends MongoRepository<Candidate> impleme
   }
 
   protected moduleName(): string {
-    return "candiate";
+    return "candidate";
   }
 }
