@@ -29,6 +29,7 @@ import { MailPatchController } from "../controllers/http/MailPatchController";
 import { StatusGetController } from "../controllers/http/StatusGetController";
 import { SwipePutController } from "../controllers/http/SwipePutController";
 import { CardGetController } from "../controllers/http/CardGetController";
+import { IncomingUserChatMessageController } from "../controllers/ws/IncomingUserChatMessageController";
 
 export const container = getContainer();
 
@@ -36,8 +37,8 @@ export const container = getContainer();
 container.bind(sharedTypes.CardRepository).to(MongoCardRepository).inSingletonScope();
 
 // Websocket
-container.bind(types.EventExposer).to(WebSocketCandidateEventExposer).inSingletonScope();
 container.bind(types.WebSocketServer).to(WebSocketServer).inSingletonScope();
+container.bind(types.EventExposer).to(WebSocketCandidateEventExposer).inSingletonScope();
 
 // Event Logger
 container.bind(EventLogger).to(EventLogger).inSingletonScope();
@@ -51,12 +52,15 @@ container.bind(CardGetController).toSelf().inSingletonScope();
 container.bind(CardFinder).toSelf().inSingletonScope();
 
 // Candidate
+// http
 container.bind(CandidatePutController).toSelf().inSingletonScope();
 container.bind(SwipePutController).toSelf().inSingletonScope();
 container.bind(CandidateEvaluator).toSelf().inSingletonScope();
 container.bind(ChatPutController).toSelf().inSingletonScope();
 container.bind(MailPatchController).toSelf().inSingletonScope();
 container.bind(ChatGetController).toSelf().inSingletonScope();
+// ws
+container.bind(IncomingUserChatMessageController).toSelf().inSingletonScope();
 
 container.bind(CandidateCreator).toSelf().inSingletonScope();
 container.bind(SwipeCreator).toSelf().inSingletonScope();

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/no-require-imports */
 import glob from 'glob';
-import { WebSocketServer } from "ws";
+import { WebSocketServer } from "../../../contexts/_core/infrastructure/WebSocketServer";
 
 export function registerHandlers(server: WebSocketServer) {
   const handlers = glob.sync(__dirname + '/**/*.handler.*');

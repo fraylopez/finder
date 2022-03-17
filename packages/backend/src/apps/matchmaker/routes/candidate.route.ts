@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { Application } from "express";
 import { CandidatePutController } from "../controllers/http/CandidatePutController";
-import { ChatGetController } from "../controllers/ChatGetController";
-import { ChatPutController } from "../controllers/ChatPutController";
-import { MailPatchController } from "../controllers/MailPatchController";
-import { SwipePutController } from "../controllers/SwipePutController";
+import { ChatGetController } from "../controllers/http/ChatGetController";
+import { ChatPutController } from "../controllers/http/ChatPutController";
+import { MailPatchController } from "../controllers/http/MailPatchController";
+import { SwipePutController } from "../controllers/http/SwipePutController";
 import { container } from "../ioc/installer";
 
 export const register = (app: Application) => {

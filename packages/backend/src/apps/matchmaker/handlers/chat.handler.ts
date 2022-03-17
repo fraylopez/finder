@@ -8,5 +8,5 @@ export const register = (server: WebSocketServer) => {
   // server.
   // cardsGetController.
   // app.get('/card', cardsGetController.request.bind(cardsGetController));
-
+  server.register("chat.message", cardsGetController);
 };

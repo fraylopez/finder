@@ -4,16 +4,20 @@ import { DomainEventMapping } from "../../contexts/_core/infrastructure/bus/even
 import { container } from "./ioc/installer";
 import { Server } from './server';
 import { coreTypes } from "../_core/ioc/coreTypes";
+import { Websocket } from "./websocket";
 
 export class MatchMakerBackendApp {
   private server?: Server;
+  private websocket?: Websocket;
 
   async start() {
     const port = process.env.PORT || '3000';
     this.server = new Server(port);
+    this.websocket = new Websocket(port, this.server.httpServer);
     await this.registerSubscribers();
 
     await this.server.listen();
+    await this.websocket.listen();
 
   }
 

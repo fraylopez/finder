@@ -8,18 +8,14 @@ import * as http from 'http';
 import cors from 'cors';
 import Logger from "../../contexts/_core/domain/Logger";
 import { container } from "./ioc/installer";
-import { types } from "./ioc/types";
 import { registerRoutes } from './routes';
-import { registerHandlers } from './handlers';
 import { coreTypes } from "../_core/ioc/coreTypes";
-import { WebSocketServer } from "ws";
 
 export class Server {
   private express: express.Express;
   readonly port: string;
   private logger: Logger;
-  private httpServer!: http.Server;
-  readonly websocketServer: http.Server;
+  httpServer!: http.Server;
 
   constructor(port: string) {
     this.port = port;
@@ -37,30 +33,17 @@ export class Server {
     router.use(errorHandler());
     this.express.use(router);
 
-    this.websocketServer = http.createServer();
-
     registerRoutes(router);
-    registerHandlers(new WebSocketServer({ server: this.websocketServer }));
   }
 
   async listen(): Promise<void> {
     await new Promise<void>(resolve => {
       this.httpServer = this.express.listen(this.port, () => {
-        this.logger.info(
-          `  App is running at http://localhost:${this.port} in ${this.express.get('env')} mode`
-        );
+        this.logger.info(`  App is running at http://localhost:${this.port} in ${this.express.get('env')} mode`);
+        this.logger.info('  Press CTRL-C to stop\n');
         resolve();
       });
     });
-    await new Promise<void>(resolve => {
-      this.websocketServer.listen(this.port, () => {
-        this.logger.info(
-          `  WebSocket is running at ws://localhost:${this.port} in ${this.express.get('env')} mode`
-        );
-        resolve();
-      });
-    });
-    this.logger.info('  Press CTRL-C to stop\n');
   }
 
   async stop(): Promise<void> {

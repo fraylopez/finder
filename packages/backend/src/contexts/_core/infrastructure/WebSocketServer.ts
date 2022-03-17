@@ -1,15 +1,20 @@
 import * as socketIO from "socket.io";
-import { injectable } from "inversify";
 import { Server } from "http";
+import { SocketIOController } from "../../../apps/_core/controllers/SocketIOController";
+import { injectable } from "inversify";
 
 @injectable()
 export class WebSocketServer {
   private connectedClients: Map<string, string>;
   private wss!: socketIO.Server;
-
-  constructor(httpServer: Server) {
+  private readonly handlers: Map<string, SocketIOController[]>;
+  constructor() {
     this.connectedClients = new Map();
-    httpServer?.on("connect", () => {
+    this.handlers = new Map();
+  }
+
+  init(httpServer: Server) {
+    httpServer.on("connect", () => {
       this.wss = new socketIO.Server(httpServer);
       this.wss.on("connection", this.onClientConnect.bind(this));
     });
@@ -20,6 +25,16 @@ export class WebSocketServer {
     if (socket) {
       this.wss.to(socket).emit(eventName, data);
     }
+  }
+  register(eventName: string, handler: SocketIOController) {
+    const current = this.handlers.get(eventName) || [];
+    current.push(handler);
+    this.handlers.set(eventName, current);
+  }
+
+  async onClientMessage(eventName: string, message: any) {
+    const handlers = this.handlers.get(eventName) || [];
+    await Promise.all(handlers.map(h => h.handle(message)));
   }
 
   private onClientConnect(socket: socketIO.Socket) {
