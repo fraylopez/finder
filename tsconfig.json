@@ -1,0 +1,35 @@
+{
+  // "extends": "@goinapp/tsconfig/tsconfig.json",
+  "compilerOptions": {
+    "module": "CommonJS",
+    "paths": {
+      "finder": ["./packages/finder/src/*"],
+    },
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    // "module": "esnext",
+    "useUnknownInCatchVariables": false,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "sourceMap": true,
+  },
+  "composite": true,
+  "references": [
+    {
+      "path": "./packages/backend/tsconfig.json"
+    },
+    {
+      "path": "./apps/referral/tsconfig.json"
+    }
+  ]
+}
