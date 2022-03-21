@@ -11,6 +11,9 @@ import { ConversationMother } from "../../contexts/_shared/domain/chat/Conversat
 import { TestUtils } from "../../utils/TestUtils";
 import { MatchMakerBackendAcceptanceTest } from "./utils/MatchMakerBackendAcceptanceTest";
 import { CandidateRepository } from "../../../src/contexts/matchmaker/candidate/domain/CandidateRepository";
+import { SpyHelper } from "../../utils/StubHelper";
+import { ChatController } from "../../../src/contexts/matchmaker/candidate/application/chat/ChatController";
+import sinon from "ts-sinon";
 
 describe(`${TestUtils.getAcceptanceTestPath(__dirname)}`, () => {
   describe("Candidate", () => {
@@ -127,6 +130,8 @@ describe(`${TestUtils.getAcceptanceTestPath(__dirname)}`, () => {
       });
 
       it('should handle match candidate conversations through WS', async () => {
+        const spy = SpyHelper.spyPrototype(ChatController);
+
         const candidate = CandidateMother.match();
         candidate.startChat(ConversationMother.randomSequential("test"));
         candidate.id.toString();
@@ -137,7 +142,9 @@ describe(`${TestUtils.getAcceptanceTestPath(__dirname)}`, () => {
             responseId: "some-id"
           });
 
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        await new Promise(resolve => setTimeout(resolve, 200));
+        sinon.assert.calledOnce(spy.talk);
+        sinon.assert.calledWith(spy.talk, sinon.match(data => data.responseId === "some-id"));
       });
     });
 

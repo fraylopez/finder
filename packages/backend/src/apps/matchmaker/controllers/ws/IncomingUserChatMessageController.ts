@@ -4,6 +4,7 @@ import { SocketIOController } from "../../../_core/controllers/SocketIOControlle
 
 @injectable()
 export class IncomingUserChatMessageController extends SocketIOController {
+
   constructor(@inject(ChatController) private readonly cardFinder: ChatController) {
     super();
   }

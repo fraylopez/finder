@@ -7,7 +7,7 @@ export abstract class SocketIOController {
   private readonly errors: Map<DomainErrorConstructor, { status: number, message?: string; }> = new Map();
   async handle(message: WsMessage): Promise<void> {
     try {
-      await this.handle(message);
+      await this.run(message);
     } catch (error) {
       const handledError = this.errors.get(error.constructor);
       if (handledError) {/*  */ }

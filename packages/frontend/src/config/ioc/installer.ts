@@ -26,7 +26,7 @@ container.bind(types.BaseHttpUrl, "http://localhost:3000");
 container.bind(types.BaseWsUrl, "ws://localhost:3000");
 
 container.bind(types.EventBus, new InMemoryEventBus());
-container.bind(types.UpdateService, new WebSocketClient(container.get(types.BaseWsUrl)));
+container.bind(types.WebSocketService, new WebSocketClient(container.get(types.BaseWsUrl)));
 
 container.bind(types.CardRepository, new HttpCardRepository(container.get(types.BaseHttpUrl)));
 container.bind(CardFinder, new CardFinder(container.get(types.CardRepository)));
@@ -41,12 +41,12 @@ container.bind(CandidateFinder, new CandidateFinder(container.get(types.Candidat
 container.bind(types.SwipeService, new HttpSwipeService(container.get(types.BaseHttpUrl)));
 container.bind(SwipeCreator, new SwipeCreator(container.get(types.SwipeService)));
 
-container.bind(types.EventHandler, new ConnectUpdateServiceOnCandidateCreatedEventHandler(container.get(types.UpdateService)));
+container.bind(types.EventHandler, new ConnectUpdateServiceOnCandidateCreatedEventHandler(container.get(types.WebSocketService)));
 
 
 // container.bind(types.ChatService, new HttpChatService(container.get(types.BaseHttpUrl)));
-container.bind(types.ChatService, new WebSocketChatService(container.get(types.BaseHttpUrl), container.get(WebSocketClient)));
-container.bind(ChatUpdater, new ChatUpdater(container.get(types.UpdateService)));
+container.bind(types.ChatService, new WebSocketChatService(container.get(types.BaseHttpUrl), container.get(types.WebSocketService)));
+container.bind(ChatUpdater, new ChatUpdater(container.get(types.WebSocketService)));
 container.bind(ChatFinder, new ChatFinder(container.get(types.ChatService)));
 container.bind(ChatCreator, new ChatCreator(container.get(types.ChatService)));
 

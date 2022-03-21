@@ -1,4 +1,5 @@
 import * as socketIO from "socket.io";
+import wilcardMessagesMiddleware from "socketio-wildcard";
 import { Server } from "http";
 import { SocketIOController } from "../../../apps/_core/controllers/SocketIOController";
 import { injectable } from "inversify";
@@ -16,6 +17,7 @@ export class WebSocketServer {
   init(httpServer: Server) {
     return new Promise<void>(resolve => {
       this.wss = new socketIO.Server(httpServer);
+      this.wss.use(wilcardMessagesMiddleware());
       this.wss.on("connection", this.onClientConnect.bind(this));
       resolve();
     });
@@ -34,15 +36,23 @@ export class WebSocketServer {
   }
 
   async onClientMessage(eventName: string, message: any) {
-    console.log(eventName);
     const handlers = this.handlers.get(eventName) || [];
-    await Promise.all(handlers.map(h => h.handle(message)));
+    await Promise.all(
+      handlers.map(h =>
+        h.handle(message)
+      )
+    );
   }
 
   private onClientConnect(socket: socketIO.Socket) {
     socket.on(
       "disconnect",
       (reason: string) => this.onClientDisconnect(socket.id, reason));
+    socket.on(
+      "*",
+      (message: { data: [messageName: string, message: any]; }) =>
+        this.onClientMessage(message.data[0], message.data[1])
+    );
 
     const uid = socket.handshake.query.uid;
     if (uid) {
