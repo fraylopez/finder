@@ -11,6 +11,9 @@ import { ConversationMother } from "../../contexts/_shared/domain/chat/Conversat
 import { TestUtils } from "../../utils/TestUtils";
 import { MatchMakerBackendAcceptanceTest } from "./utils/MatchMakerBackendAcceptanceTest";
 import { CandidateRepository } from "../../../src/contexts/matchmaker/candidate/domain/CandidateRepository";
+import { SpyHelper } from "../../utils/StubHelper";
+import { ChatController } from "../../../src/contexts/matchmaker/candidate/application/chat/ChatController";
+import sinon from "ts-sinon";
 
 describe(`${TestUtils.getAcceptanceTestPath(__dirname)}`, () => {
   describe("Candidate", () => {
@@ -61,6 +64,7 @@ describe(`${TestUtils.getAcceptanceTestPath(__dirname)}`, () => {
         expect(response.status).eq(404);
         expect(response.body.message).contains(UnknownCandidateError.name);
       });
+
       it('should decline swipe from unknown card', async () => {
         const cardId = Uuid.random();
         const uid = Uuid.random();
@@ -95,7 +99,7 @@ describe(`${TestUtils.getAcceptanceTestPath(__dirname)}`, () => {
         expect(response.status).eq(200);
       });
 
-      it('should handle match candidate conversations', async () => {
+      it('should handle match candidate conversations through HTTP', async () => {
         const candidate = CandidateMother.match();
         candidate.startChat(ConversationMother.randomSequential("test"));
 
@@ -110,7 +114,7 @@ describe(`${TestUtils.getAcceptanceTestPath(__dirname)}`, () => {
         expect(response.status).eq(200);
       });
 
-      it('should decline non match candidate conversations', async () => {
+      it('should decline non match candidate conversations through HTTP', async () => {
         const candidate = CandidateMother.random();
         const uid = candidate.id.toString();
         await candidateRepository.add(candidate);
@@ -123,6 +127,24 @@ describe(`${TestUtils.getAcceptanceTestPath(__dirname)}`, () => {
         );
         expect(response.status).eq(403);
         expect(response.body.message).contains(CandidateIsNotMatchError.name);
+      });
+
+      it('should handle match candidate conversations through WS', async () => {
+        const spy = SpyHelper.spyPrototype(ChatController);
+
+        const candidate = CandidateMother.match();
+        candidate.startChat(ConversationMother.randomSequential("test"));
+        candidate.id.toString();
+        await candidateRepository.add(candidate);
+        MatchMakerBackendAcceptanceTest.emit(
+          "chat.message",
+          {
+            responseId: "some-id"
+          });
+
+        await new Promise(resolve => setTimeout(resolve, 200));
+        sinon.assert.calledOnce(spy.talk);
+        sinon.assert.calledWith(spy.talk, sinon.match(data => data.responseId === "some-id"));
       });
     });
 

@@ -8,16 +8,14 @@ import * as http from 'http';
 import cors from 'cors';
 import Logger from "../../contexts/_core/domain/Logger";
 import { container } from "./ioc/installer";
-import { types } from "./ioc/types";
 import { registerRoutes } from './routes';
-import { WebSocketServer } from "../../contexts/_core/infrastructure/WebSocketServer";
 import { coreTypes } from "../_core/ioc/coreTypes";
 
 export class Server {
   private express: express.Express;
   readonly port: string;
   private logger: Logger;
-  httpServer?: http.Server;
+  httpServer!: http.Server;
 
   constructor(port: string) {
     this.port = port;
@@ -38,17 +36,9 @@ export class Server {
   }
 
   async listen(): Promise<void> {
-    await new Promise<void>(resolve => {
-      this.httpServer = this.express.listen(this.port, () => {
-        this.logger.info(
-          `  App is running at http://localhost:${this.port} in ${this.express.get('env')} mode`
-        );
-        this.logger.info('  Press CTRL-C to stop\n');
-        resolve();
-      });
-    });
-    const websocketServer: WebSocketServer = container.get(types.WebSocketServer);
-    websocketServer.init(this);
+    await new Promise<void>(resolve => this.httpServer = this.express.listen(this.port, resolve));
+    this.logger.info(`  HTTP App is running at http://localhost:${this.port} in ${this.express.get('env')} mode`);
+    this.logger.info('  Press CTRL-C to stop\n');
   }
 
   async stop(): Promise<void> {

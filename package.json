@@ -9,7 +9,7 @@
     ]
   },
   "scripts": {
-    "test:backend": "yarn --cwd packages/backend test:unit"
+    "test:backend": "yarn --cwd packages/backend test"
   },
   "devDependencies": {
     "@faker-js/faker": "^6.0.0-alpha.7",

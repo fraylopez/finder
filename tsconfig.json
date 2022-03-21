@@ -1,9 +1,11 @@
 {
   // "extends": "@goinapp/tsconfig/tsconfig.json",
   "compilerOptions": {
-    "module": "CommonJS",
+    // "module": "ES2022",
     "paths": {
-      "finder": ["./packages/finder/src/*"],
+      "finder": [
+        "./packages/finder/src/*"
+      ],
     },
     "allowJs": true,
     "skipLibCheck": true,
@@ -12,16 +14,17 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
+    "target": "es2016",
     // "module": "esnext",
     "useUnknownInCatchVariables": false,
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
+    // "noEmit": true,
+    // "jsx": "react-jsx",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "sourceMap": true,
+    // "sourceMap": true,
   },
   "composite": true,
   "references": [
@@ -29,7 +32,7 @@
       "path": "./packages/backend/tsconfig.json"
     },
     {
-      "path": "./apps/referral/tsconfig.json"
+      "path": "./packages/frontend/tsconfig.json"
     }
-  ]
+  ],
 }

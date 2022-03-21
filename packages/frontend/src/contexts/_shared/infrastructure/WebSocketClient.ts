@@ -1,13 +1,13 @@
 import io, { Manager, Socket } from "socket.io-client";
 import wilcard from 'socketio-wildcard';
-import { UpdateService } from "../../matchmaker/candidate/domain/UpdateService";
+import { WebSocketService } from "../../matchmaker/candidate/domain/WebSocketService";
 
 type Handler = (message: any) => Promise<void> | void;
 interface Message {
   messageName: string,
   payload: object;
 }
-export class WebSocketClient implements UpdateService {
+export class WebSocketClient implements WebSocketService {
   private wss!: typeof Socket;
   private subscriptions: Map<string, Array<Handler>>;
   private connected: boolean;
@@ -41,6 +41,10 @@ export class WebSocketClient implements UpdateService {
     this.wss.disconnect();
     this.wss.off("*");
     this.connected = false;
+  }
+
+  send(messageName: string, message: Message) {
+    this.wss.emit(messageName, message);
   }
 
   private onConnection() {

@@ -47,10 +47,10 @@ export class SpyHelper {
   static sandbox: sinon.SinonSandbox = sinon.createSandbox();
   static sandboxes: Map<object, sinon.SinonSandbox> = new Map();
 
-  static spyPrototype<T extends object>(type: { prototype: object; }): sinon.SinonSpiedInstance<T> & T {
+  static spyPrototype<T extends object>(type: { prototype: T; }): sinon.SinonSpiedInstance<T> & T {
     const customSandbox = sinon.createSandbox();
     this.sandboxes.set(type.prototype, customSandbox);
-    return customSandbox.spy<T>(type.prototype as T) as unknown as sinon.SinonSpiedInstance<T> & T;
+    return customSandbox.spy<T>(type.prototype) as unknown as sinon.SinonSpiedInstance<T> & T;
   }
 
   static reset() {

@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
 import { inject, injectable } from "inversify";
-import { MailUpdater } from "../../../contexts/matchmaker/candidate/application/update/MailUpdater";
-import { UnknownCandidateError } from "../../../contexts/matchmaker/candidate/domain/errors/UnknownCandidateError";
-import { InvalidEmailError } from "../../../contexts/_core/domain/InvalidEmailError";
-import { Controller } from '../../_core/controllers/Controller';
+import { MailUpdater } from "../../../../contexts/matchmaker/candidate/application/update/MailUpdater";
+import { UnknownCandidateError } from "../../../../contexts/matchmaker/candidate/domain/errors/UnknownCandidateError";
+import { InvalidEmailError } from "../../../../contexts/_core/domain/InvalidEmailError";
+import { ExpressController } from "../../../_core/controllers/ExpressController";
 
 @injectable()
-export class MailPatchController extends Controller {
+export class MailPatchController extends ExpressController {
   constructor(@inject(MailUpdater) private readonly updater: MailUpdater) {
     super();
     this.addHandledError(InvalidEmailError, 400);

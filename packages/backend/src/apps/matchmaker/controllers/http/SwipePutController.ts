@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
 import { inject, injectable } from "inversify";
-import { SwipeCreator } from "../../../contexts/matchmaker/candidate/application/swipe/SwipeCreator";
-import { UnknownCandidateError } from "../../../contexts/matchmaker/candidate/domain/errors/UnknownCandidateError";
-import { UnknownCardError } from "../../../contexts/_shared/domain/card/errors/UnknownCardError";
-import { Controller } from '../../_core/controllers/Controller';
+import { SwipeCreator } from "../../../../contexts/matchmaker/candidate/application/swipe/SwipeCreator";
+import { UnknownCandidateError } from "../../../../contexts/matchmaker/candidate/domain/errors/UnknownCandidateError";
+import { UnknownCardError } from "../../../../contexts/_shared/domain/card/errors/UnknownCardError";
+import { ExpressController } from "../../../_core/controllers/ExpressController";
 
 @injectable()
-export class SwipePutController extends Controller {
+export class SwipePutController extends ExpressController {
   constructor(@inject(SwipeCreator) private readonly creator: SwipeCreator) {
     super();
     this.addHandledError(UnknownCandidateError, 404);

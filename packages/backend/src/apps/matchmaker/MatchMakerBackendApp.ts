@@ -4,9 +4,11 @@ import { DomainEventMapping } from "../../contexts/_core/infrastructure/bus/even
 import { container } from "./ioc/installer";
 import { Server } from './server';
 import { coreTypes } from "../_core/ioc/coreTypes";
+import { Websocket } from "./websocket";
 
 export class MatchMakerBackendApp {
   private server?: Server;
+  private websocket?: Websocket;
 
   async start() {
     const port = process.env.PORT || '3000';
@@ -14,11 +16,13 @@ export class MatchMakerBackendApp {
     await this.registerSubscribers();
 
     await this.server.listen();
-
+    this.websocket = new Websocket(port, this.server.httpServer);
+    await this.websocket.listen();
   }
 
   async stop() {
     await this.server?.stop();
+    await this.websocket?.stop();
   }
 
   get port(): string {

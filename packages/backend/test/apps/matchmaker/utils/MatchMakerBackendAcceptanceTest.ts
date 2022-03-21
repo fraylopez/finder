@@ -12,16 +12,32 @@ import { Uuid } from "../../../../src/contexts/_core/domain/value-object/Uuid";
 import { CardRepository } from "../../../../src/contexts/_shared/domain/card/CardRepository";
 import { CandidateMother } from "../../../contexts/matchmaker/candidate/domain/CandidateMother";
 import { CardMother } from "../../../contexts/_shared/domain/card/CardMother";
+import io, { Socket } from "socket.io-client";
 
 export class MatchMakerBackendAcceptanceTest {
   private static application: MatchMakerBackendApp;
   private static cachedEnv?: string;
+  private static wss: typeof Socket;
   static async start() {
     this.cachedEnv = process.env.NODE_ENV;
     process.env.NODE_ENV = "acceptance";
     setupEnvDependencies(container);
     this.application = new MatchMakerBackendApp();
     await this.application.start();
+    const baseUrl = `ws://localhost:${process.env.PORT || '3000'}`;
+
+    await new Promise<void>((resolve, reject) => {
+      this.wss = io(
+        baseUrl,
+        {
+          autoConnect: false,
+          transports: ["websocket"],
+          query: { uid: "acceptance-test" }
+        });
+      this.wss.on("error", reject);
+      this.wss.on("connect", resolve);
+      this.wss.connect();
+    });
   }
   static async stop() {
     await this.application.stop();
@@ -40,6 +56,10 @@ export class MatchMakerBackendAcceptanceTest {
   static async publish(event: DomainEvent) {
     const eventBus = container.get<EventBus>(coreTypes.EventBus);
     await eventBus.publish([event]);
+  }
+  static emit(messageName: string, message: any) {
+    this.wss.on("error", console.log);
+    this.wss.emit(messageName, message);
   }
 
   static async addRandomCard(cardId?: Uuid) {

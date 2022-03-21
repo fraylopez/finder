@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 import { inject, injectable } from "inversify";
-import { CardFinder } from "../../../contexts/matchmaker/card/application/get-cards/CardFinder";
-import { Card } from "../../../contexts/_shared/domain/card/Card";
-import { Controller } from '../../_core/controllers/Controller';
+import { CardFinder } from "../../../../contexts/matchmaker/card/application/get-cards/CardFinder";
+import { Card } from "../../../../contexts/_shared/domain/card/Card";
+import { ExpressController } from "../../../_core/controllers/ExpressController";
 
 @injectable()
-export class CardGetController extends Controller {
+export class CardGetController extends ExpressController {
   constructor(@inject(CardFinder) private readonly cardFinder: CardFinder) {
     super();
   }

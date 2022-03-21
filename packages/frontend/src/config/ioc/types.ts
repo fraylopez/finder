@@ -1,7 +1,7 @@
 export enum types {
   EventBus = "EventBus",
   EventHandler = "EventHandler",
-  UpdateService = "UpdateService",
+  WebSocketService = "WebSocketService",
   BaseHttpUrl = "BaseHttpUrl",
   BaseWsUrl = "BaseWsUrl",
   CardRepository = "CardRepository",
