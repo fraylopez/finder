@@ -13,16 +13,16 @@ export class MatchMakerBackendApp {
   async start() {
     const port = process.env.PORT || '3000';
     this.server = new Server(port);
-    this.websocket = new Websocket(port, this.server.httpServer);
     await this.registerSubscribers();
 
     await this.server.listen();
+    this.websocket = new Websocket(port, this.server.httpServer);
     await this.websocket.listen();
-
   }
 
   async stop() {
     await this.server?.stop();
+    await this.websocket?.stop();
   }
 
   get port(): string {

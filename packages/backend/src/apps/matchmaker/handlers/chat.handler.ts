@@ -4,9 +4,6 @@ import { IncomingUserChatMessageController } from "../controllers/ws/IncomingUse
 import { container } from "../ioc/installer";
 
 export const register = (server: WebSocketServer) => {
-  const cardsGetController = container.get(IncomingUserChatMessageController);
-  // server.
-  // cardsGetController.
-  // app.get('/card', cardsGetController.request.bind(cardsGetController));
-  server.register("chat.message", cardsGetController);
+  const incommingChatMessageHandler = container.get(IncomingUserChatMessageController);
+  server.register("chat.message", incommingChatMessageHandler);
 };

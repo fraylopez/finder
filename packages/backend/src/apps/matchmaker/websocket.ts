@@ -9,28 +9,24 @@ import { coreTypes } from "../_core/ioc/coreTypes";
 export class Websocket {
   readonly port: string;
   private logger: Logger;
-  private httpServer: http.Server;
+  private httpServer!: http.Server;
   private readonly websocketServer: WebSocketServer;
 
-  constructor(port: string, server?: http.Server) {
+  constructor(port: string, private readonly server?: http.Server) {
     this.logger = container.get<Logger>(coreTypes.Logger);
     this.port = port;
-    this.httpServer = server || http.createServer();
     this.websocketServer = container.get<WebSocketServer>(types.WebSocketServer);
     registerHandlers(this.websocketServer);
   }
 
   async listen(): Promise<void> {
+    this.httpServer = this.server || http.createServer();
     if (!this.httpServer.listening) {
-      await new Promise<void>(resolve => {
-        this.httpServer.listen(this.port, () => {
-          this.logger.info(`  WebSocket is running at ws://localhost:${this.port} in ${process.env.NODE_ENV} mode`);
-          this.logger.info('  Press CTRL-C to stop\n');
-        });
-        resolve();
-      });
+      await new Promise<void>(resolve => this.httpServer.listen(this.port, resolve));
     }
-    this.websocketServer.init(this.httpServer);
+    await this.websocketServer.init(this.httpServer);
+    this.logger.info(`  WebSocket App is running at ws://localhost:${this.port} in ${process.env.NODE_ENV} mode`);
+    this.logger.info('  Press CTRL-C to stop\n');
   }
 
   async stop(): Promise<void> {

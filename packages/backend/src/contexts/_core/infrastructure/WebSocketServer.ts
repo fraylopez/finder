@@ -14,9 +14,10 @@ export class WebSocketServer {
   }
 
   init(httpServer: Server) {
-    httpServer.on("connect", () => {
+    return new Promise<void>(resolve => {
       this.wss = new socketIO.Server(httpServer);
       this.wss.on("connection", this.onClientConnect.bind(this));
+      resolve();
     });
   }
 
@@ -33,6 +34,7 @@ export class WebSocketServer {
   }
 
   async onClientMessage(eventName: string, message: any) {
+    console.log(eventName);
     const handlers = this.handlers.get(eventName) || [];
     await Promise.all(handlers.map(h => h.handle(message)));
   }

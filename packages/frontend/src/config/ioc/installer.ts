@@ -12,9 +12,9 @@ import { MapContainer } from "./MapContainer";
 import { InMemoryEventBus } from "../../contexts/matchmaker/infrastructure/InMemoryEventBus";
 import { ConnectUpdateServiceOnCandidateCreatedEventHandler } from "../../contexts/matchmaker/candidate/application/SubscribeToMatchOnCandidateCreatedEventHandler";
 import { ChatUpdater } from "../../contexts/matchmaker/chat/application/ChatUpdater";
-import { HttpChatService } from "../../contexts/matchmaker/chat/infrastructure/HttpChatService";
 import { ChatFinder } from "../../contexts/matchmaker/chat/application/ChatFinder";
 import { ChatCreator } from "../../contexts/matchmaker/chat/application/ChatCreator";
+import { WebSocketChatService } from "../../contexts/matchmaker/chat/infrastructure/WebSocketChatService";
 
 const container = new MapContainer();
 
@@ -44,7 +44,8 @@ container.bind(SwipeCreator, new SwipeCreator(container.get(types.SwipeService))
 container.bind(types.EventHandler, new ConnectUpdateServiceOnCandidateCreatedEventHandler(container.get(types.UpdateService)));
 
 
-container.bind(types.ChatService, new HttpChatService(container.get(types.BaseHttpUrl)));
+// container.bind(types.ChatService, new HttpChatService(container.get(types.BaseHttpUrl)));
+container.bind(types.ChatService, new WebSocketChatService(container.get(types.BaseHttpUrl), container.get(WebSocketClient)));
 container.bind(ChatUpdater, new ChatUpdater(container.get(types.UpdateService)));
 container.bind(ChatFinder, new ChatFinder(container.get(types.ChatService)));
 container.bind(ChatCreator, new ChatCreator(container.get(types.ChatService)));

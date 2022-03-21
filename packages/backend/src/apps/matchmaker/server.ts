@@ -32,18 +32,13 @@ export class Server {
     const router = Router();
     router.use(errorHandler());
     this.express.use(router);
-
     registerRoutes(router);
   }
 
   async listen(): Promise<void> {
-    await new Promise<void>(resolve => {
-      this.httpServer = this.express.listen(this.port, () => {
-        this.logger.info(`  App is running at http://localhost:${this.port} in ${this.express.get('env')} mode`);
-        this.logger.info('  Press CTRL-C to stop\n');
-        resolve();
-      });
-    });
+    await new Promise<void>(resolve => this.httpServer = this.express.listen(this.port, resolve));
+    this.logger.info(`  HTTP App is running at http://localhost:${this.port} in ${this.express.get('env')} mode`);
+    this.logger.info('  Press CTRL-C to stop\n');
   }
 
   async stop(): Promise<void> {
