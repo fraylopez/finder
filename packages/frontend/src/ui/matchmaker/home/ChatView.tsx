@@ -1,5 +1,4 @@
 import { ChatAltIcon } from "@heroicons/react/outline";
-import { m } from "framer-motion";
 import { useEffect, useReducer, useState } from "react";
 import { container } from "../../../config/ioc/installer";
 import { ChatCreator } from "../../../contexts/matchmaker/chat/application/ChatCreator";

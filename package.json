@@ -9,7 +9,9 @@
     ]
   },
   "scripts": {
-    "test:backend": "yarn --cwd packages/backend test"
+    "test:backend": "yarn --cwd packages/backend test",
+    "start:backend": "yarn --cwd packages/backend start",
+    "start:frontend": "yarn --cwd packages/frontend start"
   },
   "devDependencies": {
     "@faker-js/faker": "^6.0.0-alpha.7",

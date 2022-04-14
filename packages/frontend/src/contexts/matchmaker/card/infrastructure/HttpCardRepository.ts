@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from "axios";
-import { Card } from "../card/domain/Card";
-import { CardRepository } from "../card/domain/CardRepository";
+import { Card } from "../domain/Card";
+import { CardRepository } from "../domain/CardRepository";
 
 export class HttpCardRepository implements CardRepository {
   private fetcher: AxiosInstance;
